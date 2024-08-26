@@ -1,0 +1,25 @@
+export const TYPE_ARTICLE = 'article'
+export const TYPE_PATENT = 'patent'
+export const TYPE_REPORT = 'report'
+export const TYPE_BOOK = 'book'
+export const TYPE_HANDBOOK = 'handbook'
+export const TYPE_PROJECT = 'project'
+export const TYPE_SCIENCE_DB = 'sciencedata'
+export const TYPE_SOFTWARE = 'software'
+export const TYPE_MONOGRAPH = 'monograph'
+export const TYPE_AWARD = 'award'
+export const TYPE_LITERATURE = 'literature'
+export const TYPE_JOURNAL = 'journal'
+export const TYPE_CHINAXIV = 'chinaxiv'
+export const TYPE_BULLETIN = 'bulletin'
+export const TYPE_BULLETIN_REPORT = 'bulletin_report'
+export const TYPE_FAVLIST = 'favlist'
+export const TYPE_COMMENT = 'comment'
+export const VOTE_TYPE_NEUTRAL = 'neutral'
+export const VOTE_TYPE_UP = 'up'
+export const AES_KEY = 'qWeRtYuIoPaSdFgH'
+export const AES_IV = 'JkLzXcVbNm098765'
+export const UPLOAD_ACTION = location.protocol + '//' + location.host + '/file/uploadfile';
+export const UPLOAD_ACTION_HKY = location.protocol + '//' + location.host + '/hky/api/v1/files';
+export const BASE_FILE_URL = location.protocol + '//' + location.host + '/file/downloadbyfastdfspath?fastdfspath=';
+export const MOBILE_CLIENT_WIDTH = 576
