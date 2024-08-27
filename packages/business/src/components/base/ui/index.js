@@ -74,6 +74,7 @@ import BaseTree from './tree'
 import Notification from './notification';
 import BaseDescriptions from './descriptions'
 import BaseDescriptionsItem from './descriptions-item'
+import InputNumber from './input-number/input-number'
 const components = [
     BaseAvatar,
     BaseBadge,
@@ -143,7 +144,8 @@ const components = [
     BaseRate,
     BaseTree,
     BaseDescriptions,
-    BaseDescriptionsItem
+    BaseDescriptionsItem,
+    InputNumber
 ];
 const BaseUI = {
   install: function(Vue, opts = {}) {
