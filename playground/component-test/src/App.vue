@@ -3,6 +3,26 @@
     <base-input v-model="year" placeholder="牛逼"></base-input>
     <XTab :actived.sync="text"></XTab>
     <annex :fileTypes="['pdf']" :maxUploadFileSize="1024 * 1024" checkPDF></annex>
+    <base-input-number></base-input-number>
+    <base-table
+      :data="tableData"
+      height="100"
+      style="width: 100%">
+      <base-table-column
+        prop="date"
+        label="日期"
+        width="180">
+      </base-table-column>
+      <base-table-column
+        prop="name"
+        label="姓名"
+        width="180">
+      </base-table-column>
+      <base-table-column
+        prop="address"
+        label="地址">
+      </base-table-column>
+    </base-table>
   </div>
 </template>
 <script>
@@ -16,6 +36,23 @@ export default {
   components: {WangEditor,Author,Institution,Annex,AuthorOrIns,DatePickerX,XTab,Keywords,AggsItemV,Cover,AuthorX,InstitutionX,XHeader,UserProfile },
   data() {
     return {
+      tableData: [{
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+          }, {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1517 弄'
+          }, {
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+          }, {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1516 弄'
+          }],
       tags:[],
       text:'菜单2',
       year:0,

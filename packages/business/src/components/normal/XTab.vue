@@ -69,7 +69,7 @@ export default {
 <style lang="scss" scoped>
   @import '../base/ui/style/var.scss';
   .Menu__warp{
-    width: auto;
+    width: fit-content;
     height: auto;
     overflow: hidden;
     background: #e4edf6;
