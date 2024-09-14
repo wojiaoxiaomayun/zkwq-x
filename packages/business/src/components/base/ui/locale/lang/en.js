@@ -211,6 +211,7 @@ export default {
       '出版年':'Year of publication',
       '出版社':'publishing house',
       '开始时间':'Start time',
+      '结束时间':'End time',
       '承担机构':'Responsible organization',
       '使用许可协议':'License Agreement',
       '学科领域':'Subject',
@@ -225,6 +226,7 @@ export default {
       '提交机构':'Submitting institution',
       '数据中心':'data center',
       '首次发表时间':'First published',
+      '发证时间':'Certificate issuance time',
       '服务领域':'Service areas',
       '所属服务':'Services',
       '发布时间':'Release time',
@@ -234,7 +236,8 @@ export default {
       '培养单位':'training unit',
       '阅读全部':'Read all',
       '收起':'close',
-      '展开更多作者':'Expand more authors'
+      '展开更多作者':'Expand more authors',
+      '申请人':'applicant'
     }
   }
 };

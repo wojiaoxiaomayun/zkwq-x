@@ -214,7 +214,6 @@ export {
   menuItemGroup,
   submenu,
   pagination,
-  Popover,
   Progress,
   radio,
   radioButton,
@@ -225,6 +224,7 @@ export {
   OptionGroup,
   Select,
   SelectDropdown,
+  BaseSkeleton,
   BaseSwitch,
   tabs,
   tabPane,
@@ -241,5 +241,11 @@ export {
   Step,Steps,
   BaseEmpty,
   BaseRate,
-  BaseTree
+  BaseTree,
+  BaseDescriptions,
+  BaseDescriptionsItem,
+  InputNumber,
+  Message,
+  MessageBox,
+  Notification
 };
