@@ -31,6 +31,7 @@ import AppTip from './components/normal/AppTip'
 import DatePickerX from './components/normal/DatePickerX'
 import Keywords from './components/normal/Keywords'
 import ImageViewer from './components/base/ui/image/image-viewer.vue'
+import CircleTranslateButton from './components/normal/CircleTranslateButton'
 
 export {
   AggsItemH,
@@ -41,6 +42,7 @@ export {
   SmoothNumber,
   Avatar,
   Ripple,
+  CircleTranslateButton,
   Annex,XCard,XHeader,XTab,Cover,WangEditor,AppNumberBoard,UserProfile,InstitutionAvatar,InstitutionProfile,InstitutionX,Institution,AuthorX,Author,AuthorOrIns,AppTip,DatePickerX,Keywords,ImageViewer
 
 }

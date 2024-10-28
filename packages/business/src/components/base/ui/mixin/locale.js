@@ -1,4 +1,4 @@
-import { t } from '../locale/index'
+import { t,i18n } from '../locale/index'
 
 export default {
   methods: {

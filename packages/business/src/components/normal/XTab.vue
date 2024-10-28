@@ -70,7 +70,7 @@ export default {
   @import '../base/ui/style/var.scss';
   .Menu__warp{
     width: fit-content;
-    height: auto;
+    height: fit-content;
     overflow: hidden;
     background: #e4edf6;
     display: flex;

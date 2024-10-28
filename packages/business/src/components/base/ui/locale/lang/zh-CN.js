@@ -235,6 +235,10 @@ export default {
       '收起':'收起',
       '展开更多作者':'展开更多作者',
       '申请人':'申请人'
+    },
+    translate:{
+      'translate':'翻译',
+      'translateProgressWait': '正在翻译中，请稍后...',
     }
   }
 }

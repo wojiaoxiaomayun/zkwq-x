@@ -190,3 +190,16 @@ export const SuggestMonograph = query => {
       'X-XSRF-TOKEN':getHKYToken()
   }}) 
 }
+
+//翻译
+export const TranslateV2 = params => { 
+  return http.post('/hky/extend/api/v3/translate', params,{header:{
+      'X-XSRF-TOKEN':getHKYToken()
+  }}) 
+}
+export const GetLang = params => { 
+  return http.post('/hky/extend/api/v3/translate/lang', params,{header:{
+      'X-XSRF-TOKEN':getHKYToken()
+  }}) 
+}
+

@@ -24,17 +24,20 @@
       </base-table-column>
     </base-table>
     <ReadableItem :readable="readable"></ReadableItem>
+
+
+    <circle-translate-button :model="model"></circle-translate-button>
   </div>
 </template>
 <script>
 import {
-  WangEditor,Base64Util,Author,Institution,Annex,AuthorOrIns,DatePickerX,XTab,Keywords,AggsItemV,Cover,AuthorX,InstitutionX,XHeader,UserProfile
+  WangEditor,Base64Util,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,
 } from "@zkwq/business";
 import wangPlugin from './wangPlugin'
 import ReadableItem from '../../../packages/business/src/components/normal/readitem/ReadableItem.vue'
 export default {
   name: "App",
-  components: {WangEditor,Author,Institution,Annex,AuthorOrIns,DatePickerX,XTab,Keywords,AggsItemV,Cover,AuthorX,InstitutionX,XHeader,UserProfile,ReadableItem },
+  components: {WangEditor,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton },
   data() {
     return {
       readable:{
@@ -94,6 +97,10 @@ export default {
       tags:[],
       text:'菜单2',
       year:0,
+      model:{
+        title:"Magnificent tensile strength and ductility synergy in a NiCoCrAlTi high-entropy alloy at elevated temperature",
+        abstracts:"The study reported a novel L1 2 -strengthening NiCoCrAlTi high-entropy alloy (HEA) with an outstanding synergy of tensile strength and ductility at both ambient and high temperatures. The HEA was prepared by arc melting and cold-rolling, followed by isothermal aging at designed precipitation temperatures to achieve coexistence of recrystallized and non-recrystallized grains. Transmission electron microscopy (TEM) characterization revealed a high density of rod-like and spheroidal L1 2 precipitates distributing in the micro 2 precipitates, including the shearing and blocking effects, was frequently observed, contributing to the high tensile strength. Thus, the extremely high tensile strength and sustained ductility at 600°C mainly originate from the cooperation among interaction between L1 2 precipitation and dislocations and extensive SFs, DTs, immobile Lomer-Cottrell (L-C) locks formed from interactions between SFs and SFs",
+      },
       info:{"authors":[],"inss":[{"id":"26756bd7d530ff97374ae09ae8a0317a","name":"中国科学院文献情报中心"}]},
       author:{
         id:'',

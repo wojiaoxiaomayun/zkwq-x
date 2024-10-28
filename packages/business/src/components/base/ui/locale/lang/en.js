@@ -238,6 +238,10 @@ export default {
       '收起':'close',
       '展开更多作者':'Expand more authors',
       '申请人':'applicant'
-    }
+    },
+    translate:{
+      'translate':'Translate',
+      'translateProgressWait': 'Translation in progress, please wait...',
+    },
   }
 };
