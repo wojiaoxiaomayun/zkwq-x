@@ -40,6 +40,7 @@ export default {
         id: this.model.id
       }).then(lang => {
         if (lang) {
+          lang = lang === 'zh' ? 'cn' : lang
           TranslateV2({
             text: this.clearHighlight(this.model.title),
             from: lang,
@@ -47,7 +48,7 @@ export default {
             field: 'title',
             id: this.model.id
           }).then(response => {
-            if (response.trans_result.dst) {
+            if (response?.trans_result?.dst) {
               this.$emit('translate-title', response.trans_result.dst)
             } else {
               this.$emit('translate-title', '翻译功能升级中...')
@@ -64,7 +65,7 @@ export default {
               id: this.model.id
             }).then(response => {
               this.isLoading = false
-              if (response.trans_result.dst) {
+              if (response?.trans_result?.dst) {
                 this.$emit('translate-abstracts', response.trans_result.dst)
               } else {
                 this.$emit('translate-abstracts', '翻译功能升级中...')

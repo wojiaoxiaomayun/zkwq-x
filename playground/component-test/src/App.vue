@@ -23,7 +23,9 @@
         label="地址">
       </base-table-column>
     </base-table>
-    <ReadableItem :readable="readable"></ReadableItem>
+    <div style="background:white;padding: 16px;">
+      <ReadableItem :readable="readable"></ReadableItem>
+    </div>
 
 
     <circle-translate-button :model="model"></circle-translate-button>
@@ -31,16 +33,17 @@
 </template>
 <script>
 import {
-  WangEditor,Base64Util,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,
+  WangEditor,Base64Util,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem
 } from "@zkwq/business";
 import wangPlugin from './wangPlugin'
-import ReadableItem from '../../../packages/business/src/components/normal/readitem/ReadableItem.vue'
 export default {
   name: "App",
-  components: {WangEditor,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton },
+  components: {WangEditor,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem },
   data() {
     return {
       readable:{
+        title_translated:"aa",
+        abstracts_translated:"aa",
     "attachment_id": [],
     "author": [
         "曹冬"

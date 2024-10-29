@@ -237,7 +237,8 @@ export default {
       '阅读全部':'Read all',
       '收起':'close',
       '展开更多作者':'Expand more authors',
-      '申请人':'applicant'
+      '申请人':'applicant',
+      '机器翻译由':'Supported by'
     },
     translate:{
       'translate':'Translate',
