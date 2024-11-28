@@ -1,8 +1,8 @@
-import ElTableColumn from '../table/src/table-column';
+import BaseTableColumn from '../table/src/table-column';
 
 /* istanbul ignore next */
-ElTableColumn.install = function(Vue) {
-  Vue.component(ElTableColumn.name, ElTableColumn);
+BaseTableColumn.install = function(Vue) {
+  Vue.component(BaseTableColumn.name, BaseTableColumn);
 };
 
-export default ElTableColumn;
+export default BaseTableColumn;

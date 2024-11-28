@@ -220,10 +220,15 @@ export default {
     },
     handleImgLoad(e) {
       this.loading = false;
+      this.$emit('load',{
+        event:e,
+        index:this.index
+      })
     },
     handleImgError(e) {
       this.loading = false;
       e.target.alt = '加载失败';
+      this.$emit('error',e)
     },
     handleMouseDown(e) {
       if (this.loading || e.button !== 0) return;

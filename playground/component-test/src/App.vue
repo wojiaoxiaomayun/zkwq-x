@@ -28,17 +28,22 @@
     </div>
 
 
-    <circle-translate-button :model="model"></circle-translate-button>
+    <circle-translate-button :model="model" horizontal></circle-translate-button>
+    <div id="cifDom" style="width:800px;height:600px;"></div>
+    <ImageViewer :url-list="['https://scholarin.cn/file/downloadbyfastdfspath?fastdfspath=group1/M02/9F/CD/CgMLD2bztO2AYHmPAIZdiMvAvK01186825','https://scholarin.cn/file/downloadbyfastdfspath?fastdfspath=group1/M03/9F/D5/CgMLDmbztYaANr2kAG1wJjZ7JhA4492531']" @load="handleImgLoad"></ImageViewer>
   </div>
 </template>
 <script>
 import {
-  WangEditor,Base64Util,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem
+  WangEditor,Base64Util,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer
 } from "@zkwq/business";
 import wangPlugin from './wangPlugin'
+import CrystVis from 'crystvis-js';
+
+
 export default {
   name: "App",
-  components: {WangEditor,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem },
+  components: {WangEditor,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer },
   data() {
     return {
       readable:{
@@ -140,14 +145,53 @@ export default {
     setTimeout(() => {
       this.text = '菜单1'
     },5000)
+    this.initCif()
   },
   methods: {
+    handleImgLoad(e){
+      console.log(e,index)
+    },
     wangPlugin,
     aggChange(value){
       console.log(value)
     },
     insChange(info){
       console.log(info)
+    },
+    initCif(){
+      const visualizer = new CrystVis('#cifDom', 800, 600)
+      var loaded = visualizer.loadModels(`# generated using pymatgen
+data_Be2TcPt
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   9.30950095
+_cell_length_b   9.30950095
+_cell_length_c   9.30950095
+_cell_angle_alpha   124.42408402
+_cell_angle_beta   118.66288828
+_cell_angle_gamma   87.42259484
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   Be2TcPt
+_chemical_formula_sum   'Be2 Tc1 Pt1'
+_cell_volume   554.72716257
+_cell_formula_units_Z   1
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Be  Be0  1  0.00000000  0.26132300  0.26132300  1
+  Be  Be1  1  0.00000000  0.73867700  0.73867700  1
+  Tc  Tc2  1  0.00000000  0.00000000  0.00000000  1
+  Pt  Pt3  1  0.00000000  0.50000000  0.50000000  1`);
+console.log('Models loaded: ', loaded);
+visualizer.displayModel(loaded[0])
     }
   },
 };
