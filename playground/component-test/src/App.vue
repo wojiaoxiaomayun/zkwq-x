@@ -1,10 +1,14 @@
 <template>
   <div style="width:100%;height:100%;overflow: auto;padding:30px;">
-    <base-input v-model="year" placeholder="牛逼"></base-input>
+    <!-- <base-input v-model="year" placeholder="牛逼"></base-input>
     <XTab :actived.sync="text"></XTab>
     <annex :fileTypes="['pdf']" :maxUploadFileSize="1024 * 1024" checkPDF></annex>
-    <base-input-number></base-input-number>
-    <base-table
+    <base-input-number></base-input-number> -->
+    <hover-card @skip="handleSkip" :uid="'1a2321207218482ba227da042dcfa60c'" :user='{"birthday":"","city":"","research_field":[],"academic_experiences_v2":[],"follower_count":0,"is_super_manager":false,"honors":[],"scholar_id":"6ce4756c71ac423496b28e61e7c01fc3","social_experiences":[],"home_page":"","institution":"机构_plinnmgdxg","uid":"6ce4756c71ac423496b28e61e7c01fc3","followee_count":0,"province":"","academic_experiences":[],"affiliation":["机构_plinnmgdxg"],"partisan":"","browse_count":0,"tag":[],"classification_cnnace_number":[],"department":[null],"headline":"","address":"","education_experiences":[],"is_authorized":0,"is_academician":false,"sex":"","fruit_count":0,"mobile":"19291096364","orcid":"","avatar":"","biography":"","academic_title":[],"classification":[],"sync":1,"collect_count":0,"classification_cnnace":[],"external_link":["6ce4756c71ac423496b28e61e7c01fc3"],"token":"yong-hu-_ahdwhjyz3l","employment_experiences":[{"institution":["机构_plinnmgdxg"],"uid":"6ce4756c71ac423496b28e61e7c01fc3","employ_start_date":[""],"employ_end_date":[""],"position":[""],"department":[null],"professional_title":[""]}],"question_count":0,"share_count":0,"country_code":"86","wosReasearcherId":"","awards":[],"name":"用户_ahdwhjyz3l","classification_number":[],"id":"6ce4756c71ac423496b28e61e7c01fc3"}'>
+        <base-button>这是一个hover-card</base-button>
+    </hover-card>
+    <readable-item :readable="readable" authorHover @skip="handleSkip"></readable-item>
+    <!-- <base-table
       :data="tableData"
       height="100"
       style="width: 100%">
@@ -26,24 +30,25 @@
     <div style="background:white;padding: 16px;">
       <ReadableItem :readable="readable"></ReadableItem>
     </div>
-
+    <author-x cstr orcid></author-x>
 
     <circle-translate-button :model="model" horizontal></circle-translate-button>
-    <div id="cifDom" style="width:800px;height:600px;"></div>
-    <ImageViewer :url-list="['https://scholarin.cn/file/downloadbyfastdfspath?fastdfspath=group1/M02/9F/CD/CgMLD2bztO2AYHmPAIZdiMvAvK01186825','https://scholarin.cn/file/downloadbyfastdfspath?fastdfspath=group1/M03/9F/D5/CgMLDmbztYaANr2kAG1wJjZ7JhA4492531']" @load="handleImgLoad"></ImageViewer>
+    <div id="cifDom" style="width:800px;height:600px;"></div> -->
   </div>
 </template>
 <script>
 import {
-  WangEditor,Base64Util,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer
+  WangEditor,Base64Util,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ImageViewer
 } from "@zkwq/business";
 import wangPlugin from './wangPlugin'
 import CrystVis from 'crystvis-js';
+import HoverCard from '../../../packages/business/src/components/normal/hovercard/HoverCard.vue';
+import ReadableItem from '../../../packages/business/src/components/normal/readitem/ReadableItem.vue';
 
 
 export default {
   name: "App",
-  components: {WangEditor,Author,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer },
+  components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard },
   data() {
     return {
       readable:{
@@ -60,7 +65,7 @@ export default {
         "全部权利"
     ],
     "claim_way": "原始取得",
-    "cn_type": "软件著作权",
+    "cn_type": "期刊论文",
     "date": "2023-06-13",
     "id": "6d610cae0f14838d19fe7a0c4e1f85fe",
     "institution": [
@@ -83,7 +88,8 @@ export default {
         "ins-knowledge-f186913eb04e34bc24ce23f8400fdc28"
     ],
     "title": "白酒有机组分高分辨质谱分子式分析软件[简称BJMSFA]",
-    "type": "software"
+    "type": "article",
+    "keywords":['人生']
 },
       tableData: [{
             date: '2016-05-02',
@@ -135,19 +141,22 @@ export default {
     }
   },
   mounted() {
-    this.$notify({
-          title: '提示',
-          message: '这是一条不会自动关闭的消息',
-          duration: 0
-        });
-    console.log(Base64Util.isValid('中国'))
-    console.log(Base64Util.isValid('c2VsZWN0ICogZnJvbSB0X29kc19sYXNfbnN0bF92YWx1ZV9zdXBwbGVtZW50X3Y1IHdoZXJlIHN1cHBsZW1lbnRfdXBsb2FkZXItaWQgPSAnMWEyMzIxMjA3MjE4NDgyYmEyMjdkYTA0MmRjZmE2MGMnICBhbmQgc3VwcGxlbWVudF9maWxlLXR5cGUgPSAnb3RoZXInICBhbmQgc3RhdHVzID0gJ05PUk1BTCcgYW5kIHNvdXJjZSA9ICdtaWNyb2RhdGEnIG9yZGVyIGJ5IHRpbWVfY3JlYXRlIGRlc2MgbGltaXQgMCw5'))
-    setTimeout(() => {
-      this.text = '菜单1'
-    },5000)
-    this.initCif()
+    // this.$notify({
+    //       title: '提示',
+    //       message: '这是一条不会自动关闭的消息',
+    //       duration: 0
+    //     });
+    // console.log(Base64Util.isValid('中国'))
+    // console.log(Base64Util.isValid('c2VsZWN0ICogZnJvbSB0X29kc19sYXNfbnN0bF92YWx1ZV9zdXBwbGVtZW50X3Y1IHdoZXJlIHN1cHBsZW1lbnRfdXBsb2FkZXItaWQgPSAnMWEyMzIxMjA3MjE4NDgyYmEyMjdkYTA0MmRjZmE2MGMnICBhbmQgc3VwcGxlbWVudF9maWxlLXR5cGUgPSAnb3RoZXInICBhbmQgc3RhdHVzID0gJ05PUk1BTCcgYW5kIHNvdXJjZSA9ICdtaWNyb2RhdGEnIG9yZGVyIGJ5IHRpbWVfY3JlYXRlIGRlc2MgbGltaXQgMCw5'))
+    // setTimeout(() => {
+    //   this.text = '菜单1'
+    // },5000)
+    // this.initCif()
   },
   methods: {
+    handleSkip(type,scholar){
+      console.log('skip',type,scholar)
+    },
     handleImgLoad(e){
       console.log(e,index)
     },

@@ -19,6 +19,9 @@ export const VOTE_TYPE_NEUTRAL = 'neutral'
 export const VOTE_TYPE_UP = 'up'
 export const AES_KEY = 'qWeRtYuIoPaSdFgH'
 export const AES_IV = 'JkLzXcVbNm098765'
+export const PROFILE_NAV_TAB_FRUITS = 'fruits'
+export const TYPE_FOLLOWER = 'follower'
+export const TYPE_FOLLOWEE = 'followee'
 export const UPLOAD_ACTION = location.protocol + '//' + location.host + '/file/uploadfile';
 export const UPLOAD_ACTION_HKY = location.protocol + '//' + location.host + '/hky/api/v1/files';
 export const BASE_FILE_URL = location.protocol + '//' + location.host + '/file/downloadbyfastdfspath?fastdfspath=';

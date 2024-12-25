@@ -32,18 +32,26 @@
           <template v-if="!readable.show_all_author">
             <template v-if="readable.author.length <= 6">
               <span v-for="(author, index) in readable.author" :key="readable.type+index+author" class="AuthorInfo__name">
-                <span class="AuthorInfo__nameText" v-if="index === readable.author.length - 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                <hover-card v-if="index === readable.author.length - 1" :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}"  v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                </hover-card>
                 <template v-else>
-                  <span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                  <hover-card :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                    <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                  </hover-card>
                   <span class="ContentItem__comma">,</span>
                 </template>
               </span>
             </template>
             <template v-if="readable.author.length > 6">
               <span v-for="(author, index) in readable.author" :key="readable.type+index+author" class="AuthorInfo__name" v-if="index < 5">
-                    <span class="AuthorInfo__nameText" v-if="index === 4" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                    <hover-card v-if="index === 4" :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                      <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}"  v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                    </hover-card>
                     <template v-else>
-                      <span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                      <hover-card :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                        <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                      </hover-card>
                       <span class="ContentItem__comma">,</span>
                     </template>
                   </span>
@@ -51,15 +59,21 @@
                 <span class="AuthorInfo__extra" @click="showAllAuthor">···</span>
               </base-tooltip>
               <span class="AuthorInfo__name">
-                  <span class="AuthorInfo__nameText" v-html="readable.author[readable.author.length - 1]" @click="searchAuthor(clearHighlight(readable.author[readable.author.length - 1]))"></span>
+                <hover-card :uid="authorHover && readable.author_id[readable.author.length - 1]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[readable.author.length - 1])}" v-html="readable.author[readable.author.length - 1]" @click="searchAuthor(clearHighlight(readable.author[readable.author.length - 1]))"></span>
+                </hover-card>
               </span>
             </template>
           </template>
           <template v-if="readable.show_all_author">
             <span v-for="(author, index) in readable.author" :key="author" class="AuthorInfo__name">
-              <span class="AuthorInfo__nameText" v-if="index === readable.author.length - 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+              <hover-card v-if="index === readable.author.length - 1" :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}"  v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+              </hover-card>
               <template v-else>
-                <span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                <hover-card :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                </hover-card>
                 <span>,</span>
               </template>
             </span>
@@ -74,13 +88,24 @@
           <i class="base-icon-s-custom"></i>
         </base-tooltip>
         <div class="AuthorInfo__content">
-          <span v-for="(author, index) in readable.author" :key="author" class="AuthorInfo__name"><span class="AuthorInfo__nameText" v-if="index === readable.author.length - 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span><template v-else><span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span><span class="ContentItem__comma">,</span></template></span><span class="ContentItem__comma">,</span>
+          <span v-for="(author, index) in readable.author" :key="author" class="AuthorInfo__name">
+            <hover-card v-if="index === readable.author.length - 1" :uid="readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+              <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+            </hover-card>
+            <template v-else>
+              <hover-card :uid="readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+              </hover-card>
+              <span class="ContentItem__comma">,</span>
+            </template>
+            </span>
+            <span class="ContentItem__comma">,</span>
           <span class="AuthorInfo__name AuthorInfo__name--light" v-if="readable.degree">
             <span class="AuthorInfo__nameText is-disabled">{{readable.degree}}</span>
           </span><span class="ContentItem__comma" v-if="readable.degree && readable.major && readable.major !== '专业'">,</span>
           <span class="AuthorInfo__name AuthorInfo__name--light" v-if="readable.major && readable.major !== '专业'">
-            <span class="AuthorInfo__nameText" @click="searchMajor(clearHighlight(readable.major))" v-html="readable.major + '专业'"></span></span><span class="ContentItem__comma" v-if="(readable.degree || (readable.major && readable.major !== '专业')) && readable.tutor">,</span>
-          <span class="AuthorInfo__name AuthorInfo__name--light" v-if="readable.tutor"><span class="ContentItem__label">{{t('custom.readableItem.导师')}}:</span><span v-for="(tutor, index) in readable.tutor" :key="tutor+index"><span v-if="index === readable.tutor.length - 1" class="AuthorInfo__nameText" @click="searchTutor(clearHighlight(tutor))" v-html="tutor && tutor.title?tutor.title:tutor"></span><template v-else><span class="AuthorInfo__nameText" @click="searchTutor(clearHighlight(tutor))" v-html="tutor && tutor.title?tutor.title:tutor"></span><span class="ContentItem__comma">, </span></template></span></span>
+            <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchMajor(clearHighlight(readable.major))" v-html="readable.major + '专业'"></span></span><span class="ContentItem__comma" v-if="(readable.degree || (readable.major && readable.major !== '专业')) && readable.tutor">,</span>
+          <span class="AuthorInfo__name AuthorInfo__name--light" v-if="readable.tutor"><span class="ContentItem__label">{{t('custom.readableItem.导师')}}:</span><span v-for="(tutor, index) in readable.tutor" :key="tutor+index"><span v-if="index === readable.tutor.length - 1" class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchTutor(clearHighlight(tutor))" v-html="tutor && tutor.title?tutor.title:tutor"></span><template v-else><span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchTutor(clearHighlight(tutor))" v-html="tutor && tutor.title?tutor.title:tutor"></span><span class="ContentItem__comma">, </span></template></span></span>
         </div>
       </div>
     </template>
@@ -96,18 +121,18 @@
           <template v-if="!readable.show_all_author">
             <template v-if="readable.inventor.length <= 6">
               <span v-for="(inventor, index) in readable.inventor" :key="inventor" class="AuthorInfo__name">
-                <span class="AuthorInfo__nameText" v-if="index === readable.inventor.length - 1" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-if="index === readable.inventor.length - 1" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
                 <template v-else>
-                  <span class="AuthorInfo__nameText" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
                   <span class="ContentItem__comma">,</span>
                 </template>
               </span>
             </template>
             <template v-if="readable.inventor.length > 6">
               <span v-for="(inventor, index) in readable.inventor" :key="inventor" class="AuthorInfo__name" v-if="index < 5">
-                    <span class="AuthorInfo__nameText" v-if="index === 4" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
+                    <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-if="index === 4" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
                     <template v-else>
-                      <span class="AuthorInfo__nameText" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
+                      <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
                       <span class="ContentItem__comma">,</span>
                     </template>
                   </span>
@@ -119,9 +144,9 @@
           </template>
           <template v-if="readable.show_all_author">
             <span v-for="(inventor, index) in readable.inventor" :key="inventor" class="AuthorInfo__name">
-              <span class="AuthorInfo__nameText" v-if="index === readable.inventor.length - 1" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
+              <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-if="index === readable.inventor.length - 1" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
               <template v-else>
-                <span class="AuthorInfo__nameText" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="inventor" @click="searchInventor(clearHighlight(inventor))"></span>
                 <span class="ContentItem__comma">,</span>
               </template>
             </span>
@@ -135,9 +160,9 @@
           <div class="AuthorInfo__content">
             <span class="AuthorInfo__name ContentItem__label">{{t('custom.readableItem.申请人')}}:</span>
             <span v-for="(applicant, index) in readable.applicant" :key="applicant+index" class="AuthorInfo__name">
-              <span class="AuthorInfo__nameText" v-if="index === readable.applicant.length - 1" v-html="applicant" @click="searchApplicant(clearHighlight(applicant))"></span>
+              <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-if="index === readable.applicant.length - 1" v-html="applicant" @click="searchApplicant(clearHighlight(applicant))"></span>
               <template v-else>
-                <span class="AuthorInfo__nameText" v-html="applicant" @click="searchApplicant(clearHighlight(applicant))"></span>
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="applicant" @click="searchApplicant(clearHighlight(applicant))"></span>
                 <span class="ContentItem__comma">,</span>
               </template>
             </span>
@@ -154,18 +179,26 @@
           <template v-if="!readable.show_all_author">
             <template v-if="readable.author.length <= 6">
               <span v-for="(author, index) in readable.author" :key="readable.type+index+author" class="AuthorInfo__name">
-                <span class="AuthorInfo__nameText" v-if="index === readable.author.length - 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                <hover-card v-if="index === readable.author.length - 1" :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                </hover-card>
                 <template v-else>
-                  <span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                  <hover-card :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                    <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                  </hover-card>
                   <span class="ContentItem__comma">,</span>
                 </template>
               </span>
             </template>
             <template v-if="readable.author.length > 6">
               <span v-for="(author, index) in readable.author" :key="readable.type+index+author" class="AuthorInfo__name" v-if="index < 5">
-                    <span class="AuthorInfo__nameText" v-if="index === 4" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                    <hover-card v-if="index === 4" :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                      <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-if="index === 4" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                    </hover-card>
                     <template v-else>
-                      <span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                      <hover-card :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                        <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                      </hover-card>
                       <span class="ContentItem__comma">,</span>
                     </template>
                   </span>
@@ -173,15 +206,21 @@
                 <span class="AuthorInfo__extra" @click="showAllAuthor">···</span>
               </base-tooltip>
               <span class="AuthorInfo__name">
-                  <span class="AuthorInfo__nameText" v-html="readable.author[readable.author.length - 1]" @click="searchAuthor(clearHighlight(readable.author[readable.author.length - 1]))"></span>
+                <hover-card :uid="authorHover && readable.author_id[readable.author.length - 1]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[readable.author.length - 1])}" v-html="readable.author[readable.author.length - 1]" @click="searchAuthor(clearHighlight(readable.author[readable.author.length - 1]))"></span>
+                </hover-card>
                 </span>
             </template>
           </template>
           <template v-if="readable.show_all_author">
             <span v-for="(author, index) in readable.author" :key="author" class="AuthorInfo__name">
-              <span class="AuthorInfo__nameText" v-if="index === readable.author.length - 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+              <hover-card v-if="index === readable.author.length - 1" :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+              </hover-card>
               <template v-else>
-                <span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                <hover-card :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                </hover-card>
                 <span>,</span>
               </template>
             </span>
@@ -191,7 +230,7 @@
     </template>
     <div v-if="readable.type === TYPE_ARTICLE && (readable.year || readable.publish_year) && readable.article_type !== '学位论文' && readable.article_type !== '预发布论文'" class="ContentItem__meta">
       <span v-if="isChineseReadable" class="ContentItem__source">
-        <span class="ContentItem__metaSource" v-if="readable.source" style="margin-left: -6px" @click="searchSource(clearHighlight(readable.source))">《<span v-html="readable.source"></span>》</span>
+        <span class="ContentItem__metaSource" :class="{'is-disabled':!openSearch}" v-if="readable.source" style="margin-left: -6px" @click="searchSource(clearHighlight(readable.source))">《<span v-html="readable.source"></span>》</span>
         <span v-if="!hidden && !isArrayEmpty(readable.collections)" v-for="(item,index) in readable.collections" :key="item" class="Keyword" :class="[{'is-last':index===readable.collections.length-1},{'is-first':index===0}]">{{item}}</span>
         <span v-if="(readable.year || readable.publish_year) && readable.issue">{{ (readable.year || readable.publish_year)+' 年'}}<template v-if="readable.issue">{{ '第 '+readable.issue+' 期' }}</template></span>
         <span v-if="(readable.year || readable.publish_year) && !readable.issue">{{ (readable.year || readable.publish_year)+' 年'}}<template v-if="readable.volume">{{ '第 '+readable.volume+' 卷' }}</template></span>
@@ -200,7 +239,7 @@
         <span v-if="totalPages > 0">{{ ', 共 '+totalPages+' 页' }}</span>
       </span>
       <span v-if="!isChineseReadable" class="ContentItem__source">
-        <span class="ContentItem__metaSource" v-if="readable.source" style="margin-left: -6px" @click="searchSource(clearHighlight(readable.source))">《<span v-html="readable.source"></span>》</span>
+        <span class="ContentItem__metaSource" :class="{'is-disabled':!openSearch}" v-if="readable.source" style="margin-left: -6px" @click="searchSource(clearHighlight(readable.source))">《<span v-html="readable.source"></span>》</span>
         <span v-if="!hidden && !isArrayEmpty(readable.collections)" v-for="(item,index) in readable.collections" :key="item" class="Keyword" :class="[{'is-last':index===readable.collections.length-1},{'is-first':index===0}]">{{item}}</span>
         <span v-if="(readable.year || readable.publish_year) && readable.volume">{{ (readable.year || readable.publish_year)}}<template v-if="readable.volume">{{ ' , Volume '+readable.volume}}</template></span>
         <span v-if="(readable.year || readable.publish_year) && !readable.volume">{{ (readable.year || readable.publish_year)}}<template v-if="readable.issue">{{ ' , Issue '+readable.issue}}</template></span>
@@ -212,18 +251,18 @@
       <span class="ContentItem__source">
         <span v-if="(readable.year || readable.publish_year)">
            <span class="ContentItem__label">{{t('custom.readableItem.学位授予时间')}}:</span>
-           {{(readable.year || readable.publish_year).trim()}}
+           {{((readable.year || readable.publish_year) + '').trim()}}
          </span>
         <span v-if="(!isArrayEmpty(readable.graduation_institution) || !isArrayEmpty(readable.training_institution)) && (readable.year || readable.publish_year)" class="ContentItem__comma">,</span>
         <span v-if="!isArrayEmpty(readable.graduation_institution)  || !isArrayEmpty(readable.training_institution)">
            <span class="ContentItem__label">{{t('custom.readableItem.学位授予单位')}}:</span>
-           <span v-if="!isArrayEmpty(readable.graduation_institution)" v-for="(graduation, index) in readable.graduation_institution" :key="graduation+index"><span v-if="index === readable.graduation_institution.length - 1" class="AuthorInfo__nameText" @click="searchGraduation(clearHighlight(graduation))" v-html="graduation"></span><template v-else><span class="AuthorInfo__nameText" @click="searchGraduation(clearHighlight(graduation))" v-html="graduation"></span><span class="ContentItem__comma">, </span></template></span>
-           <span v-if="!isArrayEmpty(readable.training_institution)"  v-for="(graduation, index) in readable.training_institution" :key="graduation+index"><span v-if="index === readable.training_institution.length - 1" class="AuthorInfo__nameText" @click="searchGraduation(clearHighlight(graduation))" v-html="graduation.title"></span><template v-else><span class="AuthorInfo__nameText" @click="searchGraduation(clearHighlight(graduation))" v-html="graduation.title"></span><span class="ContentItem__comma">, </span></template></span>
+           <span v-if="!isArrayEmpty(readable.graduation_institution)" v-for="(graduation, index) in readable.graduation_institution" :key="graduation+index"><span v-if="index === readable.graduation_institution.length - 1" class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchGraduation(clearHighlight(graduation))" v-html="graduation"></span><template v-else><span class="AuthorInfo__nameText" @click="searchGraduation(clearHighlight(graduation))" v-html="graduation"></span><span class="ContentItem__comma">, </span></template></span>
+           <span v-if="!isArrayEmpty(readable.training_institution)"  v-for="(graduation, index) in readable.training_institution" :key="graduation+index"><span v-if="index === readable.training_institution.length - 1" class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchGraduation(clearHighlight(graduation))" v-html="graduation.title"></span><template v-else><span class="AuthorInfo__nameText" @click="searchGraduation(clearHighlight(graduation))" v-html="graduation.title"></span><span class="ContentItem__comma">, </span></template></span>
          </span>
         <span v-if="((readable.year || readable.publish_year) || (!isArrayEmpty(readable.graduation_institution)  || !isArrayEmpty(readable.training_institution))) && !isArrayEmpty(readable.school)" class="ContentItem__comma">,</span>
         <span v-if="!isArrayEmpty(readable.school)">
            <span class="ContentItem__label">{{t('custom.readableItem.培养单位')}}:</span>
-           <span v-for="(school, index) in readable.school" :key="school+index"><span v-if="index === readable.school.length - 1" class="AuthorInfo__nameText" @click="searchSchool(clearHighlight(school))" v-html="school && school.title?school.title:school"></span><template v-else><span class="AuthorInfo__nameText" @click="searchSchool(clearHighlight(school))" v-html="school && school.title?school.title:school"></span><span class="ContentItem__comma">, </span></template></span>
+           <span v-for="(school, index) in readable.school" :key="school+index"><span v-if="index === readable.school.length - 1" class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchSchool(clearHighlight(school))" v-html="school && school.title?school.title:school"></span><template v-else><span class="AuthorInfo__nameText" @click="searchSchool(clearHighlight(school))" v-html="school && school.title?school.title:school"></span><span class="ContentItem__comma">, </span></template></span>
          </span>
       </span>
     </div>
@@ -231,7 +270,7 @@
       <span class="ContentItem__source">
         <span v-if="readable.source">
           <span class="ContentItem__label">{{t('custom.readableItem.来源预印本平台')}}:</span>
-          <span class="AuthorInfo__nameText" @click="searchSource(clearHighlight(readable.source))" v-html="readable.source"></span>
+          <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchSource(clearHighlight(readable.source))" v-html="readable.source"></span>
         </span>
         <span v-if="(readable.year || readable.publish_year) && readable.source" class="ContentItem__comma">,</span>
         <span v-if="(readable.year || readable.publish_year)">
@@ -256,7 +295,7 @@
     <div v-if="readable.type === TYPE_ARTICLE && readable.conference && readable.conference !== '不详' && readable.article_type === '会议论文'" class="ContentItem__meta">
       <span class="ContentItem__source">
         <span class="ContentItem__label">{{t('custom.readableItem.会议名称')}}:</span>
-        <span class="AuthorInfo__nameText" @click="searchConference(clearHighlight(readable.conference))" v-html="readable.conference"></span>
+        <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchConference(clearHighlight(readable.conference))" v-html="readable.conference"></span>
       </span>
     </div>
     <template v-if="readable.type === TYPE_REPORT">
@@ -267,32 +306,32 @@
             <template v-if="!readable.show_all_author">
               <template v-if="readable.author.length <= 3">
               <span v-for="(author, index) in readable.author" :key="author" class="AuthorInfo__name">
-                <span class="AuthorInfo__nameText" v-if="index === readable.author.length - 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-if="index === readable.author.length - 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
                 <template v-else>
-                  <span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
                   <span>,</span>
                 </template>
               </span>
               </template>
               <template v-if="readable.author.length > 3">
             <span v-for="(author, index) in readable.author" :key="author" class="AuthorInfo__name" v-if="index < 2">
-              <span class="AuthorInfo__nameText" v-if="index === 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+              <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-if="index === 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
               <template v-else>
-                <span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
                 <span>,</span>
               </template>
             </span>
                 <span class="AuthorInfo__extra" @click="showAllAuthor">···</span>
                 <span class="AuthorInfo__name">
-              <span class="AuthorInfo__nameText" v-html="readable.author[readable.author.length - 1]" @click="searchAuthor(clearHighlight(author))"></span>
+              <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="readable.author[readable.author.length - 1]" @click="searchAuthor(clearHighlight(author))"></span>
             </span>
               </template>
             </template>
             <template v-if="readable.show_all_author">
             <span v-for="(author, index) in readable.author" :key="author" class="AuthorInfo__name">
-              <span class="AuthorInfo__nameText" v-if="index === readable.author.length - 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+              <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-if="index === readable.author.length - 1" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
               <template v-else>
-                <span class="AuthorInfo__nameText" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
                 <span>,</span>
               </template>
             </span>
@@ -310,7 +349,7 @@
         <span v-if="readable.serverName">{{readable.serverName}}</span>
         <span v-if="(readable.date || readable.serverName) && !isArrayEmpty(readable.subjects)" class="ContentItem__comma">,</span>
         <span v-if="!isArrayEmpty(readable.subjects)" class="ContentItem__label">{{t('custom.readableItem.服务领域')}}:</span>
-        <span v-if="!isArrayEmpty(readable.subjects)" class="AuthorInfo__nameText" @click="searchSubject(clearHighlight(readable.subjects[0]))" v-html="readable.subjects[0]"></span>
+        <span v-if="!isArrayEmpty(readable.subjects)" class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchSubject(clearHighlight(readable.subjects[0]))" v-html="readable.subjects[0]"></span>
       </span>
     </div>
     <div v-if="readable.type === TYPE_SOFTWARE && readable.date" class="ContentItem__meta">
@@ -322,13 +361,13 @@
         <span v-if="readable.publish_date">{{readable.publish_date}}</span>
         <span v-if="(readable.date || readable.serverName) && !isArrayEmpty(readable.subjects)" class="ContentItem__comma">,</span>
         <span v-if="!isArrayEmpty(readable.subjects)" class="ContentItem__label">{{t('custom.readableItem.服务领域')}}:</span>
-        <span v-if="!isArrayEmpty(readable.subjects)" class="AuthorInfo__nameText" @click="searchSubject(clearHighlight(readable.subjects[0]))" v-html="readable.subjects[0]"></span>
+        <span v-if="!isArrayEmpty(readable.subjects)" class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchSubject(clearHighlight(readable.subjects[0]))" v-html="readable.subjects[0]"></span>
       </span>
     </div>
     <div v-if="readable.type === TYPE_REPORT && readable.journal" class="ContentItem__meta">
       <span class="ContentItem__source">
         <span v-if="readable.journal" class="ContentItem__label">{{t('custom.readableItem.所属快报产品')}}:</span>
-        <span v-if="readable.journal">《<span @click="searchSource(clearHighlight(readable.journal))" class="AuthorInfo__nameText" v-html="readable.journal"></span>》</span>
+        <span v-if="readable.journal">《<span :class="{'is-disabled':!openSearch}" @click="searchSource(clearHighlight(readable.journal))" class="AuthorInfo__nameText" v-html="readable.journal"></span>》</span>
         <span v-if="readable.date && readable.date.substring(0, 4)">{{ readable.date.substring(0, 4) }} 年</span><span v-if="readable.issue">第 {{readable.issue}} 期</span>
       </span>
     </div>
@@ -338,9 +377,9 @@
           <i class="base-icon-s-custom"></i>
           <div v-if="!isArrayEmpty(readable.author)" class="AuthorInfo__content">
             <span  v-for="(author, index) in readable.author" :key="readable.type+author" class="AuthorInfo__name">
-                <span class="AuthorInfo__nameText" v-if="index === readable.author.length - 1" v-html="author"  @click="searchAuthor(clearHighlight(author))"></span>
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-if="index === readable.author.length - 1" v-html="author"  @click="searchAuthor(clearHighlight(author))"></span>
                 <template v-else>
-                  <span class="AuthorInfo__nameText" v-html="author"  @click="searchAuthor(clearHighlight(author))"></span>
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="author"  @click="searchAuthor(clearHighlight(author))"></span>
                   <span>,</span>
                 </template>
               </span>
@@ -363,9 +402,9 @@
         <div class="ContentItem__author AuthorInfo">
           <span class="AuthorInfo__name">{{t('custom.readableItem.提交机构')}}:</span>
           <span v-for="(provider, index) in readable.providers" :key="provider+index" class="AuthorInfo__name">
-            <span class="AuthorInfo__nameText" v-if="index === readable.providers.length - 1" v-html="provider" @click="searchProvider(clearHighlight(provider))"></span>
+            <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-if="index === readable.providers.length - 1" v-html="provider" @click="searchProvider(clearHighlight(provider))"></span>
             <template v-else>
-              <span class="AuthorInfo__nameText" v-html="provider" @click="searchProvider(clearHighlight(provider))"></span>
+              <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" v-html="provider" @click="searchProvider(clearHighlight(provider))"></span>
               <span>,</span>
             </template>
           </span>
@@ -406,7 +445,7 @@
         <span v-if="readable.license">{{readable.license}}</span>
         <span v-if="(readable.license) && !isArrayEmpty(readable.subject)" class="ContentItem__comma">,</span>
         <span v-if="!isArrayEmpty(readable.subject)" class="ContentItem__label">{{t('custom.readableItem.学科领域')}}:</span>
-        <span v-if="!isArrayEmpty(readable.subject)" class="AuthorInfo__nameText" @click="searchSubject(clearHighlight(readable.subject))" v-html="readable.subject.join(';')"></span>
+        <span v-if="!isArrayEmpty(readable.subject)" class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch}" @click="searchSubject(clearHighlight(readable.subject))" v-html="readable.subject.join(';')"></span>
       </span>
     </div>
     <div v-if="readable.type === TYPE_AWARD && readable.date" class="ContentItem__meta">
@@ -447,10 +486,10 @@
       <span class="Keywords">
         <span class="MetaText">{{t('custom.readableItem.关键词')}}：</span>
         <template v-if="readable.show_all_keywords">
-           <span class="Keyword" v-for="(item, index) in keywords" :key="item + index" v-html="item" @click="searchKeyword(clearHighlight(item))"></span>
+           <span class="Keyword" :class="{'is-disabled':!openSearch}" v-for="(item, index) in keywords" :key="item + index" v-html="item" @click="searchKeyword(clearHighlight(item))"></span>
         </template>
         <template v-if="!readable.show_all_keywords">
-          <span class="Keyword" v-for="(item, index) in keywords" v-if="index < (isChineseReadable ? 5 : 4)" :key="item + index" v-html="item" @click="searchKeyword(clearHighlight(item))"></span>
+          <span class="Keyword" :class="{'is-disabled':!openSearch}" v-for="(item, index) in keywords" v-if="index < (isChineseReadable ? 5 : 4)" :key="item + index" v-html="item" @click="searchKeyword(clearHighlight(item))"></span>
           <base-tooltip :content="t('custom.readableItem.展开更多关键词')" placement="top">
             <span class="KeywordMore" v-if="keywords.length > (isChineseReadable ? 5 : 4)" @click="showAllKeyword">···</span>
           </base-tooltip>
@@ -496,9 +535,10 @@ import {IsNumber,isArrayEmpty,HasChinese,clearHighlight} from '../../../util'
 import appPdf from '../../../static/app-pdf.png?assets'
 import {TYPE_ARTICLE,TYPE_PATENT,TYPE_REPORT,TYPE_SCIENCE_DB,TYPE_BOOK,TYPE_SOFTWARE,TYPE_AWARD,TYPE_PROJECT,TYPE_CHINAXIV} from '../../../constant/index'
 import Locale from '../../base/ui/mixin/locale'
+import HoverCard from '../hovercard/HoverCard.vue'
 export default {
   name: 'ReadableItem',
-  components: {BaseTag, BaseButton, BaseTooltip },
+  components: {BaseTag, BaseButton, BaseTooltip, HoverCard },
   mixins:[Locale],
   data () {
     return {
@@ -510,7 +550,9 @@ export default {
   props: {
     readable: Object,
     editable: Boolean,
-    showCPC: Boolean
+    showCPC: Boolean,
+    authorHover: Boolean,
+    openSearch:Boolean
   },
   computed: {
     authorLabel () {
@@ -631,6 +673,15 @@ export default {
     }
   },
   methods: {
+    handleSkip(type,scholar){
+      this.$emit('skip',type,scholar)
+    },
+    handleFollow(scholar){
+      this.$emit('follow',scholar)
+    },
+    handleDisFollow(scholar){
+      this.$emit('disfollow',scholar)
+    },
     isArrayEmpty,
     clearHighlight,
     handleMore () {
@@ -737,6 +788,11 @@ export default {
     },
     saveCount(browse_count, download_count){
       SaveCount(this.readable.type, this.readable.id, this.readable.article_type, browse_count, download_count)
+    }
+  },
+  created(){
+    if(isArrayEmpty(this.readable.author_id)){
+      this.readable.author_id = []
     }
   },
   mounted () {
@@ -986,6 +1042,13 @@ export default {
       border-bottom: 1px dotted $--color-text-regular;
     }
     cursor: pointer;
+    &.is-disabled {
+      cursor: auto;
+      &:hover {
+        border: none;
+        color: $--color-text-regular;
+      }
+    }
   }
   .RichContent {
     line-height: 1.6;
@@ -1045,6 +1108,15 @@ export default {
   }
   .ContentItem__keywords {
     margin-top: 8px;
+    .Keyword{
+      &.is-disabled {
+        cursor: auto;
+        &:hover {
+          border: none;
+          color: $--color-text-regular;
+        }
+      }
+    }
   }
   .PatentMetaList {
     display: flex;

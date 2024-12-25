@@ -72,6 +72,10 @@
       <div v-if="CorrespondingAuthor" class="Author__list--item"><base-checkbox v-model="item.contributor_equal_first" >{{t('custom.authorx.共同第一作者')}}</base-checkbox></div>
       <div v-if="CorrespondingAuthor" class="Author__list--space">·</div>
       <div v-if="CorrespondingAuthor" class="Author__list--item"><base-checkbox v-model="item.contrib_corresponding">{{t('custom.authorx.通讯作者')}}</base-checkbox></div>
+      <div v-if="orcid" class="Author__list--space">·</div>
+      <div v-if="orcid" class="Author__list--item"><base-input v-model="item.orcid" placeholder="请输入orcid" :showLabel="false"></base-input></div>
+      <div v-if="cstr" class="Author__list--space">·</div>
+      <div v-if="cstr" class="Author__list--item"><base-input v-model="item.cstr" placeholder="请输入cstr" :showLabel="false"></base-input></div>
       <div class="Author__list--contro" v-if="!disabled">
         <base-tooltip
           class="box-item"
@@ -155,6 +159,8 @@ export default {
         name: "",
         institution: [],
         institutionId:[],
+        orcid:'',
+        cstr:'',
         contributor_equal_first:false,
         contrib_corresponding:false
       },
@@ -199,6 +205,14 @@ export default {
     disabled:{
       type:Boolean,
       default:false
+    },
+    cstr:{
+      type:Boolean,
+      default:false
+    },
+    orcid:{
+      type:Boolean,
+      default:false
     }
   },
   watch: {
@@ -233,7 +247,8 @@ export default {
               name: response[index].title,
               department: response[index].department,
               email: response[index].email,
-              orc_id:response[index].orc_id,
+              orcid:response[index].orc_id,
+              cstr:response[index].extend_entity?.cstr,
               ...response[index]
             });
           }
@@ -266,6 +281,8 @@ export default {
       this.authorInfo.name = item.name;
       this.authorInfo.institution = item.institution;
       this.authorInfo.institutionId = item.institutionId;
+      this.authorInfo.orcid = item.orcid;
+      this.authorInfo.cstr = item.cstr;
       this._toggleAddAuthor(true);
     },
     _upIndex(item,index){  
@@ -299,6 +316,8 @@ export default {
         name: this.authorInfo.name,
         institution: this.authorInfo.institution,
         institutionId: this.authorInfo.institutionId,
+        orcid:this.authorInfo.orcid,
+        cstr:this.authorInfo.cstr,
         contributor_equal_first: false,
         contrib_corresponding: false
       };
@@ -318,6 +337,8 @@ export default {
         this.authorInfo.id = val.id;
         this.authorInfo.name = val.name;
         this.authorInfo.institution = val.affiliation?.length > 0?[val.affiliation?.[0]]:[];
+        this.authorInfo.orcid = val.orcid;
+        this.authorInfo.cstr = val.cstr;
       }
     },
     removeAuthor(index) {

@@ -60,5 +60,14 @@ export default defineConfig({
         }
       }
     }
+  },
+  server:{
+    proxy:{
+      '/hky':{
+        target:'https://scholarin.cn',
+        changeOrigin:true,
+        rewrite: (path) => path.replace(/^\/hky/, '')
+      }
+    }
   }
 })
