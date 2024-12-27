@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="HoverCard__item">
-          <app-number-board :divider="false" :data="[{key: '成果数', name: PROFILE_NAV_TAB_FRUITS, value: scholar.fruit_count, is_hover_item: true},{key: '关注者', name: TYPE_FOLLOWER, value: scholar.follower_count, is_hover_item: true},{key: '被浏览', value: scholar.browse_count}]" @click="handleClickNumberBoard"></app-number-board>
+          <app-number-board :divider="false" :data="[{key: '成果数', name: PROFILE_NAV_TAB_FRUITS, value: fruit_count, is_hover_item: true},{key: '关注者', name: TYPE_FOLLOWER, value: scholar.follower_count, is_hover_item: true},{key: '被浏览', value: scholar.browse_count}]" @click="handleClickNumberBoard"></app-number-board>
           <div v-if="user && user.uid !== scholar.uid " class="MemberButtonGroup ProfileButtonGroup HoverCard__buttons">
             <follow-button :followee-id="scholar.uid" :is-follower="scholar.is_followed" :followee-sex="scholar.sex" @follow="handleFollow" @disfollow="handleDisfollow"></follow-button>
             <button class="Button Button--grey" @click="handleDirectToHomePage"><i class="base-icon-s-home"></i>个人主页</button>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { GetUserV2 } from '../../../service/index'
+import { GetUserV2,FruitCount } from '../../../service/index'
 import { PROFILE_NAV_TAB_FRUITS, TYPE_FOLLOWER } from '../../../constant'
 import AppNumberBoard from '../AppNumberBoard'
 import FollowButton from './FollowButton'
@@ -71,13 +71,19 @@ export default {
       isLoading:false,
       scholar: {},
       PROFILE_NAV_TAB_FRUITS:PROFILE_NAV_TAB_FRUITS,
-      TYPE_FOLLOWER:TYPE_FOLLOWER
+      TYPE_FOLLOWER:TYPE_FOLLOWER,
+      fruit_count:0
     }
   },
   props: {
     uid: String
   },
   methods: {
+    getCount(){
+      FruitCount(this.scholar.scholar_id).then(e => {
+        this.fruit_count = e.total;
+      })
+    },
     isNotEmpty (array) {
       return array && ((array.length > 0 && array.length !== 1) || (array.length === 1 && array[0]))
     },
@@ -88,12 +94,14 @@ export default {
         GetUserV2(uid, this.user.uid).then(response => {
           this.isLoading = false
           this.scholar = response
+          this.getCount()
         })
       }else{
         this.isLoading = true
         GetUserV2(this.uid, this.uid).then(response => {
           this.isLoading = false
           this.scholar = response
+          this.getCount()
         })
       }
     },

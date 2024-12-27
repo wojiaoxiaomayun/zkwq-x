@@ -203,3 +203,4 @@ export const GetLang = params => {
   }}) 
 }
 
+export const FruitCount = (sid,isWhite,deleteCache) => http.get(`/hky/api/v5/scholars/fruits/${sid}/count`,{isWhite,deleteCache})

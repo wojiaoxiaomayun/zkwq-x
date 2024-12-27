@@ -14,6 +14,10 @@ export default class ScrollTool {
 
     // 支持横向滚动：将 scrollTop 改为 scrollLeft 或 scrollTop，根据需要选择
     toTop() {
+        this.dom.scrollTop = 0; // 滚动到最上边
+    }
+
+    toLeft(){
         this.dom.scrollLeft = 0; // 滚动到最左边
     }
 
