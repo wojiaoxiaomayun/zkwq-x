@@ -34,6 +34,7 @@ import ImageViewer from './components/base/ui/image/image-viewer.vue'
 import CircleTranslateButton from './components/normal/CircleTranslateButton'
 import HoverCard from './components/normal/hovercard/HoverCard.vue'
 import FollowButton from './components/normal/hovercard/FollowButton.vue'
+import AvatarGroup from './components/normal/AvatarGroup.vue'
 export {
   AggsItemH,
   AggsItemV,
@@ -44,8 +45,7 @@ export {
   Avatar,
   Ripple,
   CircleTranslateButton,
-  Annex,XCard,XHeader,XTab,Cover,WangEditor,AppNumberBoard,UserProfile,InstitutionAvatar,InstitutionProfile,InstitutionX,Institution,AuthorX,Author,AuthorOrIns,AppTip,DatePickerX,Keywords,ImageViewer,HoverCard,FollowButton
-
+  Annex,XCard,XHeader,XTab,Cover,WangEditor,AppNumberBoard,UserProfile,InstitutionAvatar,InstitutionProfile,InstitutionX,Institution,AuthorX,Author,AuthorOrIns,AppTip,DatePickerX,Keywords,ImageViewer,HoverCard,FollowButton,AvatarGroup
 }
 
 import * as BaseUtil from './util/index'

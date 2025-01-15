@@ -61,21 +61,32 @@
       v-for="(item, index) in newAuthors"
       :key="'author' + index"
     >
-      <div class="Author__list--item">{{ item.name }}</div>
-      <div class="Author__list--space">·</div>
-      <div class="Author__list--item">{{ item.institution.join('·') }}</div>
-      <!-- <div class="Author__list--space">·</div>
-      <div class="Author__list--item">{{ item.email }}</div> -->
-      <div class="Author__list--space" v-if="CorrespondingAuthor && index == 0">·</div>
-      <div style="color:red" v-if="CorrespondingAuthor && index == 0">【{{t('custom.authorx.第一作者')}}】</div>
-      <div v-if="CorrespondingAuthor" class="Author__list--space">·</div>
-      <div v-if="CorrespondingAuthor" class="Author__list--item"><base-checkbox v-model="item.contributor_equal_first" >{{t('custom.authorx.共同第一作者')}}</base-checkbox></div>
-      <div v-if="CorrespondingAuthor" class="Author__list--space">·</div>
-      <div v-if="CorrespondingAuthor" class="Author__list--item"><base-checkbox v-model="item.contrib_corresponding">{{t('custom.authorx.通讯作者')}}</base-checkbox></div>
-      <div v-if="orcid" class="Author__list--space">·</div>
-      <div v-if="orcid" class="Author__list--item"><base-input v-model="item.orcid" placeholder="请输入orcid" :showLabel="false"></base-input></div>
-      <div v-if="cstr" class="Author__list--space">·</div>
-      <div v-if="cstr" class="Author__list--item"><base-input v-model="item.cstr" placeholder="请输入cstr" :showLabel="false"></base-input></div>
+      <div class="Author__list--wrap">
+        <div class="Author__list--items">
+          <div class="Author__list--item">{{ item.name }}</div>
+          <div class="Author__list--space">·</div>
+          <div class="Author__list--item">{{ item.institution.join('·') }}</div>
+          <!-- <div class="Author__list--space">·</div>
+          <div class="Author__list--item">{{ item.email }}</div> -->
+          <div class="Author__list--space" v-if="CorrespondingAuthor && index == 0">·</div>
+          <div style="color:red" v-if="CorrespondingAuthor && index == 0">【{{t('custom.authorx.第一作者')}}】</div>
+          <div v-if="CorrespondingAuthor" class="Author__list--space">·</div>
+          <div v-if="CorrespondingAuthor" class="Author__list--item"><base-checkbox v-model="item.contributor_equal_first" >{{t('custom.authorx.共同第一作者')}}</base-checkbox></div>
+          <div v-if="CorrespondingAuthor" class="Author__list--space">·</div>
+          <div v-if="CorrespondingAuthor" class="Author__list--item"><base-checkbox v-model="item.contrib_corresponding">{{t('custom.authorx.通讯作者')}}</base-checkbox></div>
+        </div>
+        <div class="Author__list--items">
+          <div v-if="orcid" class="Author__list--item">
+            ORCID:
+            <base-input size="mini" v-model="item.orcid" placeholder="请输入orcid" :showLabel="false"></base-input>
+          </div>
+          <div v-if="cstr" class="Author__list--space">·</div>
+          <div v-if="cstr" class="Author__list--item">
+            CSTR:
+            <base-input size="mini" v-model="item.cstr" placeholder="请输入cstr" :showLabel="false"></base-input>
+          </div>
+        </div>
+      </div>
       <div class="Author__list--contro" v-if="!disabled">
         <base-tooltip
           class="box-item"
@@ -385,25 +396,48 @@ export default {
   top: 40px;
   color: $--color-text-placeholder;
 }
-.Author__list {
-  width: auto;
-  overflow: hidden;
-  margin: 8px;
-  padding: 8px;
+.Author__list{
+  width: 100%;
   height: auto;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  & *{
-    line-height: 30px;
-  }
+  justify-content: center;
   &:hover {
     background-color: #f6f6f6;
     border-radius: 4px;
   }
-  &--contro {
-    width: auto;
+  .Author__list--wrap{
+    width: 0px;
+    flex: 1;
+    height: auto;
+    overflow: hidden;
+    padding: 8px;
+    margin-top: 4px;
+    .Author__list--items {
+      width: auto;
+      overflow: hidden;
+      margin: 0px 8px;
+      padding: 4px 8px;
+      height: auto;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      .Author__list--item{
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      & *{
+        line-height: 26px;
+      }
+      
+      
+    }
+  }
+  .Auhtor__list--contro{
+    width: fit-content;
     display: flex;
     justify-content: space-between;
     span {
@@ -411,6 +445,7 @@ export default {
     }
   }
 }
+
 .add_author {
   cursor: pointer;
   &:hover {

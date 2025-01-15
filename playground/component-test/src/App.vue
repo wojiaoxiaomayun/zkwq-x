@@ -30,25 +30,28 @@
     <div style="background:white;padding: 16px;">
       <ReadableItem :readable="readable"></ReadableItem>
     </div>
-    <author-x cstr orcid></author-x>
+    
 
     <circle-translate-button :model="model" horizontal></circle-translate-button>
     <div id="cifDom" style="width:800px;height:600px;"></div> -->
+    <!-- <author-x CorrespondingAuthor cstr orcid></author-x> -->
+    <AvatarGroup :urls="['https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777','https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777']"></AvatarGroup>
   </div>
 </template>
 <script>
 import {
-  WangEditor,Base64Util,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ImageViewer
+  WangEditor,Base64Util,Institution,Annex,AuthorOrIns,CircleTranslateButton,ImageViewer,AvatarGroup
 } from "@zkwq/business";
 import wangPlugin from './wangPlugin'
 import CrystVis from 'crystvis-js';
 import HoverCard from '../../../packages/business/src/components/normal/hovercard/HoverCard.vue';
 import ReadableItem from '../../../packages/business/src/components/normal/readitem/ReadableItem.vue';
+import AuthorX from '../../../packages/business/src/components/normal/AuthorX.vue'
 
 
 export default {
   name: "App",
-  components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard },
+  components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard,AvatarGroup },
   data() {
     return {
       readable:{

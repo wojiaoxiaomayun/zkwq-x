@@ -1,25 +1,25 @@
 <template>
   <div class="Author__wrap">
     <div class="Form__author">
-        <base-autocomplete
-          popper-class="SupplementForm--autocomplete Width--auto ScholarSuggestionPopper Author__custom--popper"
-          :fetch-suggestions="_getAuthorName"
-          clearable
-          :trigger-on-focus="false"
-          :placeholder="placeholder"
-          v-model="authorInfo.name"
-          :hide-loading="false"
-          @select="_authorSelectChange"
-          @input="_authorInput"
-          @clear="_authorClear"
-          v-bind="$attrs"
-        >
-          <template slot-scope="{ item }">
-            <user-profile-item :profile="item" v-bind="$attrs"></user-profile-item>
-          </template>
-        </base-autocomplete>
-        <div v-if="tip" class="FormItem__tip">{{t('custom.author.搜索')}}{{ text }}{{t('custom.author.姓名，如：张三 清华大学')}}</div>
-      </div>
+      <base-autocomplete
+        popper-class="SupplementForm--autocomplete Width--auto ScholarSuggestionPopper Author__custom--popper"
+        :fetch-suggestions="_getAuthorName"
+        clearable
+        :trigger-on-focus="false"
+        :placeholder="placeholder"
+        v-model="authorInfo.name"
+        :hide-loading="false"
+        @select="_authorSelectChange"
+        @input="_authorInput"
+        @clear="_authorClear"
+        v-bind="$attrs"
+      >
+        <template slot-scope="{ item }">
+          <user-profile-item :profile="item" v-bind="$attrs"></user-profile-item>
+        </template>
+      </base-autocomplete>
+      <div v-if="tip" class="FormItem__tip">{{t('custom.author.搜索')}}{{ text }}{{t('custom.author.姓名，如：张三 清华大学')}}</div>
+    </div>
   </div>
 </template>
 

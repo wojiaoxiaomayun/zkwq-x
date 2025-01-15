@@ -87,7 +87,7 @@ export function build(obj,particiles,options){
       if(typeof obj == 'string' || typeof obj == 'number'){
           return value; // 如果要高亮的属性是一个字符串或数字，直接返回
       }
-      return HighLight(target[key],particiles,options); // 递归地对属性值进行高亮处理
+      return build(target[key],particiles,options); // 递归地对属性值进行高亮处理
     }
   });
   return proxy;
