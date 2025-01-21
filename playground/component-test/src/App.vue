@@ -35,7 +35,7 @@
     <circle-translate-button :model="model" horizontal></circle-translate-button>
     <div id="cifDom" style="width:800px;height:600px;"></div> -->
     <!-- <author-x CorrespondingAuthor cstr orcid></author-x> -->
-    <AvatarGroup :urls="['https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777','https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777']"></AvatarGroup>
+    <!-- <AvatarGroup :urls="['https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777','https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777']"></AvatarGroup> -->
   </div>
 </template>
 <script>
@@ -55,44 +55,209 @@ export default {
   data() {
     return {
       readable:{
-        title_translated:"aa",
-        abstracts_translated:"aa",
-    "attachment_id": [],
+    "abstracts": "The study reported a novel L1 2 -strengthening NiCoCrAlTi high-entropy alloy (HEA) with an outstanding synergy of tensile strength and ductility at both ambient and high temperatures. The HEA was prepared by arc melting and cold-rolling, followed by isothermal aging at designed precipitation temperatures to achieve coexistence of recrystallized and non-recrystallized grains. Transmission electron microscopy (TEM) characterization revealed a high density of rod-like and spheroidal L1 2 precipitates distributing in the micro 2 precipitates, including the shearing and blocking effects, was frequently observed, contributing to the high tensile strength. Thus, the extremely high tensile strength and sustained ductility at 600°C mainly originate from the cooperation among interaction between L1 2 precipitation and dislocations and extensive SFs, DTs, immobile Lomer-Cottrell (L-C) locks formed from interactions between SFs and SFs",
+    "abstracts_abbreviation": "The study reported a novel L1 2 -strengthening NiCoCrAlTi high-entropy alloy (HEA) with an outstanding synergy of tensile strength and ductility at both ambient and high temperatures. The HE...",
+    "article_type": "期刊论文",
+    "attachment_id": [
+        "5dfb652468e3d42160f0cd68a480590e"
+    ],
+    "attachments": [
+        {
+            "file_id": "5dfb652468e3d42160f0cd68a480590e",
+            "file_last_modified": "2024-07-10 18:46:04",
+            "file_link": "group1/M03/9E/BE/CgMLDmZhnByAFs8vAAqh3fgYfYQ1004706",
+            "file_name": "不同富硒方式对甘薯叶蛋白抗氧化活性的影响.pdf",
+            "file_permission": 4,
+            "file_size": 1994147,
+            "file_title": "132851gRFbT"
+        }
+    ],
     "author": [
-        "曹冬"
+        "徐浩亮",
+        "张茹敏"
     ],
     "author_id": [
-        "7935ebf083104433aaa939f35170bf23"
+        "bcd71ea4224c4485b9486c7909c416fe",
+        "4ab886de5cde8bb749877a945ad45255"
     ],
-    "claim_range": [
-        "全部权利"
-    ],
-    "claim_way": "原始取得",
-    "cn_type": "期刊论文",
-    "date": "2023-06-13",
-    "id": "6d610cae0f14838d19fe7a0c4e1f85fe",
-    "institution": [
-        "中国科学院生态环境研究中心"
-    ],
-    "institution_id": [
-        "f186913eb04e34bc24ce23f8400fdc28"
-    ],
-    "permission": 4,
-    "registration_number": "2023SR0637425",
-    "relation": [
+    "author_name": [
         [
-            "中国科学院生态环境研究中心"
+            "徐浩亮",
+            "HaoLiang Xu",
+            "Xu, haoliang",
+            "Xu Haoliang",
+            "Haoliang Xu",
+            "Xu, HaoLiang",
+            "Xu, Haoliang",
+            "Xu, Hao-liang",
+            "Hao-Liang Xu",
+            "Xu Hao-Liang",
+            "XuHaoLiang",
+            "Xu, Hao-Liang",
+            "Haoliang, Xu",
+            "Hao-Liang, Xu"
+        ],
+        [
+            "张茹敏",
+            "RuMin Zhang",
+            "Zhang, rumin",
+            "Zhang Rumin",
+            "Rumin Zhang",
+            "Zhang, RuMin",
+            "Zhang, Rumin",
+            "Zhang, Ru-min",
+            "Ru-Min Zhang",
+            "Zhang Ru-Min",
+            "ZhangRuMin",
+            "Zhang, Ru-Min",
+            "Rumin, Zhang",
+            "Ru-Min, Zhang"
         ]
     ],
-    "source_list": [
-        "neweditsoftware",
-        "ins-knowledge-base—data",
-        "pub-scholar-data",
-        "ins-knowledge-f186913eb04e34bc24ce23f8400fdc28"
+    "author_v2": [
+        {
+            "author_index": 1,
+            "institutions": [
+                {
+                    "name": "中国科学院文献情报中心"
+                }
+            ],
+            "is_corresponding_author": true,
+            "name": "徐浩亮",
+            "orcid": ""
+        },
+        {
+            "author_index": 2,
+            "institutions": [
+                {
+                    "name": "中国科学院文献情报中心"
+                }
+            ],
+            "is_corresponding_author": false,
+            "name": "张茹敏",
+            "orcid": "1111-1111-3333--2222"
+        }
     ],
-    "title": "白酒有机组分高分辨质谱分子式分析软件[简称BJMSFA]",
+    "authors": [
+        {
+            "author_index": 1,
+            "institutions": [
+                {
+                    "name": "中国科学院文献情报中心"
+                }
+            ],
+            "is_corresponding_author": true,
+            "name": "徐浩亮",
+            "orcid": ""
+        },
+        {
+            "author_index": 2,
+            "institutions": [
+                {
+                    "name": "中国科学院文献情报中心"
+                }
+            ],
+            "is_corresponding_author": false,
+            "name": "张茹敏",
+            "orcid": "1111-1111-3333--2222"
+        }
+    ],
+    "browse_count": 14,
+    "clc_level_one": "中图分类一",
+    "clc_level_two": "中图分类二",
+    "cn_type": "论文",
+    "collections": [
+        "SCIE",
+        "CSCD"
+    ],
+    "college": "",
+    "comment_count": 0,
+    "corresponding_author": [
+        true,
+        false
+    ],
+    "create_time": "2024-07-10 18:46:04",
+    "cstr": "1",
+    "date": "1970",
+    "degree": "",
+    "degree_type": "",
+    "doi": "1",
+    "equal_first_author": [
+        false,
+        false
+    ],
+    "extend_entity": {},
+    "first_page": "1",
+    "free": false,
+    "id": "c16f3565c9f8612a923debd734880f92",
+    "impact_factor": "",
+    "institution": [
+        "中国科学院文献情报中心"
+    ],
+    "institution_id": [
+        "26756bd7d530ff97374ae09ae8a0317a"
+    ],
+    "is_collected": false,
+    "is_representativeWork": true,
+    "is_up_voted": false,
+    "issn": "",
+    "jcr": "没有协议",
+    "journal_id": "2da6d808c67497b5b33890e4b41b4da5",
+    "journal_title": "化学物理学报（英文版）",
+    "keyword": [
+        "大哥大"
+    ],
+    "lang": "C",
+    "last_page": "1",
+    "license": "没有协议",
+    "link": "2",
+    "links": [
+        {
+            "is_authorized": false,
+            "login_url": "",
+            "name": "期刊官网",
+            "url": "http://dx.doi.org/1"
+        }
+    ],
+    "major": "",
+    "permission": 4,
+    "project_id": "",
+    "project_num": "",
+    "project_title": "2",
+    "publish_year": "1970",
+    "publisher": "",
+    "relation": [
+        [
+            "中国科学院文献情报中心"
+        ],
+        [
+            "中国科学院文献情报中心"
+        ]
+    ],
+    "relation_index": [
+        [
+            "0"
+        ],
+        [
+            "0"
+        ]
+    ],
+    "research_field": [
+        ""
+    ],
+    "source": "化学物理学报（英文版）",
+    "source_list": [
+        "neweditarticle",
+        "pub-scholar-data-claim",
+        "pub-scholar-data-3236e8942bb847d799c26a19eb50cf95",
+        "pub-scholar-data",
+        "化学物理学报（英文版）",
+        "ins-knowledge-base—data"
+    ],
+    "title": "测试论文Cstr",
+    "total_pages": 1,
     "type": "article",
-    "keywords":['人生']
+    "up_voted_count": 0
 },
       tableData: [{
             date: '2016-05-02',

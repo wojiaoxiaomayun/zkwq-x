@@ -8,9 +8,10 @@
       </span>
       <h2 class="ContentItem__title" @click="goToDetail">
         <span class="ContentItem__titleText" v-html="readable.title"></span>
-        <span class="ContentItem__status" v-if="readable.type === TYPE_PATENT && readable.grant_date">[{{t('custom.readableItem.已授权')}}]</span>
-        <span v-if="!isArrayEmpty(readable.local_links) || readable.download_url" class="ContentItem__pdf">
-          <svg class="Icon" viewBox="0 0 1024 1024" p-id="4805" width="20" height="20"><path d="M192 0h448.1536L960 320v576c0 70.6944-57.3056 128-128 128H192C121.3056 1024 64 966.6944 64 896V128C64 57.3056 121.3056 0 192 0z" fill="#E9494A" p-id="4806"></path><path d="M323.1104 647.8592v72.1408h-42.1888V515.2512h79.872c12.096 0 22.912 1.6896 32.4224 5.056 9.5104 3.3792 17.5744 8.0896 24.192 14.144 6.6048 6.0416 11.648 13.2096 15.104 21.504 3.4688 8.3072 5.2096 17.3312 5.2096 27.072 0 9.9456-1.7408 18.8928-5.2096 26.8672a55.552 55.552 0 0 1-15.104 20.3904c-6.6176 5.632-14.6816 9.9584-24.192 13.0048-9.5232 3.0464-20.3264 4.5696-32.4224 4.5696h-37.6832z m0-34.176h37.6832c6.0032 0 11.1872-0.7424 15.5392-2.24 4.352-1.5104 7.936-3.584 10.688-6.272 2.7648-2.6624 4.8128-5.8752 6.1184-9.6256 1.3184-3.7504 1.9712-7.8208 1.9712-12.2368 0-4.4032-0.6528-8.64-1.9712-12.7232a30.1824 30.1824 0 0 0-6.1184-10.8288 29.504 29.504 0 0 0-10.688-7.5264c-4.352-1.8688-9.536-2.816-15.5392-2.816h-37.6832v64.2688zM466.688 720V515.2512h63.0016c13.7856 0 26.4064 2.368 37.888 7.104 11.4944 4.736 21.3376 11.392 29.5424 19.968a91.264 91.264 0 0 1 19.2 30.8608c4.5824 12.0064 6.8864 25.3184 6.8864 39.936v9.28c0 14.6304-2.2784 27.9168-6.8224 39.872a89.4208 89.4208 0 0 1-19.264 30.7968 85.76 85.76 0 0 1-29.7472 19.904c-11.52 4.6848-24.2304 7.0272-38.1056 7.0272H466.688z m42.1888-170.5728v136.6784h20.3904c16.6912 0 29.3888-5.504 38.1056-16.512 8.7168-11.0208 13.0816-26.752 13.0816-47.1936v-9.5616c0-20.8128-4.3136-36.5824-12.928-47.3088-8.64-10.752-21.248-16.1024-37.8368-16.1024h-20.8128z m268.16 86.912H696.064v83.6608h-42.1888V515.2512h133.312v34.176h-91.136v52.864h81.0112v34.048z" fill="#FFFFFF" opacity=".9" p-id="4807"></path><path d="M640 0l320 320H768c-70.6944 0-128-57.3056-128-128V0z" fill="#FF7171" p-id="4808"></path></svg>
+        <span class="ContentItem__status" v-if="readable.type === TYPE_PATENT && readable.grant_date">「{{t('custom.readableItem.授权')}}」</span>
+        <span class="ContentItem__status" v-if="readable.type === TYPE_ARTICLE && readable.is_representativeWork">「{{t('custom.readableItem.代表作')}}」</span>
+        <span v-if="!isArrayEmpty(readable.local_links) || readable.download_url || (!isArrayEmpty(readable.attachments) && readable.attachments.filter(e => e.file_name.endsWith('.pdf')).length)" class="ContentItem__pdf">
+          <svg class="Icon" viewBox="0 0 1024 1024" p-id="4805" width="16" height="16"><path d="M192 0h448.1536L960 320v576c0 70.6944-57.3056 128-128 128H192C121.3056 1024 64 966.6944 64 896V128C64 57.3056 121.3056 0 192 0z" fill="#E9494A" p-id="4806"></path><path d="M323.1104 647.8592v72.1408h-42.1888V515.2512h79.872c12.096 0 22.912 1.6896 32.4224 5.056 9.5104 3.3792 17.5744 8.0896 24.192 14.144 6.6048 6.0416 11.648 13.2096 15.104 21.504 3.4688 8.3072 5.2096 17.3312 5.2096 27.072 0 9.9456-1.7408 18.8928-5.2096 26.8672a55.552 55.552 0 0 1-15.104 20.3904c-6.6176 5.632-14.6816 9.9584-24.192 13.0048-9.5232 3.0464-20.3264 4.5696-32.4224 4.5696h-37.6832z m0-34.176h37.6832c6.0032 0 11.1872-0.7424 15.5392-2.24 4.352-1.5104 7.936-3.584 10.688-6.272 2.7648-2.6624 4.8128-5.8752 6.1184-9.6256 1.3184-3.7504 1.9712-7.8208 1.9712-12.2368 0-4.4032-0.6528-8.64-1.9712-12.7232a30.1824 30.1824 0 0 0-6.1184-10.8288 29.504 29.504 0 0 0-10.688-7.5264c-4.352-1.8688-9.536-2.816-15.5392-2.816h-37.6832v64.2688zM466.688 720V515.2512h63.0016c13.7856 0 26.4064 2.368 37.888 7.104 11.4944 4.736 21.3376 11.392 29.5424 19.968a91.264 91.264 0 0 1 19.2 30.8608c4.5824 12.0064 6.8864 25.3184 6.8864 39.936v9.28c0 14.6304-2.2784 27.9168-6.8224 39.872a89.4208 89.4208 0 0 1-19.264 30.7968 85.76 85.76 0 0 1-29.7472 19.904c-11.52 4.6848-24.2304 7.0272-38.1056 7.0272H466.688z m42.1888-170.5728v136.6784h20.3904c16.6912 0 29.3888-5.504 38.1056-16.512 8.7168-11.0208 13.0816-26.752 13.0816-47.1936v-9.5616c0-20.8128-4.3136-36.5824-12.928-47.3088-8.64-10.752-21.248-16.1024-37.8368-16.1024h-20.8128z m268.16 86.912H696.064v83.6608h-42.1888V515.2512h133.312v34.176h-91.136v52.864h81.0112v34.048z" fill="#FFFFFF" opacity=".9" p-id="4807"></path><path d="M640 0l320 320H768c-70.6944 0-128-57.3056-128-128V0z" fill="#FF7171" p-id="4808"></path></svg>
         </span>
         <span class="ContentItem__linkDotMeta" v-if="readable.type === TYPE_ARTICLE && (readable.is_free || !isArrayEmpty(readable.local_links))">
           <span class="ContentItem__linkDot"></span>
@@ -35,11 +36,17 @@
               <template v-if="readable.author.length <= 6">
                 <span v-for="(author, index) in readable.author" :key="readable.type+index+author" class="AuthorInfo__name">
                   <hover-card v-if="index === readable.author.length - 1" :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
-                    <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}"  v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                    <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" @click="searchAuthor(clearHighlight(author))">
+                      {{author}}
+                      <span title="通讯作者" class="AuthorInfo__corresponding" v-if="readable.corresponding_author && readable.corresponding_author[index]"><i class="base-icon-message"></i></span>
+                    </span>
                   </hover-card>
                   <template v-else>
                     <hover-card :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
-                      <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                      <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" @click="searchAuthor(clearHighlight(author))">
+                        {{author}}
+                        <span title="通讯作者" class="AuthorInfo__corresponding" v-if="readable.corresponding_author && readable.corresponding_author[index]"><i class="base-icon-message"></i></span>
+                      </span>
                     </hover-card>
                     <span class="ContentItem__comma">,</span>
                   </template>
@@ -48,11 +55,17 @@
               <template v-if="readable.author.length > 6">
                 <span v-for="(author, index) in readable.author" :key="readable.type+index+author" class="AuthorInfo__name" v-if="index < 5">
                       <hover-card v-if="index === 4" :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
-                        <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}"  v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                        <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}"  @click="searchAuthor(clearHighlight(author))">
+                          {{author}}
+                          <span title="通讯作者" class="AuthorInfo__corresponding" v-if="readable.corresponding_author && readable.corresponding_author[index]"><i class="base-icon-message"></i></span>
+                        </span>
                       </hover-card>
                       <template v-else>
                         <hover-card :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
-                          <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                          <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" @click="searchAuthor(clearHighlight(author))">
+                            {{author}}
+                            <span title="通讯作者" class="AuthorInfo__corresponding" v-if="readable.corresponding_author && readable.corresponding_author[index]"><i class="base-icon-message"></i></span>
+                          </span>
                         </hover-card>
                         <span class="ContentItem__comma">,</span>
                       </template>
@@ -62,7 +75,10 @@
                 </base-tooltip>
                 <span class="AuthorInfo__name">
                   <hover-card :uid="authorHover && readable.author_id[readable.author.length - 1]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
-                    <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[readable.author.length - 1])}" v-html="readable.author[readable.author.length - 1]" @click="searchAuthor(clearHighlight(readable.author[readable.author.length - 1]))"></span>
+                    <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[readable.author.length - 1])}" @click="searchAuthor(clearHighlight(readable.author[readable.author.length - 1]))">
+                      {{readable.author[readable.author.length - 1]}}
+                      <span title="通讯作者" class="AuthorInfo__corresponding" v-if="readable.corresponding_author && readable.corresponding_author[readable.author.length - 1]"><i class="base-icon-message"></i></span>
+                    </span>
                   </hover-card>
                 </span>
               </template>
@@ -70,11 +86,17 @@
             <template v-if="readable.show_all_author">
               <span v-for="(author, index) in readable.author" :key="author" class="AuthorInfo__name">
                 <hover-card v-if="index === readable.author.length - 1" :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
-                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}"  v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" @click="searchAuthor(clearHighlight(author))">
+                    {{author}}
+                    <span title="通讯作者" class="AuthorInfo__corresponding" v-if="readable.corresponding_author && readable.corresponding_author[index]"><i class="base-icon-message"></i></span>
+                  </span>
                 </hover-card>
                 <template v-else>
                   <hover-card :uid="authorHover && readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
-                    <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                    <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" @click="searchAuthor(clearHighlight(author))">
+                      {{author}}
+                      <span title="通讯作者" class="AuthorInfo__corresponding" v-if="readable.corresponding_author && readable.corresponding_author[index]"><i class="base-icon-message"></i></span>
+                    </span>
                   </hover-card>
                   <span>,</span>
                 </template>
@@ -92,11 +114,17 @@
           <div class="AuthorInfo__content">
             <span v-for="(author, index) in readable.author" :key="author" class="AuthorInfo__name">
               <hover-card v-if="index === readable.author.length - 1" :uid="readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
-                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" @click="searchAuthor(clearHighlight(author))">
+                  {{author}}
+                  <span title="通讯作者" class="AuthorInfo__corresponding" v-if="readable.corresponding_author && readable.corresponding_author[index]"><i class="base-icon-message"></i></span>
+                </span>
               </hover-card>
               <template v-else>
                 <hover-card :uid="readable.author_id[index]" @skip="handleSkip" @follow="handleFollow" @disfollow="handleDisfollow">
-                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" v-html="author" @click="searchAuthor(clearHighlight(author))"></span>
+                  <span class="AuthorInfo__nameText" :class="{'is-disabled':!openSearch && !(authorHover && readable.author_id[index])}" @click="searchAuthor(clearHighlight(author))">
+                    {{author}}
+                    <span title="通讯作者" class="AuthorInfo__corresponding" v-if="readable.corresponding_author && readable.corresponding_author[index]"><i class="base-icon-message"></i></span>
+                  </span>
                 </hover-card>
                 <span class="ContentItem__comma">,</span>
               </template>
@@ -498,7 +526,7 @@
           </template>
         </span>
       </div>
-      <div v-if="!isArrayEmpty(links) && !editable && readable.type === TYPE_ARTICLE">
+      <div v-if="!isArrayEmpty(links) && readable.type === TYPE_ARTICLE">
         <div class="ContentItem__links">
           <span class="MetaText"><i v-if="1!==1" class="base-icon-s-promotion"></i>{{t('custom.readableItem.原文链接')}}：</span>
           <a :href="item.url" target="_blank" @click="goToDownload(item)" class="ContentItem__link" v-for="(item, index) in links" :key="index">
@@ -508,7 +536,7 @@
           </a>
         </div>
       </div>
-      <div v-if="!isArrayEmpty(links) && !editable && readable.type !== TYPE_ARTICLE">
+      <div v-if="!isArrayEmpty(links) && readable.type !== TYPE_ARTICLE">
         <div class="ContentItem__links">
           <a :href="item.url" target="_blank" @click="goToDownload(item)" class="ContentItem__link" v-for="(item, index) in links" :key="index">
             <span v-if="item.is_open_access" class="ContentItem__linkDot"></span>
@@ -517,7 +545,7 @@
           </a>
         </div>
       </div>
-      <div v-if="!isArrayEmpty(readable.local_links) && !editable && readable.type === TYPE_PATENT">
+      <div v-if="!isArrayEmpty(readable.local_links) && readable.type === TYPE_PATENT">
         <div class="ContentItem__links">
           <a :href="readable.local_links[0]" @click="saveDownloadLog" target="_blank" class="ContentItem__link">
             <img class="ContentItem__linkLogo" src="../../../static/app-pdf.png">
@@ -552,7 +580,6 @@ export default {
   },
   props: {
     readable: Object,
-    editable: Boolean,
     showCPC: Boolean,
     authorHover: Boolean,
     openSearch:Boolean
@@ -682,7 +709,7 @@ export default {
     handleFollow(scholar){
       this.$emit('follow',scholar)
     },
-    handleDisFollow(scholar){
+    handleDisfollow(scholar){
       this.$emit('disfollow',scholar)
     },
     isArrayEmpty,
@@ -925,6 +952,7 @@ export default {
     font-size: 14px;
     margin: 0 4px 0 -4px;
     vertical-align: 1px;
+    color:$--color-warning;
   }
   .ContentItem__abstracts {
     margin-top: 10px;

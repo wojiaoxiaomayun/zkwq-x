@@ -37,7 +37,7 @@
         <div class="HoverCard__item">
           <app-number-board :divider="false" :data="[{key: '成果数', name: PROFILE_NAV_TAB_FRUITS, value: fruit_count, is_hover_item: true},{key: '关注者', name: TYPE_FOLLOWER, value: scholar.follower_count, is_hover_item: true},{key: '被浏览', value: scholar.browse_count}]" @click="handleClickNumberBoard"></app-number-board>
           <div v-if="user && user.uid !== scholar.uid " class="MemberButtonGroup ProfileButtonGroup HoverCard__buttons">
-            <follow-button :followee-id="scholar.uid" :is-follower="scholar.is_followed" :followee-sex="scholar.sex" @follow="handleFollow" @disfollow="handleDisfollow"></follow-button>
+            <follow-button :followee-id="scholar.scholar_id" :is-follower="scholar.is_followed" :followee-sex="scholar.sex" @follow="handleFollow" @disfollow="handleDisfollow"></follow-button>
             <button class="Button Button--grey" @click="handleDirectToHomePage"><i class="base-icon-s-home"></i>个人主页</button>
           </div>
         </div>
@@ -76,7 +76,7 @@ export default {
     }
   },
   props: {
-    uid: String
+    uid: String | Boolean
   },
   methods: {
     getCount(){
@@ -91,14 +91,14 @@ export default {
       if(this.user){
         this.isLoading = true
         let uid = this.uid === this.user.scholar_id ? this.user.uid : this.uid
-        GetUserV2(uid, this.user.uid).then(response => {
+        GetUserV2(uid, this.user.scholar_id,this.applicationId || this.appid || '').then(response => {
           this.isLoading = false
           this.scholar = response
           this.getCount()
         })
       }else{
         this.isLoading = true
-        GetUserV2(this.uid, this.uid).then(response => {
+        GetUserV2(this.uid, this.uid,this.applicationId || this.appid || '').then(response => {
           this.isLoading = false
           this.scholar = response
           this.getCount()

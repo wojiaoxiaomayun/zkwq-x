@@ -101,7 +101,7 @@ export const ExportResource = params => { return http.postBlob('/toolsApi/applic
  */
 export const ExportResourceTxt = params => { return http.postBlob('/toolsApi/applicationExport/exportTxt', params) }
 
-export const GetUserV2 = (uid,userId) => http.get(`/hky/api/v2/scholars/${uid}`,{userId})
+export const GetUserV2 = (uid,user_id,app_id) => http.get(`/hky/api/v2/scholars/${uid}`,{user_id,app_id})
 
 export const getHKYToken = () => {
   let cookie = document.cookie.match(new RegExp(`XSRF-TOKEN=([^;]+)`))

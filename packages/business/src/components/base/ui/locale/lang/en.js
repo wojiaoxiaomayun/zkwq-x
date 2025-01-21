@@ -194,7 +194,8 @@ export default {
       '返回':'Back'
     },
     readableItem:{
-      '已授权':'Authorized',
+      '代表作':'masterpiece',
+      '授权':'Authorized',
       '已发布':'Published',
       '未发布':'Unpublished',
       '作为本文作者的授权代理人提交':'Submitted as an authorized agent of the author of this article',

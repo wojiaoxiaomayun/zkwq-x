@@ -61,13 +61,13 @@ export default {
   methods: {
     handleFollow () {
       if (!this.followed) {
-        Follow(this.followeeId, this.user.uid,this.applicationId || this.appid || '').then(() => {
+        Follow(this.followeeId, this.user.scholar_id,this.applicationId || this.appid || '').then(() => {
           this.followed = true
           this.followButtonText = '已关注'
           this.$emit('follow')
         })
       } else {
-        Disfollow(this.followeeId, this.user.uid,this.applicationId || this.appid || '').then(() => {
+        Disfollow(this.followeeId, this.user.scholar_id,this.applicationId || this.appid || '').then(() => {
           this.followed = false
           this.followButtonText = '关注'
           this.$emit('disfollow')
