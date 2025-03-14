@@ -63,7 +63,7 @@
   </transition-group>
 </template>
 <script>
-import Locale from '../locale'
+import Locale from '../mixin/locale'
 import BaseProgress from '../progress/Progress'
 export default {
   name: 'BaseUploadList',

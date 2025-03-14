@@ -73,6 +73,10 @@
             height:{
                 type:Number,
                 default:130
+            },
+            fullUrl:{
+                type:Boolean,
+                default:false
             }
         },
         watch:{
@@ -104,7 +108,7 @@
                 }
                 this.coverImg = response.fastdfspath
                 this.isMeUpdate = true;
-                this.$emit('update:img', response.fastdfspath)
+                this.$emit('update:img', (this.fullUrl?BASE_FILE_URL:'') + response.fastdfspath)
             },
             _beforeAvatarUpload(file) {
                 const isJPG = ['jpg','jpeg','png','webp'].includes(file.name.split('.')[1])

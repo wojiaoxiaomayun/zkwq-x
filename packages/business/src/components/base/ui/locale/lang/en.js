@@ -209,6 +209,7 @@ export default {
       '编译者':'compiler',
       '所属快报产品':'Belonging express products',
       '发布日期':'release date',
+      '来源':'source',
       '出版年':'Year of publication',
       '出版社':'publishing house',
       '开始时间':'Start time',

@@ -1,6 +1,7 @@
 <template>
   <div class="Readable__wrap">
-    <img v-if="readable.cover" class="Readable__cover" :src="readable.cover" />
+    <img v-if="!notShowCover && readable.cover" class="Readable__cover" :src="readable.cover" />
+    <img v-else-if="!notShowCover && readable.extend_entity && readable.extend_entity.wenge_pictures && readable.extend_entity.wenge_pictures.length" class="Readable__cover" :src="readable.extend_entity.wenge_pictures[0]" />
     <div class="ContentItem" :class="{'is-en':!isChineseReadable}">
       <span class="ContentItem__linkDotMeta" v-if="1!==1 && readable.type === TYPE_ARTICLE && readable.is_free">
           <span class="ContentItem__linkDot"></span>
@@ -427,6 +428,17 @@
             <span class="ContentItem__source">{{t('custom.readableItem.数据中心') + '：'+readable.institution.join(",")}}</span>
           </span>
       </div>
+      <div v-if="readable.type === TYPE_NEWS" class="ContentItem__meta">
+        <span class="ContentItem__source" v-if="readable.date">
+          <span class="ContentItem__label">{{t('custom.readableItem.发布日期')}}:</span>
+          <span>{{readable.date}}</span>
+        </span>
+        <span v-if="readable.date && readable.source" class="ContentItem__comma"></span>
+        <span class="ContentItem__source" v-if="readable.source">
+          <span class="ContentItem__label">{{t('custom.readableItem.来源')}}:</span>
+          <span>{{readable.source}}</span>
+        </span>
+      </div>
       <template v-if="1!==1 && readable.type === TYPE_SCIENCE_DB">
         <div class="ContentItem__meta" v-if="!isArrayEmpty(readable.providers)">
           <div class="ContentItem__author AuthorInfo">
@@ -564,7 +576,7 @@ import BaseTag from '../../base/ui/tag/Tag'
 import {IsNumber,isArrayEmpty,HasChinese,clearHighlight} from '../../../util'
 // import {SaveCount, UpDownload, Log} from '../../service/explore'
 import appPdf from '../../../static/app-pdf.png?assets'
-import {TYPE_ARTICLE,TYPE_PATENT,TYPE_REPORT,TYPE_SCIENCE_DB,TYPE_BOOK,TYPE_SOFTWARE,TYPE_AWARD,TYPE_PROJECT,TYPE_CHINAXIV} from '../../../constant/index'
+import {TYPE_ARTICLE,TYPE_PATENT,TYPE_REPORT,TYPE_SCIENCE_DB,TYPE_BOOK,TYPE_SOFTWARE,TYPE_AWARD,TYPE_PROJECT,TYPE_CHINAXIV, TYPE_NEWS} from '../../../constant/index'
 import Locale from '../../base/ui/mixin/locale'
 import HoverCard from '../hovercard/HoverCard.vue'
 export default {
@@ -573,7 +585,7 @@ export default {
   mixins:[Locale],
   data () {
     return {
-      TYPE_ARTICLE,TYPE_PATENT,TYPE_REPORT,TYPE_SCIENCE_DB,TYPE_BOOK,TYPE_SOFTWARE,TYPE_AWARD,TYPE_PROJECT,TYPE_CHINAXIV,
+      TYPE_ARTICLE,TYPE_PATENT,TYPE_REPORT,TYPE_SCIENCE_DB,TYPE_BOOK,TYPE_SOFTWARE,TYPE_AWARD,TYPE_PROJECT,TYPE_CHINAXIV,TYPE_NEWS,
       showAbstractsAbbreviation: true,
       hidden: true
     }
@@ -582,7 +594,8 @@ export default {
     readable: Object,
     showCPC: Boolean,
     authorHover: Boolean,
-    openSearch:Boolean
+    openSearch: Boolean,
+    notShowCover: Boolean
   },
   computed: {
     authorLabel () {
@@ -679,6 +692,11 @@ export default {
               })
             }
             return links
+          } else if (this.readable.type === TYPE_NEWS) {
+            return [{
+              name: '原文链接',
+              url: this.readable.link
+            }]
           } else {
             return [{
               name: '全文获取',
