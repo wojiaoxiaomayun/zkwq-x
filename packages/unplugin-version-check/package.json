@@ -1,0 +1,21 @@
+{
+  "name": "@zkwq/unplugin-version-check",
+  "version": "0.0.31",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "scripts": {
+    "build": "tsup",
+    "pub": "pnpm build & npm publish --access public"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^11.1.0",
+    "unplugin": "^1.5.1"
+  },
+  "devDependencies": {
+    "tsup": "^6.6.3"
+  }
+}

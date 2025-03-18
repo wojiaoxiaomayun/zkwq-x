@@ -1,0 +1,22 @@
+{
+  "name": "@zkwq/unplugin-split-style",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "pub": "pnpm build & npm publish --access public"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^11.1.0",
+    "unplugin": "^1.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.3",
+    "tsup": "^6.6.3"
+  }
+}

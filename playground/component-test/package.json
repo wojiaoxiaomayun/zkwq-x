@@ -1,0 +1,28 @@
+{
+  "name": "component-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@zkwq/unplugin-color-change": "workspace:*",
+    "sass": "^1.58.3",
+    "unplugin-test": "workspace:^1.0.0",
+    "vite": "^4.1.0",
+    "vite-plugin-inspect": "^0.7.16",
+    "vite-plugin-vue2": "^2.0.3",
+    "vue-template-compiler": "2.6.14"
+  },
+  "dependencies": {
+    "@zkwq/business": "workspace:*",
+    "@zkwq/unplugin-version-check": "workspace:*",
+    "crystvis-js": "^0.4.13",
+    "vue": "2.6.14",
+    "vue-i18n": "^8.28.2",
+    "wangeditor": "^4.7.15"
+  }
+}

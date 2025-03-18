@@ -1,0 +1,203 @@
+@import 'mixins';
+@import 'utils';
+@import 'var';
+
+@include b(form) {
+  @include m(label-left) {
+    & .base-form-item__label {
+      text-align: left;
+    }
+  }
+  @include m(label-top) {
+    & .base-form-item__label {
+      float: none;
+      display: inline-block;
+      text-align: left;
+      padding: 0 0 10px 0;
+    }
+  }
+  @include m(inline) {
+    & .base-form-item {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: top;
+    }
+    & .base-form-item__label {
+      float: none;
+      display: inline-block;
+    }
+    & .base-form-item__content {
+      display: inline-block;
+      vertical-align: top;
+    }
+    &.base-form--label-top .base-form-item__content {
+      display: block;
+    }
+  }
+}
+@include b(form-item) {
+  margin-bottom: 22px;
+  @include utils-clearfix;
+
+  & .base-form-item {
+    margin-bottom: 0;
+  }
+
+  & .base-input__validateIcon {
+    display: none;
+  }
+
+  @include m(medium) {
+    .base-form-item__label {
+      line-height: 36px;
+    }
+    .base-form-item__content {
+      line-height: 36px;
+    }
+  }
+  @include m(small) {
+    .base-form-item__label {
+      line-height: 32px;
+    }
+    .base-form-item__content {
+      line-height: 32px;
+    }
+    &.base-form-item {
+      margin-bottom: 18px;
+    }
+    .base-form-item__error {
+      padding-top: 2px;
+    }
+  }
+  @include m(mini) {
+    .base-form-item__label {
+      line-height: 28px;
+    }
+    .base-form-item__content {
+      line-height: 28px;
+    }
+    &.base-form-item {
+      margin-bottom: 18px;
+    }
+    .base-form-item__error {
+      padding-top: 1px;
+    }
+  }
+
+  @include e(label-wrap) {
+    float: left;
+    .base-form-item__label {
+      display: inline-block;
+      float: none;
+    }
+  }
+
+  @include e(label) {
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    font-size: $--form-label-font-size;
+    color: $--color-text-regular;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+  }
+  @include e(content) {
+    line-height: 40px!important;
+    position: relative;
+    font-size: 14px;
+    @include utils-clearfix;
+
+    .base-input-group {
+      vertical-align: top;
+    }
+  }
+  @include e(error) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    text-align: right;
+    line-height: inherit;
+    height: inherit;
+    padding: 0 0 0 20px;
+    font-size: inherit;
+    color: $--color-danger;
+    background: $--color-white;
+    cursor: text;
+    max-height: 40px;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: -16px;
+      width: 16px;
+      height: 100%;
+      background: -webkit-gradient(linear,left top,right top,from(hsla(0,0%,100%,0)),to(#fff));
+      background: linear-gradient(90deg,hsla(0,0%,100%,0),#fff);
+      content: "";
+    }
+    @include when(required) {
+      left: 0;
+      right: 0;
+      text-align: left;
+      padding-left: 0;
+    }
+    @include m(inline) {
+      position: relative;
+      top: auto;
+      left: auto;
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+
+  @include when(required) {
+    @include pseudo('not(.is-no-asterisk)') {
+      & > .base-form-item__label:before,
+      & .base-form-item__label-wrap > .base-form-item__label:before {
+        content: '*';
+        color: $--color-danger;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  @include when(error) {
+    & .base-input {
+      &:before {
+        border-color: $--color-danger;
+      }
+    }
+    & .base-input__placeholder {
+      color: $--color-danger;
+    }
+    & .base-input__inner,
+    & .base-textarea__inner {
+      &, &:focus {
+        border-color: $--color-danger;
+      }
+    }
+    & .base-input-group__append,
+    & .base-input-group__prepend {
+      & .base-input__inner {
+        border-color: transparent;
+      }
+    }
+    .base-input__validateIcon {
+      color: $--color-danger;
+    }
+  }
+
+  @include m(feedback) {
+    .base-input__validateIcon {
+      display: inline-block;
+    }
+  }
+
+  &.is-error {
+    .base-input__placeholder {
+      color: $--color-danger;
+    }
+  }
+}

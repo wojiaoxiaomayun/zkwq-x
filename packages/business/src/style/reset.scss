@@ -1,0 +1,90 @@
+/* Base
+ -------------------------- */
+body {
+  font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+  font-size: 14px;
+  color: #121212;
+  background-color: #F6F6F6;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba(26,26,26,0);
+  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
+}
+button, input, select, textarea {
+  font: inherit;
+  background-color: transparent;
+  border-style: none;
+}
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+input, textarea {
+  -webkit-appearance: none;
+}
+textarea {
+  overflow: auto;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow:0 0 0 1000px #fff inset!important
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type="number"]{
+  -moz-appearance: textfield;
+}
+textarea:-webkit-autofill {
+  -webkit-box-shadow:0 0 0 1000px #fff inset!important
+}
+textarea::-webkit-outer-spin-button,
+textarea::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .3s;
+}
+a:hover {
+  color: #175199;
+  text-decoration: none;
+}
+a:focus, a:visited, a:active {
+  outline: none;
+}
+li {
+  list-style-type: none;
+}
+li:focus {
+  outline: none;
+}
+h1, h2, h3 {
+  margin: 0;
+  font: inherit;
+}
+img:focus {
+  outline: none;
+}
+ul {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+button {
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+*:focus {
+  outline: none;
+}

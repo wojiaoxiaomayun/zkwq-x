@@ -1,0 +1,48 @@
+@import "../components/base/ui/style/var";
+.Recommendation {
+  color: #444;
+  .List {
+    padding-top: 10px;
+  }
+  .List__item {
+    padding: 10px 20px;
+  }
+}
+.RecommendationItem {
+  display: flex;
+}
+.RecommendationItem__title {
+  font-size: 16px;
+  color: $--color-text-primary;
+  font-weight: 500;
+  font-synthesis: style;
+  line-height: 1.6;
+  word-break: break-word;
+  cursor: pointer;
+  transition: color .3s;
+  margin-right: 10px;
+  &:hover {
+    color: rgba(47,58,145, .8);
+  }
+}
+.RecommendationItem__index {
+  width: 32px;
+  display: inline-block;
+  font-weight: 500;
+  color: $--color-primary;
+  font-size: $--font-size-medium;
+  padding-top: 3px;
+}
+.RecommendationItem__date {
+  color: $--color-text-secondary;
+  font-size: 15px;
+}
+.RecommendationItem__meta {
+  color: $--color-text-secondary;
+  font-size: 14px;
+  // font-style: italic;
+  margin-top: 6px;
+}
+.RecommendationComma {
+  margin-right: 4px;
+}
