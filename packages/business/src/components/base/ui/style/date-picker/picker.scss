@@ -6,6 +6,9 @@
   position: relative;
   display: inline-block;
   text-align: left;
+  border-bottom-style: solid !important;
+  border-bottom-width: 1px !important;
+  border-bottom-color: #DDDFE6 !important;
 
   &.base-input,
   &.base-input__inner {
@@ -93,6 +96,10 @@
 }
 
 @include b(range-editor) {
+  border-bottom-style: solid !important;
+  border-bottom-width: 1px !important;
+  border-bottom-color: #DDDFE6 !important;
+
   &.base-input__inner {
     display: inline-flex;
     align-items: center;
@@ -104,10 +111,10 @@
   }
 
   @include when(active) {
-    border-color: $--color-primary;
+    border-color: $--color-primary !important;
 
     &:hover {
-      border-color: $--color-primary;
+      border-color: $--color-primary !important;
     }
   }
 

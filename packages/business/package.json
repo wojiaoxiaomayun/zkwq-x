@@ -1,6 +1,6 @@
 {
   "name": "@zkwq/business",
-  "version": "0.1.88",
+  "version": "0.1.89",
   "description": "中科文情业务组件库",
   "type": "module",
   "main": "dist/index.umd.min.cjs",

@@ -734,7 +734,8 @@ export default {
     handleClickIcon(event) {
       if (this.readonly || this.pickerDisabled) return;
       if (this.showClose) {
-        this.valueOnOpen = this.value;
+        // this.valueOnOpen = this.value;
+        console.log(this.valueOnOpen)
         event.stopPropagation();
         this.emitInput(null);
         this.emitChange(null);
@@ -937,8 +938,8 @@ export default {
     emitChange(val) {
       // determine user real change only
       if (!valueEquals(val, this.valueOnOpen)) {
-        this.$emit('change', val);
-        this.valueOnOpen = val;
+        this.$emit('change', val || []);
+        this.valueOnOpen = val || [];
         if (this.validateEvent) {
           this.dispatch('BaseFormItem', 'base.form.change', val);
         }

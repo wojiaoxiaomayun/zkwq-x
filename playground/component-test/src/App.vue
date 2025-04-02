@@ -4,10 +4,7 @@
     <XTab :actived.sync="text"></XTab>
     <annex :fileTypes="['pdf']" :maxUploadFileSize="1024 * 1024" checkPDF></annex>
     <base-input-number></base-input-number> -->
-    <hover-card @skip="handleSkip" :uid="'1a2321207218482ba227da042dcfa60c'" :user='{"birthday":"","city":"","research_field":[],"academic_experiences_v2":[],"follower_count":0,"is_super_manager":false,"honors":[],"scholar_id":"6ce4756c71ac423496b28e61e7c01fc3","social_experiences":[],"home_page":"","institution":"机构_plinnmgdxg","uid":"6ce4756c71ac423496b28e61e7c01fc3","followee_count":0,"province":"","academic_experiences":[],"affiliation":["机构_plinnmgdxg"],"partisan":"","browse_count":0,"tag":[],"classification_cnnace_number":[],"department":[null],"headline":"","address":"","education_experiences":[],"is_authorized":0,"is_academician":false,"sex":"","fruit_count":0,"mobile":"19291096364","orcid":"","avatar":"","biography":"","academic_title":[],"classification":[],"sync":1,"collect_count":0,"classification_cnnace":[],"external_link":["6ce4756c71ac423496b28e61e7c01fc3"],"token":"yong-hu-_ahdwhjyz3l","employment_experiences":[{"institution":["机构_plinnmgdxg"],"uid":"6ce4756c71ac423496b28e61e7c01fc3","employ_start_date":[""],"employ_end_date":[""],"position":[""],"department":[null],"professional_title":[""]}],"question_count":0,"share_count":0,"country_code":"86","wosReasearcherId":"","awards":[],"name":"用户_ahdwhjyz3l","classification_number":[],"id":"6ce4756c71ac423496b28e61e7c01fc3"}'>
-        <base-button>这是一个hover-card</base-button>
-    </hover-card>
-    <readable-item :readable="readable" authorHover @skip="handleSkip"></readable-item>
+
     <!-- <base-table
       :data="tableData"
       height="100"
@@ -36,19 +33,15 @@
     <div id="cifDom" style="width:800px;height:600px;"></div> -->
     <!-- <author-x CorrespondingAuthor cstr orcid></author-x> -->
     <!-- <AvatarGroup :urls="['https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777','https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777']"></AvatarGroup> -->
-    <base-upload
-  class="upload-demo"
-  action="https://jsonplaceholder.typicode.com/posts/"
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :before-remove="beforeRemove"
-  multiple
-  :limit="3"
-  :on-exceed="handleExceed"
-  :file-list="fileList">
-  <base-button size="small" type="primary">点击上传</base-button>
-  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-</base-upload>
+    <base-date-picker
+        v-model="dateRange"
+        @change="changeDateRange"
+        type="daterange"
+        value-format="yyyy-MM-dd"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"> 
+      </base-date-picker>
   </div>
 </template>
 <script>
@@ -66,6 +59,7 @@ export default {
   components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard,AvatarGroup},
   data() {
     return {
+      dateRange:[],
       fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
       readable:{
   "abstracts": "论坛背景近年来，单细胞与空间组学技术的发展日新月异，在肿瘤微环境与免疫治疗、神经疾病与机制、生殖健康与诊断、药物筛选和疫苗研制等领域用着广泛的应用，是当前生命科学领域的前沿和研究热点。为了加强国内外单细胞和空间组学技术学术交流，促进单细胞空间组学基础研究、转化与临床研究深入发展，转化医学网联合中国医药生物技术协会基因检测技术分会、中国遗传学会遗传诊断分会等多家单位发起了中国单细胞与空间...",
@@ -147,6 +141,9 @@ export default {
     // this.initCif()
   },
   methods: {
+    changeDateRange(){
+      console.log(this.dateRange)
+    },
     handleSkip(type,scholar){
       console.log('skip',type,scholar)
     },
