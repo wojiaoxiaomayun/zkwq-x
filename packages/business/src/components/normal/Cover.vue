@@ -77,6 +77,10 @@
             fullUrl:{
                 type:Boolean,
                 default:false
+            },
+            suffixs:{
+                type:Array,
+                default:() => ['jpg','jpeg','png','webp']
             }
         },
         watch:{
@@ -111,11 +115,16 @@
                 this.$emit('update:img', (this.fullUrl?BASE_FILE_URL:'') + response.fastdfspath)
             },
             _beforeAvatarUpload(file) {
-                const isJPG = ['jpg','jpeg','png','webp'].includes(file.name.split('.')[1])
-                if (!isJPG) {
-                    this.$message.error('请上传图片')
+                try {
+                	const isJPG = this.suffixs.includes(file.name.split('.').at(-1).toLowerCase())
+                    if (!isJPG) {
+                        this.$message.error('请上传图片')
+                    }
+                    return isJPG	
+                }catch(e){
+                    console.error(e)
+                    return false
                 }
-                return isJPG
             },
             _handleFileRemove(){
                 this.coverImg=''

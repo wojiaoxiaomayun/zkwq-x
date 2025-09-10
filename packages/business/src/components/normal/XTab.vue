@@ -22,7 +22,7 @@ export default {
       type:Array,
       default:() => [{name:'菜单1',value:'菜单1'},{name:'菜单2',value:'菜单2'}]
     },
-    actived:String
+    actived:String | Number
   },
   watch:{
     actived:function(newVal){

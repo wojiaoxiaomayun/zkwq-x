@@ -1,12 +1,25 @@
 <template>
   <div class="warp" v-if="datas && datas.length > 0">
-    <div class="title__warp">
-      <div class="title">{{ title }}</div>
+    <slot name="head"></slot>
+    <div v-if="!$slots.head" class="title__warp">
+      <div class="title__content">
+        <div class="title">{{ title }}</div>
+        <i v-if="search" class="base-icon-search" @click="isShowInput = !isShowInput"></i>
+      </div>
       <i
         class="base-icon-caret-bottom icon"
         :class="fold ? 'icon-active' : ''"
         @click="fold = !fold"
       ></i>
+    </div>
+    <div class="Search__wrap" v-if="search && isShowInput">
+      <base-input
+        v-model="searchValue"
+        class="Search__input"
+        placeholder="搜索"
+        clearable
+        :showLabel="false"
+      ></base-input>
     </div>
     <base-checkbox-group v-model="checkedList" @change="checkboxChange">
       <transition
@@ -19,7 +32,7 @@
       >
         <ul class="item_warp" ref="itemWarp" v-show="!fold">
           <li
-            v-for="(item, index) in datas"
+            v-for="(item, index) in filterDatas"
             :key="'checkitem' + index"
             v-show="index < showNumX"
           >
@@ -42,14 +55,14 @@
     </base-checkbox-group>
     <div
       class="readmore"
-      v-if="showNumX < datas.length && !fold"
-      @click="showNumX = step?(showNumX + showNum):datas.length"
+      v-if="showNumX < filterDatas.length && !fold"
+      @click="showNumX = step?(showNumX + showNum):filterDatas.length"
     >
       <i class="base-icon-caret-bottom"></i><span>{{t('custom.aggsItemV.查看更多')}}</span>
     </div>
     <div
       class="readmore"
-      v-if="showNumX >= datas.length && datas.length > showNum && !fold"
+      v-if="showNumX >= filterDatas.length && filterDatas.length > showNum && !fold"
       @click="showNumX = showNum"
     >
       <i class="base-icon-caret-top"></i><span>{{t('custom.aggsItemV.折叠隐藏')}}</span>
@@ -60,21 +73,28 @@
 import BaseCheckbox from "../base/ui/checkbox/checkbox.vue";
 import BaseCheckboxGroup from "../base/ui/checkbox/checkbox-group.vue";
 import Locale from '../base/ui/mixin/locale'
+import BaseInput from '../base/ui/input/Input';
 export default {
   name: "AggItemV",
   mixins:[Locale],
-  components:{BaseCheckbox,BaseCheckboxGroup},
+  components:{BaseCheckbox,BaseCheckboxGroup,BaseInput},
   data() {
     return {
       fold: false,
       readMore: false,
       checkedList: [],
-      showNumX:5
+      showNumX:5,
+      searchValue: "",
+      isShowInput:false
     };
   },
   props: {
     title: String,
     datas: Array,
+    search: {
+      type: Boolean,
+      default: false,
+    },
     showNum: {
       type: Number,
       default: 5,
@@ -88,6 +108,16 @@ export default {
       default: () => {
         return [];
       },
+    },
+  },
+  computed: {
+    filterDatas() {
+      if (this.searchValue) {
+        return this.datas.filter((e) => {
+          return (e.name || e.key).toLowerCase().includes(this.searchValue.toLowerCase());
+        });
+      }
+      return this.datas;
     },
   },
   created() {
@@ -170,8 +200,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .title {
+    .title__content{
+      display: flex;
+      align-items: center;
       flex: 1;
+      gap: 8px;
+      i{
+        cursor: pointer;
+      }
     }
     .icon {
       padding: 2px;
@@ -186,6 +222,14 @@ export default {
     .icon-active {
       transform: rotate(-90deg);
     }
+  }
+  .Search__wrap{
+    width: 100%;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
   }
 
   .item_warp {

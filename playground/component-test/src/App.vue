@@ -1,5 +1,8 @@
 <template>
   <div style="width:100%;height:100%;overflow: auto;padding:30px;">
+    <div style="width:300px;">
+      <AggsItemV :title="'aa'" :datas="[{key:'a',value:10},{key:'b',value:11}]"></AggsItemV>
+    </div>
     <!-- <base-input v-model="year" placeholder="牛逼"></base-input>
     <XTab :actived.sync="text"></XTab>
     <annex :fileTypes="['pdf']" :maxUploadFileSize="1024 * 1024" checkPDF></annex>
@@ -33,7 +36,7 @@
     <div id="cifDom" style="width:800px;height:600px;"></div> -->
     <!-- <author-x CorrespondingAuthor cstr orcid></author-x> -->
     <!-- <AvatarGroup :urls="['https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777','https://pubscholar.cn/files?fastdfspath=group2/M00/82/4A/CgMLEGVUuK-Aa7L1AABn8KVnX9s6549777']"></AvatarGroup> -->
-    <base-date-picker
+    <!-- <base-date-picker
         v-model="dateRange"
         @change="changeDateRange"
         type="daterange"
@@ -41,7 +44,7 @@
         range-separator="至"
         start-placeholder="开始日期"
         end-placeholder="结束日期"> 
-      </base-date-picker>
+      </base-date-picker> -->
   </div>
 </template>
 <script>
@@ -53,10 +56,10 @@ import CrystVis from 'crystvis-js';
 import HoverCard from '../../../packages/business/src/components/normal/hovercard/HoverCard.vue';
 import ReadableItem from '../../../packages/business/src/components/normal/readitem/ReadableItem.vue';
 import AuthorX from '../../../packages/business/src/components/normal/AuthorX.vue'
-
+import AggsItemV from '../../../packages/business/src/components/normal/AggsItemV.vue';
 export default {
   name: "App",
-  components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard,AvatarGroup},
+  components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard,AvatarGroup,AggsItemV},
   data() {
     return {
       dateRange:[],

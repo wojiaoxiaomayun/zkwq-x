@@ -16,13 +16,14 @@
       ref="input"
       v-model="multiple ? presentText : inputValue"
       :size="realSize"
-      :placeholder="placeholder"
+      :placeholder="inputValue ? '' : placeholder"
       :readonly="readonly"
       :disabled="isDisabled"
       :validate-event="false"
       :class="{ 'is-focus': dropDownVisible }"
       @focus="handleFocus"
       @blur="handleBlur"
+      :show-label="false"
       @input="handleInput">
       <template slot="suffix">
         <i
@@ -56,10 +57,10 @@
       </base-tag>
       <input
         v-if="filterable && !isDisabled"
-        v-modbase.trim="inputValue"
+        v-model.trim="inputValue"
         type="text"
         class="base-cascader__search-input"
-        :placeholder="presentTags.length ? '' : placeholder"
+        :placeholder="presentTags.length ? '' : ''"
         @input="e => handleInput(inputValue, e)"
         @click.stop="toggleDropDownVisible(true)"
         @keydown.delete="handleDelete">
