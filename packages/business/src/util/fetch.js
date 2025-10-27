@@ -41,7 +41,8 @@ export default {
     return new Promise((resolve, reject) => {
       axios.get(url, { 
           params: params, 
-          baseURL: config?.baseURL ?? ''
+          baseURL: config?.baseURL ?? '',
+          ...config
         }
       )
         .then(response => {
@@ -68,6 +69,7 @@ export default {
       axios.post(url, params, { 
         responseType: 'blob', 
         baseURL: config?.baseURL ?? '', 
+        ...config
       })
         .then(response => {
           resolve(response.data)
@@ -80,7 +82,8 @@ export default {
   post(url, params,config) {
     return new Promise((resolve, reject) => {
       axios.post(url, params,{
-        baseURL: config?.baseURL ?? ''
+        baseURL: config?.baseURL ?? '',
+        ...config
       })
         .then(response => {
           resolve(response.data)
@@ -93,7 +96,8 @@ export default {
   postForm(url, params,config) {
     return new Promise((resolve, reject) => {
       axios.post(url, qs.stringify(params),{
-        baseURL: config?.baseURL ?? ''
+        baseURL: config?.baseURL ?? '',
+        ...config
       })
         .then(response => {
           resolve(response.data)
@@ -106,7 +110,8 @@ export default {
   put(url, params,config) {
     return new Promise((resolve, reject) => {
       axios.put(url, params,{
-        baseURL: config?.baseURL ?? ''
+        baseURL: config?.baseURL ?? '',
+        ...config
       })
         .then(response => {
           resolve(response.data)
@@ -120,7 +125,8 @@ export default {
     return new Promise((resolve, reject) => {
       axios.delete(url, { 
         params: params, 
-        baseURL: config?.baseURL ?? ''
+        baseURL: config?.baseURL ?? '',
+        ...config
       })
         .then(response => {
           resolve(response.data)
@@ -145,7 +151,8 @@ export default {
           axios.post(url, fd, {
               baseURL:  config?.baseURL ?? '',
               timeout: 100000,
-              headers: { 'Content-Type': 'multipart/form-data' }
+              headers: { 'Content-Type': 'multipart/form-data' },
+              ...config
           }).then(response => {
               resolve(response.data)
           }).catch(error => {

@@ -1,13 +1,18 @@
 <template>
   <div style="width:100%;height:100%;overflow: auto;padding:30px;">
     <div style="width:300px;">
-      <AggsItemV :title="'aa'" :datas="[{key:'a',value:10},{key:'b',value:11}]"></AggsItemV>
+      <XTab vertical></XTab>
+      <!-- <AggsItemV :title="'aa'" :datas="[{key:'a',value:10},{key:'b',value:11}]"></AggsItemV> -->
     </div>
     <!-- <base-input v-model="year" placeholder="牛逼"></base-input>
     <XTab :actived.sync="text"></XTab>
     <annex :fileTypes="['pdf']" :maxUploadFileSize="1024 * 1024" checkPDF></annex>
     <base-input-number></base-input-number> -->
-
+<annex :fileTypes="['pdf']" :maxUploadFileSize="1024 * 1024" checkPDF @change="handleChange"></annex>
+<base-select multiple v-model="selectedOptions" placeholder="请选择" showLabel="false">
+  <base-option value="1">选项1</base-option>
+  <base-option value="2">选项2</base-option>
+</base-select>
     <!-- <base-table
       :data="tableData"
       height="100"
@@ -49,7 +54,7 @@
 </template>
 <script>
 import {
-  WangEditor,Base64Util,Institution,Annex,AuthorOrIns,CircleTranslateButton,ImageViewer,AvatarGroup
+  WangEditor,Base64Util,Institution,Annex,AuthorOrIns,CircleTranslateButton,ImageViewer,AvatarGroup,XTab
 } from "@zkwq/business";
 import wangPlugin from './wangPlugin'
 import CrystVis from 'crystvis-js';
@@ -59,9 +64,10 @@ import AuthorX from '../../../packages/business/src/components/normal/AuthorX.vu
 import AggsItemV from '../../../packages/business/src/components/normal/AggsItemV.vue';
 export default {
   name: "App",
-  components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard,AvatarGroup,AggsItemV},
+  components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard,AvatarGroup,AggsItemV,XTab},
   data() {
     return {
+      selectedOptions: [],
       dateRange:[],
       fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
       readable:{
@@ -144,6 +150,10 @@ export default {
     // this.initCif()
   },
   methods: {
+    handleChange(files,index,file){
+      console.log(files,index,file)
+      window.myFile = file
+    },
     changeDateRange(){
       console.log(this.dateRange)
     },

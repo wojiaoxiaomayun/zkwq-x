@@ -1,5 +1,5 @@
 <template>
-  <div class="Menu__warp">
+  <div class="Menu__warp" :class="{'Menu__wrap--vertical':vertical}">
     <div ref="Menu__item" class="Menu__item" :class="{'Menu__item--actived':item.value == newActived,'Menu__item--disabled':item.disabled}" v-for="item,index in data" :key="'xmenu' + index" @click="item.disabled?'':changeTab(item.value,true)">
       <slot :item="item">
         {{item.name}}
@@ -22,10 +22,14 @@ export default {
       type:Array,
       default:() => [{name:'菜单1',value:'菜单1'},{name:'菜单2',value:'菜单2'}]
     },
-    actived:String | Number
+    actived:String | Number,
+    vertical:Boolean
   },
   watch:{
     actived:function(newVal){
+      this.changeTab(newVal || this.data[0].value)
+    },
+    vertical:function(newVal){
       this.changeTab(newVal || this.data[0].value)
     }
   },
@@ -52,10 +56,21 @@ export default {
     changeTab(value,isUpdate = false){
       let index = this.data.findIndex(e => e.value == value)
       let dom = this.$refs['Menu__item'][index];
-      let width = dom.scrollWidth;
-      let left = dom.offsetLeft;
-      this.$refs.actived.style.width = width + 'px';
-      this.$refs.actived.style.left = left + 'px';
+      if (!this.vertical) {
+        let width = dom.scrollWidth;
+        let left = dom.offsetLeft;
+        this.$refs.actived.style.width = width + 'px';
+        this.$refs.actived.style.left = left + 'px';
+        this.$refs.actived.style.height = '100%';
+        this.$refs.actived.style.top = '0px';
+      } else {
+        let height = dom.scrollHeight;
+        let top = dom.offsetTop;
+        this.$refs.actived.style.height = height + 'px';
+        this.$refs.actived.style.top = top + 'px';
+        this.$refs.actived.style.width = '100%';
+        this.$refs.actived.style.left = '0px';
+      }
       this.newActived = value;
       if(isUpdate){
         this.$emit('update:actived',value)
@@ -68,10 +83,13 @@ export default {
 
 <style lang="scss" scoped>
   @import '../base/ui/style/var.scss';
+  .Menu__wrap--vertical{
+    flex-direction: column;
+  }
   .Menu__warp{
     width: fit-content;
     height: fit-content;
-    overflow: hidden;
+    overflow: auto;
     background: #e4edf6;
     display: flex;
     font-size: 13px;
@@ -81,6 +99,7 @@ export default {
     .Menu__item{
       width: auto;
       height: 100%;
+      flex: 0 0 auto;
       padding: 8px 16px;
       z-index: 2;
       cursor: pointer;
@@ -97,9 +116,7 @@ export default {
     }
     .actived{
       position: absolute;
-      height: 100%;
       background: $--color-primary;
-      top: 0px;
       transition: all .5s;
       border-radius: 4px;
     }

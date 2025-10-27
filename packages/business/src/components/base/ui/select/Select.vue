@@ -84,6 +84,7 @@
       :tabindex="(multiple && filterable) ? '-1' : null"
       :enable-focus-class="false"
       :show-label="showLabel"
+      :tags="selected"
       @focus="handleFocus"
       @blur="handleBlur"
       @keyup.native="debouncedOnInputChange"
@@ -366,7 +367,7 @@ export default {
       value(val, oldVal) {
         if (this.multiple) {
           this.resetInputHeight()
-          if ((val && val.length > 0) || (this.$refs.input && this.query !== '')) {
+          if (!this.showLabel && ((val && val.length > 0) || (this.$refs.input && this.query !== ''))) {
             this.currentPlaceholder = ''
           } else {
             this.currentPlaceholder = this.cachedPlaceHolder

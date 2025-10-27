@@ -352,6 +352,24 @@ export default {
           };
         })
       );
+      this.$emit(
+        "change",
+        this.newFiles.map((e) => {
+          return {
+            id: e.id,
+            name: e.name,
+            link: e.link,
+            title: e.title,
+            desc:e.desc,
+            url: e.url,
+            size: e.size,
+            create_time: e.create_time,
+            last_modified:e.last_modified
+          };
+        }),
+        index,
+        file
+      );
     },
     handleFileUploadError(err, file) {
       this.annexObj.fileErrorMsg = "文件上传失败，请稍后再试";
@@ -359,7 +377,7 @@ export default {
       this.clearFile(index);
     },
     handleFileExceed() {
-      this.annexObj.fileErrorMsg = "最多上传 5 个附件";
+      this.annexObj.fileErrorMsg = `最多上传 ${this.max} 个附件`;
     },
     handleOnFileProgress(event, file) {
       if (file) {

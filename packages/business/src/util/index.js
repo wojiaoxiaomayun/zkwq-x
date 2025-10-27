@@ -2,6 +2,11 @@ import { Base64 } from '../util/base64'
 import { AES_IV,AES_KEY } from '../constant'
 import CryptoJS from 'crypto-js'
 
+export const MD5 = function(message){
+  const hash = CryptoJS.MD5(message);
+  return hash.toString(CryptoJS.enc.Hex);
+}
+
 export const generateId = function() {
   return Math.floor(Math.random() * 10000)
 }
