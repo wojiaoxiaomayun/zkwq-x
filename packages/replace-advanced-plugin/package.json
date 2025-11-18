@@ -1,0 +1,20 @@
+{
+  "name": "@zkwq/replace-advanced-plugin",
+  "version": "0.0.1",
+  "description": "A webpack plugin to replace multiple strings in JS/CSS/HTML files with loader and build stage support",
+  "main": "index.js",
+  "files": [
+    "ReplaceAdvancedPlugin.js",
+    "replace-advanced-loader.js",
+    "index.js"
+  ],
+  "scripts": {
+    "pub": "pnpm publish --access public"
+  },
+  "keywords": ["webpack", "plugin", "replace", "cdn", "loader"],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "webpack": ">=4.0.0"
+  }
+}

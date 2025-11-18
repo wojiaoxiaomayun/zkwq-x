@@ -120,6 +120,11 @@ export default {
       return this.datas;
     },
   },
+  watch:{
+    checkList(newVal){
+      this.checkedList = newVal
+    }
+  },
   created() {
     this.checkedList = this.checkList;
     this.showNumX = this.showNum;
