@@ -8,40 +8,60 @@ export const transform = (code:string,options:UserOptions = {
     return code;
   }
   const codeObj = new MagicString(code);
+
+  // 找出 :root 区块
+  const rootCssRegex = /:root\s*\{[\s\S]*?\}/gi;
+  const rootMatches = Array.from(code.matchAll(rootCssRegex));
+
+  const rootRanges = rootMatches.map(m => ({
+    start: m.index!,
+    end: m.index! + m[0].length,
+    content: m[0]
+  }));
+
+  function inRoot(index: number) {
+    return rootRanges.some(r => index >= r.start && index < r.end);
+  }
+
+  function escapeRegExp(str: string) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+
   options.colors.forEach(option => {
-    let initColors = Object.keys(option);
-    if(initColors.length > 0){
-      initColors.forEach(color => {
-        let replaceColor = option[color];
-        //替换正常的颜色值
-        let regexp = new RegExp(`${color}`,'gi')
-        let colors = Array.from(code.matchAll(regexp))
-        colors.forEach(e => {
-          codeObj.update(e.index!,e.index! + e[0].length,replaceColor)
-        })
-      })
-    }
-  })
+    Object.keys(option).forEach(color => {
+      const replaceColor = option[color];
+      const regexp = new RegExp(escapeRegExp(color), 'gi');
+      for (const match of code.matchAll(regexp)) {
+        if (inRoot(match.index!)) continue; // ⭐关键：跳过 :root
+
+        codeObj.update(
+          match.index!,
+          match.index! + match[0].length,
+          replaceColor
+        );
+      }
+    });
+  });
+
   //单独处理:root里面的颜色
-  let rootCssRegex = new RegExp(/:root\s?{\s?\n?.*?\s?\n?}/gi);
-  let roots = Array.from(code.matchAll(rootCssRegex))
-  options.colors.forEach(option => {
-    let initColors = Object.keys(option);
-    if(initColors.length > 0){
-      initColors.forEach(color => {
-        let replaceColor = option[color] as any;
-        if(!replaceColor.startsWith('var(')){
-          //替换正常的颜色值
-          let regexp = new RegExp(`${color}`,'gi')
-          roots.forEach(root => {
-            root['replace'] = root[0].replace(regexp,replaceColor)
-          })
+  rootRanges.forEach(root => {
+    let newContent = root.content;
+
+    options.colors.forEach(option => {
+      Object.keys(option).forEach(color => {
+        const replaceColor = option[color];
+
+        if (typeof replaceColor === 'string' && !replaceColor.startsWith('var(')) {
+          const regexp = new RegExp(escapeRegExp(color), 'gi');
+          newContent = newContent.replace(regexp, replaceColor);
         }
-      })
-    }
-  })
-  roots.forEach(root => {
-    codeObj.update(root.index!,root.index! + root[0].length,root['replace'] || root[0])
-  })
+      });
+    });
+
+    codeObj.update(root.start, root.end, newContent);
+  });
+
+  
   return codeObj.toString()
 }
