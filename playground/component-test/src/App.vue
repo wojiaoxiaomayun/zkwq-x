@@ -50,11 +50,12 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期"> 
       </base-date-picker> -->
+      <CaptchaDialog ref="captcha"></CaptchaDialog>
   </div>
 </template>
 <script>
 import {
-  WangEditor,Base64Util,Institution,Annex,AuthorOrIns,CircleTranslateButton,ImageViewer,AvatarGroup,XTab
+  WangEditor,Base64Util,Institution,Annex,AuthorOrIns,CircleTranslateButton,ImageViewer,AvatarGroup,XTab,CaptchaDialog
 } from "@zkwq/business";
 import wangPlugin from './wangPlugin'
 import CrystVis from 'crystvis-js';
@@ -64,7 +65,7 @@ import AuthorX from '../../../packages/business/src/components/normal/AuthorX.vu
 import AggsItemV from '../../../packages/business/src/components/normal/AggsItemV.vue';
 export default {
   name: "App",
-  components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard,AvatarGroup,AggsItemV,XTab},
+  components: {WangEditor,AuthorX,Institution,Annex,AuthorOrIns,CircleTranslateButton,ReadableItem,ImageViewer,HoverCard,AvatarGroup,AggsItemV,XTab,CaptchaDialog},
   data() {
     return {
       selectedOptions: [],
@@ -148,6 +149,7 @@ export default {
     //   this.text = '菜单1'
     // },5000)
     // this.initCif()
+    this.$refs.captcha.show()
   },
   methods: {
     handleChange(files,index,file){

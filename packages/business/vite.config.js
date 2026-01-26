@@ -42,7 +42,13 @@ export default defineConfig({
     target:'ES2015',
     cssCodeSplit: true,
     lib: {
-      entry: resolve(__dirname, 'src/index.js'),
+      // entry: {
+      //   index:resolve(__dirname, 'src/index.js'),
+      //   baseui:resolve(__dirname, 'src/baseui.js'),
+      //   'my-components':resolve(__dirname, 'src/my-components.js'),
+      //   'my-functions':resolve(__dirname, 'src/my-functions.js')
+      // },
+      entry:resolve(__dirname, 'src/index.js'),
       name: 'Business',
       // the proper extensions will be added
       fileName: 'index',

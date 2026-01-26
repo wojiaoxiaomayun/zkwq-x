@@ -35,6 +35,7 @@ import CircleTranslateButton from './components/normal/CircleTranslateButton'
 import HoverCard from './components/normal/hovercard/HoverCard.vue'
 import FollowButton from './components/normal/hovercard/FollowButton.vue'
 import AvatarGroup from './components/normal/AvatarGroup.vue'
+import CaptchaDialog from './components/normal/captcha/CaptchaDialog.vue';
 export {
   AggsItemH,
   AggsItemV,
@@ -45,7 +46,8 @@ export {
   Avatar,
   Ripple,
   CircleTranslateButton,
-  Annex,XCard,XHeader,XTab,Cover,WangEditor,AppNumberBoard,UserProfile,InstitutionAvatar,InstitutionProfile,InstitutionX,Institution,AuthorX,Author,AuthorOrIns,AppTip,DatePickerX,Keywords,ImageViewer,HoverCard,FollowButton,AvatarGroup
+  Annex,XCard,XHeader,XTab,Cover,WangEditor,AppNumberBoard,UserProfile,InstitutionAvatar,InstitutionProfile,InstitutionX,Institution,AuthorX,Author,AuthorOrIns,AppTip,DatePickerX,Keywords,ImageViewer,HoverCard,FollowButton,AvatarGroup,
+  CaptchaDialog
 }
 
 import * as BaseUtil from './util/index'
@@ -57,6 +59,7 @@ import * as Quote from './util/quote'
 import * as Service from './service/index'
 import Bus from './util/bus';
 import HighLight from './util/hightlight';
+import * as CheckRobot from './util/CheckRobot'
 export {
   BaseUtil,
   Base64Util,
@@ -66,5 +69,6 @@ export {
   Quote,
   Service,
   Bus,
-  HighLight
+  HighLight,
+  CheckRobot
 }
