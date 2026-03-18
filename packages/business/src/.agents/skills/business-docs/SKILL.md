@@ -1,6 +1,6 @@
 ---
 name: business-docs
-description: @zkwq-x/business 组件库文档技能。当用户询问该组件库的组件用法、工具函数、服务模块、安装方式、Props/Events/Methods/Slots 等任何与 business 包相关的问题时，使用本技能提供准确的文档参考和代码示例。
+description: "@zkwq-x/business 组件库文档技能。当用户询问该组件库的组件用法、工具函数、服务模块、安装方式、Props/Events/Methods/Slots 等任何与 business 包相关的问题时，使用本技能提供准确的文档参考和代码示例。"
 ---
 
 # @zkwq-x/business 组件库文档
