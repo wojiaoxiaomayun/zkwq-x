@@ -55,7 +55,7 @@
 </template>
 <script>
 import {
-  WangEditor,Base64Util,Institution,Annex,AuthorOrIns,CircleTranslateButton,ImageViewer,AvatarGroup,XTab,CaptchaDialog
+  WangEditor,Base64Util,Institution,Annex,AuthorOrIns,CircleTranslateButton,ImageViewer,AvatarGroup,XTab
 } from "@zkwq/business";
 import wangPlugin from './wangPlugin'
 import CrystVis from 'crystvis-js';

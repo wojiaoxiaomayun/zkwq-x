@@ -57,11 +57,15 @@ Vue.component('el-step', ElStep)
 ## Development
 ```shell
 make dev
+```
 
 ## test
+```shell
 make test
+```
 
 ## build
+```shell
 make build
 ```
 

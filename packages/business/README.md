@@ -41,11 +41,18 @@
   - [HoverCard(悬停卡片组件)](#hovercard)
   - [FollowButton(关注按钮组件)](#followbutton)
   - [AvatarGroup(头像组组件)](#avatargroup)
+  - [CaptchaDialog(机器人验证对话框组件)](#captchadialog)
+  - [CaptchaFormItem(验证码表单项组件)](#captchaformitem)
+  - [MultipleSpan(多值文本组件)](#multiplespan)
 - [工具函数](#工具函数)
   - [加密与哈希函数](#加密与哈希函数)
   - [ID与字符串生成函数](#id与字符串生成函数)
   - [数据验证与处理函数](#数据验证与处理函数)
+  - [表单验证函数](#表单验证函数)
   - [数据转换函数](#数据转换函数)
+  - [数组工具函数](#数组工具函数)
+  - [文件与下载函数](#文件与下载函数)
+  - [浏览器环境检测函数](#浏览器环境检测函数)
   - [URL与参数处理函数](#url与参数处理函数)
   - [数据存储函数](#数据存储函数)
   - [其他工具函数](#其他工具函数)
@@ -53,8 +60,9 @@
   - [http(HTTP请求工具)](#http)
   - [CONSTANT(常量集合)](#constant)
   - [ScrollTool(滚动工具)](#scrolltool)
-  - [Quote(引用工具)](#quote)
+  - [ExportUtil(导出工具)](#exportutil)
   - [Bus(事件总线)](#bus)
+  - [CheckRobot(机器人验证工具)](#checkrobot)
   - [HighLight(高亮工具)](#highlight)
 - [服务模块](#服务模块)
   - [日志服务](#日志服务)
@@ -454,8 +462,8 @@ export default {
 ```vue
 <template>
   <div>
-    <avatar :src="avatarUrl" :size="40" />
-    <avatar :src="avatarUrl" :size="60" :round="true" />
+    <avatar :url="avatarUrl" :size="40" />
+    <avatar :url="avatarUrl" :size="60" :round="true" />
     <avatar :size="80" />
   </div>
 </template>
@@ -479,7 +487,7 @@ export default {
 
 ```vue
 <template>
-  <button v-ipple>点击我</button>
+  <button v-ripple>点击我</button>
 </template>
 ```
 
@@ -627,7 +635,7 @@ export default {
 
 ```vue
 <template>
-  <x-header :back="true" back-home="handleBackHome">
+  <x-header :back="true" :back-home="handleBackHome">
     <base-button>操作</base-button>
   </x-header>
 </template>
@@ -829,9 +837,9 @@ export default {
 
 ```vue
 <template>
-  <user-profile 
-    :user-info="userInfo" 
-    :avatar-size="80" 
+  <user-profile
+    :profile="userInfo"
+    :avatar-size="80"
     :avatar-round="true"
   />
 </template>
@@ -1317,6 +1325,130 @@ export default {
 </script>
 ```
 
+### CaptchaDialog
+
+机器人验证对话框组件，通过图形算式验证用户非机器人身份，验证成功后触发事件或刷新页面。通常配合 `CheckRobot.createCaptchaDialog()` 使用。
+
+#### Events
+
+| 事件名 | 说明 | 回调参数 |
+|--------|------|----------|
+| on-success | 验证通过时触发 | - |
+
+#### Methods
+
+| 方法名 | 说明 | 参数 |
+|--------|------|------|
+| show | 显示验证对话框 | - |
+| hide | 隐藏验证对话框并重置表单 | - |
+
+#### 示例
+
+```javascript
+// 推荐：通过 CheckRobot 工具函数触发
+import { CheckRobot } from '@zkwq-x/business'
+CheckRobot.createCaptchaDialog()
+```
+
+```vue
+<!-- 手动使用组件 -->
+<template>
+  <captcha-dialog ref="captchaDialog" @on-success="handleSuccess" />
+</template>
+
+<script>
+export default {
+  methods: {
+    showCaptcha() {
+      this.$refs.captchaDialog.show()
+    },
+    handleSuccess() {
+      console.log('验证通过')
+    }
+  }
+}
+</script>
+```
+
+### CaptchaFormItem
+
+验证码表单项组件，封装了图形验证码输入框与验证码图片（点击可刷新），用于嵌入表单中使用。
+
+#### Props
+
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+|------|------|------|--------|--------|
+| prop | 表单验证字段名 | String | - | - |
+| captcha | 验证码值（v-model） | String | - | - |
+| captchaKey | 验证码 Key（用于获取图形验证码） | String | - | - |
+| showLabel | 是否显示 label | Boolean | - | false |
+
+#### Events
+
+| 事件名 | 说明 | 回调参数 |
+|--------|------|----------|
+| input | 输入值变化时触发 | (value: string) |
+
+#### Methods
+
+| 方法名 | 说明 | 参数 |
+|--------|------|------|
+| handleRefreshCaptcha | 刷新验证码图片 | - |
+
+#### 示例
+
+```vue
+<template>
+  <base-form :model="form" :rules="rules" ref="form">
+    <captcha-form-item
+      prop="captcha"
+      v-model.trim="form.captcha"
+      :captcha-key="clientId"
+    />
+  </base-form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      clientId: 'your-client-id',
+      form: { captcha: null }
+    }
+  }
+}
+</script>
+```
+
+### MultipleSpan
+
+多值文本组件，将字符串数组以逗号分隔渲染为行内 `<span>` 列表，支持分隔符间距控制。
+
+#### Props
+
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+|------|------|------|--------|--------|
+| data | 文本数组 | Array | - | - |
+| gutter | 分隔符间距大小 | String | medium/large | 'medium' |
+
+#### 示例
+
+```vue
+<template>
+  <multiple-span :data="authors" gutter="large" />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      authors: ['张三', '李四', '王五']
+    }
+  }
+}
+</script>
+```
+
 ## 工具函数
 
 ### 加密与哈希函数
@@ -1334,30 +1466,60 @@ const hash = BaseUtil.MD5('hello world')
 console.log(hash) // 输出: 5eb63bbbe01eeed093cb22bb8f5acdc3
 ```
 
-#### encryptAES(data, key)
+#### AESEncode(message[, aesKeyStr, aesIvStr])
 - **功能**: 使用AES算法加密数据
-- **参数**: 
-  - `data` (String): 要加密的数据
-  - `key` (String): 加密密钥
+- **参数**:
+  - `message` (String): 要加密的数据
+  - `aesKeyStr` (String): 加密密钥，默认使用内置 AES_KEY
+  - `aesIvStr` (String): 加密向量，默认使用内置 AES_IV
 - **返回值**: String - 加密后的字符串
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-const encrypted = BaseUtil.encryptAES('sensitive data', 'secret-key')
+const encrypted = BaseUtil.AESEncode('sensitive data')
 ```
 
-#### decryptAES(encrypted, key)
+#### AESDecode(message[, aesKeyStr, aesIvStr])
 - **功能**: 使用AES算法解密数据
-- **参数**: 
-  - `encrypted` (String): 加密的数据
-  - `key` (String): 解密密钥
+- **参数**:
+  - `message` (String): 加密的数据
+  - `aesKeyStr` (String): 解密密钥，默认使用内置 AES_KEY
+  - `aesIvStr` (String): 解密向量，默认使用内置 AES_IV
 - **返回值**: String - 解密后的原始数据
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-const decrypted = BaseUtil.decryptAES(encryptedData, 'secret-key')
+const decrypted = BaseUtil.AESDecode(encryptedData)
+```
+
+#### AESEncodeBase64(message[, aesKeyStr, aesIvStr])
+- **功能**: 使用AES算法加密数据，返回 Base64 格式密文
+- **参数**:
+  - `message` (String): 要加密的数据
+  - `aesKeyStr` (String): 加密密钥，默认使用内置 AES_KEY
+  - `aesIvStr` (String): 加密向量，默认使用内置 AES_IV
+- **返回值**: String - Base64 格式的加密字符串
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+const encrypted = BaseUtil.AESEncodeBase64('sensitive data')
+```
+
+#### AESDecodeBase64(message[, aesKeyStr, aesIvStr])
+- **功能**: 解密 AESEncodeBase64 产生的 Base64 格式密文
+- **参数**:
+  - `message` (String): Base64 格式的加密数据
+  - `aesKeyStr` (String): 解密密钥，默认使用内置 AES_KEY
+  - `aesIvStr` (String): 解密向量，默认使用内置 AES_IV
+- **返回值**: String - 解密后的原始数据
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+const decrypted = BaseUtil.AESDecodeBase64(encryptedBase64Data)
 ```
 
 ### ID与字符串生成函数
@@ -1387,7 +1549,7 @@ const str = BaseUtil.randomString(8)
 console.log(str) // 输出: "a1b2c3d4" (示例)
 ```
 
-#### generateUUID()
+#### guid()
 - **功能**: 生成UUID字符串
 - **参数**: 无
 - **返回值**: String - UUID格式的字符串
@@ -1395,11 +1557,101 @@ console.log(str) // 输出: "a1b2c3d4" (示例)
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-const uuid = BaseUtil.generateUUID()
+const uuid = BaseUtil.guid()
 console.log(uuid) // 输出: "f47ac10b-58cc-4372-a567-0e02b2c3d479" (示例)
 ```
 
 ### 数据验证与处理函数
+
+#### isString(obj)
+- **功能**: 检查值是否为字符串类型
+- **参数**:
+  - `obj` (Any): 要检查的值
+- **返回值**: Boolean
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+console.log(BaseUtil.isString('hello')) // true
+console.log(BaseUtil.isString(123))     // false
+```
+
+#### isObject(obj)
+- **功能**: 检查值是否为普通对象类型
+- **参数**:
+  - `obj` (Any): 要检查的值
+- **返回值**: Boolean
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+console.log(BaseUtil.isObject({}))    // true
+console.log(BaseUtil.isObject([]))    // false
+```
+
+#### isUndefined(val)
+- **功能**: 检查值是否为 undefined
+- **参数**:
+  - `val` (Any): 要检查的值
+- **返回值**: Boolean
+
+#### isDefined(val)
+- **功能**: 检查值是否已定义（非 undefined 且非 null）
+- **参数**:
+  - `val` (Any): 要检查的值
+- **返回值**: Boolean
+
+#### looseEqual(a, b)
+- **功能**: 宽松比较两个值是否相等（对象使用 JSON 序列化比较）
+- **参数**:
+  - `a` (Any): 第一个值
+  - `b` (Any): 第二个值
+- **返回值**: Boolean
+
+#### arrayEquals(arrayA, arrayB)
+- **功能**: 比较两个数组是否相等（逐元素宽松比较）
+- **参数**:
+  - `arrayA` (Array): 第一个数组
+  - `arrayB` (Array): 第二个数组
+- **返回值**: Boolean
+
+#### isEqual(value1, value2)
+- **功能**: 比较两个值是否相等，支持数组和普通值
+- **参数**:
+  - `value1` (Any): 第一个值
+  - `value2` (Any): 第二个值
+- **返回值**: Boolean
+
+#### isSupportWebp()
+- **功能**: 检测当前浏览器是否支持 WebP 图片格式
+- **参数**: 无
+- **返回值**: Boolean
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+if (BaseUtil.isSupportWebp()) {
+  // 使用 WebP 图片
+}
+```
+
+#### HasChinese(str)
+- **功能**: 检查字符串是否包含中文字符
+- **参数**:
+  - `str` (String): 要检查的字符串
+- **返回值**: Boolean
+
+#### HasWhiteSpace(str)
+- **功能**: 检查字符串是否包含空格
+- **参数**:
+  - `str` (String): 要检查的字符串
+- **返回值**: Boolean
+
+#### IsNumber(val)
+- **功能**: 检查值是否为数字类型
+- **参数**:
+  - `val` (Any): 要检查的值
+- **返回值**: Boolean
 
 #### isEmpty(val)
 - **功能**: 检查值是否为空（null、undefined、空字符串、空数组、空对象）
@@ -1431,24 +1683,10 @@ console.log(BaseUtil.isArrayEmpty([1, 2, 3])) // false
 console.log(BaseUtil.isArrayEmpty(undefined)) // true
 ```
 
-#### isObjectEmpty(val)
-- **功能**: 检查对象是否为空或未定义
-- **参数**: 
-  - `val` (Object): 要检查的对象
-- **返回值**: Boolean - 如果对象为空或未定义返回true，否则返回false
-- **示例**:
-```javascript
-import { BaseUtil } from '@zkwq-x/business'
-
-console.log(BaseUtil.isObjectEmpty({})) // true
-console.log(BaseUtil.isObjectEmpty({a: 1})) // false
-console.log(BaseUtil.isObjectEmpty(undefined)) // true
-```
-
-#### isFunction(val)
+#### isFunction(functionToCheck)
 - **功能**: 检查值是否为函数
-- **参数**: 
-  - `val` (Any): 要检查的值
+- **参数**:
+  - `functionToCheck` (Any): 要检查的值
 - **返回值**: Boolean - 如果值是函数返回true，否则返回false
 - **示例**:
 ```javascript
@@ -1459,172 +1697,396 @@ console.log(BaseUtil.isFunction(function() {})) // true
 console.log(BaseUtil.isFunction('hello')) // false
 ```
 
+### 表单验证函数
+
+> 以下验证函数符合 Element-UI / base-form 的 validator 规范，可直接用于表单 rules 配置。
+
+#### ValidateMobile(rule, value, callback)
+- **功能**: 验证手机号格式
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+rules: {
+  phone: [{ validator: BaseUtil.ValidateMobile, trigger: 'blur' }]
+}
+```
+
+#### ValidateMobileCode(rule, value, callback)
+- **功能**: 验证短信验证码（6位纯数字）
+
+#### ValidateCaptcha(rule, value, callback)
+- **功能**: 验证图形验证码（纯数字）
+
+#### ValidateEmail(rule, value, callback)
+- **功能**: 验证邮箱格式
+
+#### ValidateEmailCode(rule, value, callback)
+- **功能**: 验证邮箱验证码（6位纯数字）
+
 ### 数据转换函数
 
-#### formatFileSize(bytes)
-- **功能**: 格式化文件大小为人类可读的格式
-- **参数**: 
-  - `bytes` (Number): 文件大小（字节）
-- **返回值**: String - 格式化后的文件大小（如 "1.5 MB"）
-- **示例**:
-```javascript
-import { BaseUtil } from '@zkwq-x/business'
-
-console.log(BaseUtil.formatFileSize(1024)) // "1 KB"
-console.log(BaseUtil.formatFileSize(1048576)) // "1 MB"
-console.log(BaseUtil.formatFileSize(1073741824)) // "1 GB"
-```
-
-#### formatDate(date, format)
-- **功能**: 格式化日期
-- **参数**: 
-  - `date` (Date|String|Number): 日期对象、时间戳或日期字符串
-  - `format` (String): 日期格式，默认为 "YYYY-MM-DD"
-- **返回值**: String - 格式化后的日期字符串
-- **示例**:
-```javascript
-import { BaseUtil } from '@zkwq-x/business'
-
-console.log(BaseUtil.formatDate(new Date(), 'YYYY-MM-DD HH:mm:ss')) // "2023-12-22 14:30:00" (示例)
-console.log(BaseUtil.formatDate(1671694200000, 'YYYY/MM/DD')) // "2022/12/22" (示例)
-```
-
-#### formatNumber(num, digits)
+#### formatNumber(val)
 - **功能**: 格式化数字，添加千位分隔符
-- **参数**: 
-  - `num` (Number): 要格式化的数字
-  - `digits` (Number): 保留的小数位数，默认为2
-- **返回值**: String - 格式化后的数字字符串
+- **参数**:
+  - `val` (Number): 要格式化的数字
+- **返回值**: String - 格式化后的数字字符串（如 "5,416,252"）
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-console.log(BaseUtil.formatNumber(1234567.891)) // "1,234,567.89"
-console.log(BaseUtil.formatNumber(1234567.891, 0)) // "1,234,568"
+console.log(BaseUtil.formatNumber(5416252)) // "5,416,252"
 ```
+
+#### formatKNumber(val)
+- **功能**: 格式化数字为 K 单位（千）
+- **参数**:
+  - `val` (Number): 要格式化的数字
+- **返回值**: String|Number - 小于1000返回原值，否则返回如 "6.2K" 格式的字符串
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+console.log(BaseUtil.formatKNumber(6252))  // "6.3K"
+console.log(BaseUtil.formatKNumber(500))   // 500
+```
+
+#### scaleNumber(val, scale)
+- **功能**: 对数字进行固定小数位数格式化
+- **参数**:
+  - `val` (Number): 要格式化的数字
+  - `scale` (Number): 保留的小数位数
+- **返回值**: String - 固定小数位的数字字符串
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+console.log(BaseUtil.scaleNumber(3.14159, 2)) // "3.14"
+```
+
+#### ConvertArrayToString(array[, splitSign])
+- **功能**: 将数组转换为分隔符连接的字符串，自动过滤 null 值
+- **参数**:
+  - `array` (Array): 要转换的数组
+  - `splitSign` (String): 分隔符，默认 `','`
+- **返回值**: String - 转换后的字符串，数组为空时返回 `''`
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+console.log(BaseUtil.ConvertArrayToString(['张三', '李四', '王五'])) // "张三,李四,王五"
+console.log(BaseUtil.ConvertArrayToString(['a', 'b'], ' | '))       // "a | b"
+```
+
+#### ConvertStringToArray(str[, splitSign])
+- **功能**: 将分隔符连接的字符串转换为数组
+- **参数**:
+  - `str` (String): 要转换的字符串
+  - `splitSign` (String): 分隔符，默认 `','`
+- **返回值**: Array - 转换后的数组，str 为空时返回 `[]`
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+console.log(BaseUtil.ConvertStringToArray('张三,李四,王五')) // ['张三', '李四', '王五']
+```
+
+#### clearHighlight(str)
+- **功能**: 清除字符串中的高亮 HTML 标签（`<span class="Highlight">`）
+- **参数**:
+  - `str` (String): 包含高亮标签的字符串
+- **返回值**: String - 清除标签后的纯文本
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+const raw = '这是<span class="Highlight">高亮</span>内容'
+console.log(BaseUtil.clearHighlight(raw)) // "这是高亮内容"
+```
+
+#### ClearHtml(text)
+- **功能**: 清除字符串中所有 HTML 标签
+- **参数**:
+  - `text` (String): 含 HTML 标签的字符串
+- **返回值**: String - 纯文本字符串
+
+### 数组工具函数
+
+#### ArraySwapItems(arr, src, dest)
+- **功能**: 交换数组中两个元素的位置
+- **参数**:
+  - `arr` (Array): 目标数组
+  - `src` (Number): 源元素索引
+  - `dest` (Number): 目标元素索引
+- **返回值**: Array - 操作后的数组
+
+#### ArrayValueEquals(a, b)
+- **功能**: 严格比较两个数组的值是否完全相同（引用相等或逐元素 `===`）
+- **参数**:
+  - `a` (Array): 第一个数组
+  - `b` (Array): 第二个数组
+- **返回值**: Boolean
+
+#### ArrayUpItem(arr, index)
+- **功能**: 将数组中指定位置的元素上移一位
+- **参数**:
+  - `arr` (Array): 目标数组
+  - `index` (Number): 元素索引，已是第一位则不操作
+
+#### ArrayDownItem(arr, index)
+- **功能**: 将数组中指定位置的元素下移一位
+- **参数**:
+  - `arr` (Array): 目标数组
+  - `index` (Number): 元素索引，已是最后一位则不操作
+
+### 文件与下载函数
+
+#### DownloadFile(base64File, fileName)
+- **功能**: 将 Base64 编码的文件数据下载到本地
+- **参数**:
+  - `base64File` (String): Base64 格式的文件数据
+  - `fileName` (String): 下载文件名
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+BaseUtil.DownloadFile(base64Data, 'report.pdf')
+```
+
+#### DownloadUrl(url, fileName)
+- **功能**: 通过 URL 下载文件
+- **参数**:
+  - `url` (String): 文件 URL
+  - `fileName` (String): 下载文件名
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+BaseUtil.DownloadUrl('https://example.com/file.pdf', 'file.pdf')
+```
+
+#### Base64toBlob(base64Data[, contentType, sliceSize])
+- **功能**: 将 Base64 字符串转换为 Blob 对象
+- **参数**:
+  - `base64Data` (String): Base64 编码数据
+  - `contentType` (String): MIME 类型，默认 `''`
+  - `sliceSize` (Number): 切片大小，默认 `512`
+- **返回值**: Blob
+
+#### isPDF(file)
+- **功能**: 检测文件是否为 PDF 格式（通过读取文件头字节判断）
+- **参数**:
+  - `file` (File): 文件对象
+- **返回值**: Promise\<Boolean\>
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+BaseUtil.isPDF(file).then(result => {
+  console.log('是否为PDF:', result)
+})
+```
+
+### 浏览器环境检测函数
+
+#### isIE()
+- **功能**: 检测当前浏览器是否为 IE
+- **返回值**: Boolean
+
+#### isEdge()
+- **功能**: 检测当前浏览器是否为 Edge
+- **返回值**: Boolean
+
+#### isFirefox()
+- **功能**: 检测当前浏览器是否为 Firefox
+- **返回值**: Boolean
 
 ### URL与参数处理函数
 
-#### getQueryString(name)
+#### getQueryString(name[, mode])
 - **功能**: 获取URL查询字符串参数值
-- **参数**: 
+- **参数**:
   - `name` (String): 参数名
-- **返回值**: String - 参数值，如果不存在则返回null
+  - `mode` (String): 路由模式，`'history'`（默认）或 `'hash'`
+- **返回值**: String - 参数值，如果不存在则返回空字符串 `''`
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
 // 假设当前URL为: https://example.com?id=123&name=test
-console.log(BaseUtil.getQueryString('id')) // "123"
-console.log(BaseUtil.getQueryString('name')) // "test"
-console.log(BaseUtil.getQueryString('nonexistent')) // null
-```
+console.log(BaseUtil.getQueryString('id'))            // "123"
+console.log(BaseUtil.getQueryString('name'))          // "test"
+console.log(BaseUtil.getQueryString('nonexistent'))   // ""
 
-#### setQueryString(url, params)
-- **功能**: 设置URL查询字符串参数
-- **参数**: 
-  - `url` (String): 原始URL
-  - `params` (Object): 要设置的参数对象
-- **返回值**: String - 设置参数后的URL
-- **示例**:
-```javascript
-import { BaseUtil } from '@zkwq-x/business'
-
-const newUrl = BaseUtil.setQueryString('https://example.com', { id: 123, name: 'test' })
-console.log(newUrl) // "https://example.com?id=123&name=test"
+// hash 路由模式（URL为: https://example.com/#/?id=456）
+console.log(BaseUtil.getQueryString('id', 'hash'))    // "456"
 ```
 
 ### 数据存储函数
 
-#### setLocalStorage(key, value)
-- **功能**: 设置本地存储数据
-- **参数**: 
+> 存储函数基于 localStorage/sessionStorage 封装，支持过期时间，内部使用 Base64 编码存储。
+
+#### setStorage(key, value[, expire])
+- **功能**: 设置本地存储数据（localStorage），支持过期时间
+- **参数**:
   - `key` (String): 存储键名
-  - `value` (Any): 要存储的值（会自动序列化为JSON）
+  - `value` (Any): 要存储的值（自动序列化）
+  - `expire` (Number): 过期时间（毫秒），默认 `7200000`（2小时），传 `-1` 表示永不过期
 - **返回值**: 无
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-BaseUtil.setLocalStorage('user', { id: 1, name: 'John' })
+BaseUtil.setStorage('user', { id: 1, name: 'John' })
+BaseUtil.setStorage('token', 'abc123', -1) // 永不过期
 ```
 
-#### getLocalStorage(key)
-- **功能**: 获取本地存储数据
-- **参数**: 
+#### getStorage(key)
+- **功能**: 获取本地存储数据，过期自动清除并返回 null
+- **参数**:
   - `key` (String): 存储键名
-- **返回值**: Any - 存储的值（会自动反序列化JSON），如果不存在则返回null
+- **返回值**: Any - 存储的值，如果不存在或已过期则返回 null
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-const user = BaseUtil.getLocalStorage('user')
+const user = BaseUtil.getStorage('user')
 console.log(user) // { id: 1, name: 'John' } (示例)
 ```
 
-#### removeLocalStorage(key)
+#### removeStorage(key)
 - **功能**: 删除本地存储数据
-- **参数**: 
+- **参数**:
   - `key` (String): 存储键名
 - **返回值**: 无
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-BaseUtil.removeLocalStorage('user')
+BaseUtil.removeStorage('user')
+```
+
+#### setSession(key, value[, expire])
+- **功能**: 设置会话存储数据（sessionStorage），支持过期时间
+- **参数**:
+  - `key` (String): 存储键名
+  - `value` (Any): 要存储的值（自动序列化）
+  - `expire` (Number): 过期时间（毫秒），默认 `72000000`（20小时）
+- **返回值**: 无
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+BaseUtil.setSession('tempData', { page: 1 })
+```
+
+#### getSession(key)
+- **功能**: 获取会话存储数据，过期自动清除并返回 null
+- **参数**:
+  - `key` (String): 存储键名
+- **返回值**: Any - 存储的值，如果不存在或已过期则返回 null
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+const data = BaseUtil.getSession('tempData')
+```
+
+#### removeSession(key)
+- **功能**: 删除会话存储数据
+- **参数**:
+  - `key` (String): 存储键名
+- **返回值**: 无
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+BaseUtil.removeSession('tempData')
 ```
 
 ### 其他工具函数
 
-#### debounce(func, wait)
-- **功能**: 创建防抖函数
-- **参数**: 
-  - `func` (Function): 要防抖的函数
-  - `wait` (Number): 等待时间（毫秒）
-- **返回值**: Function - 防抖后的函数
+#### ClearInterval(timer)
+- **功能**: 安全清除 setInterval 定时器并置为 null
+- **参数**:
+  - `timer`: 定时器引用
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-const debouncedSearch = BaseUtil.debounce((query) => {
-  console.log('搜索:', query)
-}, 300)
-
-debouncedSearch('test') // 只在停止输入300ms后执行
+let timer = setInterval(() => {}, 1000)
+BaseUtil.ClearInterval(timer)
 ```
 
-#### throttle(func, wait)
-- **功能**: 创建节流函数
-- **参数**: 
-  - `func` (Function): 要节流的函数
-  - `wait` (Number): 等待时间（毫秒）
-- **返回值**: Function - 节流后的函数
+#### ClearTimeout(timer)
+- **功能**: 安全清除 setTimeout 定时器并置为 null
+- **参数**:
+  - `timer`: 定时器引用
+
+#### CalcTextWidth(text[, font])
+- **功能**: 使用 Canvas 计算文本的像素宽度
+- **参数**:
+  - `text` (String): 要计算的文本
+  - `font` (String): CSS font 字符串，默认为系统默认字体 14px
+- **返回值**: Number - 文本像素宽度
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-const throttledScroll = BaseUtil.throttle(() => {
-  console.log('滚动事件')
-}, 100)
-
-window.addEventListener('scroll', throttledScroll)
+const width = BaseUtil.CalcTextWidth('Hello World')
+console.log(width) // 输出像素宽度数值
 ```
 
-#### deepClone(obj)
-- **功能**: 深度克隆对象
-- **参数**: 
-  - `obj` (Any): 要克隆的对象
-- **返回值**: Any - 克隆后的对象
+#### GenerateNonce(length)
+- **功能**: 生成指定长度的大写随机字符串（含数字和字母）
+- **参数**:
+  - `length` (Number): 字符串长度，为空时返回 null
+- **返回值**: String|null
 - **示例**:
 ```javascript
 import { BaseUtil } from '@zkwq-x/business'
 
-const original = { a: 1, b: { c: 2 } }
-const cloned = BaseUtil.deepClone(original)
+const nonce = BaseUtil.GenerateNonce(16)
+console.log(nonce) // 输出如: "A3B7C2D9E1F4G8H5"
+```
 
-cloned.b.c = 3
-console.log(original.b.c) // 2 (原对象未受影响)
-console.log(cloned.b.c) // 3
+#### isArrayContains(arr, item)
+- **功能**: 检查数组是否包含指定元素
+- **参数**:
+  - `arr` (Array): 目标数组
+  - `item` (Any): 要查找的元素
+- **返回值**: Boolean
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+console.log(BaseUtil.isArrayContains([1, 2, 3], 2)) // true
+console.log(BaseUtil.isArrayContains([1, 2, 3], 5)) // false
+```
+
+#### getStringLength(str)
+- **功能**: 获取字符串的字节长度（中文字符计2字节，英文字符计1字节）
+- **参数**:
+  - `str` (String): 目标字符串
+- **返回值**: Number - 字节长度
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+console.log(BaseUtil.getStringLength('hello'))  // 5
+console.log(BaseUtil.getStringLength('你好'))    // 4
+```
+
+#### getPlainUrl(url)
+- **功能**: 获取去除查询参数后的纯 URL
+- **参数**:
+  - `url` (String): 原始 URL
+- **返回值**: String|null - 去除 `?` 及其后内容的 URL，url 为空时返回 null
+- **示例**:
+```javascript
+import { BaseUtil } from '@zkwq-x/business'
+
+console.log(BaseUtil.getPlainUrl('https://example.com/page?id=1')) // "https://example.com/page"
 ```
 
 ### Base64Util
@@ -1681,67 +2143,145 @@ http.post('/api/data', { name: 'test' }).then(response => {
 
 ### CONSTANT
 
-常量集合。
+常量集合，包含资源类型、投票类型、上传地址、移动端断点等业务常量。
 
-#### 属性
+#### 导出常量
 
-| 属性名 | 说明 | 类型 |
-|--------|------|------|
-| API_BASE_URL | API基础URL | string |
-| STATUS_CODE | 状态码常量 | object |
+| 常量名 | 说明 | 值 |
+|--------|------|----|
+| TYPE_ARTICLE | 文章类型 | `'article'` |
+| TYPE_PATENT | 专利类型 | `'patent'` |
+| TYPE_REPORT | 报告类型 | `'report'` |
+| TYPE_BOOK | 图书类型 | `'book'` |
+| TYPE_HANDBOOK | 手册类型 | `'handbook'` |
+| TYPE_PROJECT | 项目类型 | `'project'` |
+| TYPE_SCIENCE_DB | 科学数据类型 | `'sciencedata'` |
+| TYPE_SOFTWARE | 软件类型 | `'software'` |
+| TYPE_MONOGRAPH | 专著类型 | `'monograph'` |
+| TYPE_AWARD | 奖项类型 | `'award'` |
+| TYPE_LITERATURE | 文献类型 | `'literature'` |
+| TYPE_NEWS | 新闻类型 | `'news'` |
+| TYPE_JOURNAL | 期刊类型 | `'journal'` |
+| TYPE_CHINAXIV | ChinaXiv类型 | `'chinaxiv'` |
+| TYPE_BULLETIN | 公告类型 | `'bulletin'` |
+| TYPE_BULLETIN_REPORT | 公告报告类型 | `'bulletin_report'` |
+| TYPE_FAVLIST | 收藏列表类型 | `'favlist'` |
+| TYPE_COMMENT | 评论类型 | `'comment'` |
+| VOTE_TYPE_NEUTRAL | 中立投票 | `'neutral'` |
+| VOTE_TYPE_UP | 点赞投票 | `'up'` |
+| TYPE_FOLLOWER | 粉丝类型 | `'follower'` |
+| TYPE_FOLLOWEE | 关注类型 | `'followee'` |
+| UPLOAD_ACTION | 默认文件上传地址 | 动态（基于 location） |
+| UPLOAD_ACTION_HKY | HKY 文件上传地址 | 动态（基于 location） |
+| BASE_FILE_URL | 文件下载基础 URL | 动态（基于 location） |
+| MOBILE_CLIENT_WIDTH | 移动端宽度断点 | `576` |
+| AES_KEY | AES 加密默认密钥 | 内置值 |
+| AES_IV | AES 加密默认向量 | 内置值 |
 
 #### 示例
 
 ```javascript
 import { CONSTANT } from '@zkwq-x/business';
 
-// 使用常量
-console.log(CONSTANT.API_BASE_URL);
-console.log(CONSTANT.STATUS_CODE.SUCCESS);
+if (item.type === CONSTANT.TYPE_ARTICLE) {
+  // 处理文章类型
+}
+
+const isPC = window.innerWidth > CONSTANT.MOBILE_CLIENT_WIDTH
 ```
 
 ### ScrollTool
 
-滚动工具。
+滚动工具类，封装了纵向/横向滚动监听，支持滚动到顶/左边缘及销毁监听。
+
+#### 构造函数
+
+```javascript
+new ScrollTool(dom?, useCapture?)
+```
+
+| 参数 | 说明 | 类型 | 默认值 |
+|------|------|------|--------|
+| dom | 监听滚动的 DOM 元素 | Element | `document` |
+| useCapture | 是否使用捕获阶段 | Boolean | `false` |
 
 #### 方法
 
 | 方法名 | 说明 | 参数 |
 |--------|------|------|
-| scrollToTop | 滚动到顶部 | - |
-| scrollToElement | 滚动到指定元素 | (selector: string) |
-| scrollBottom | 滚动到底部 | - |
+| toTop | 滚动到最顶部（scrollTop = 0） | - |
+| toLeft | 滚动到最左侧（scrollLeft = 0） | - |
+| init(callBack) | 初始化滚动监听，回调参数：`(scrollPosition, isBottom, scrollType, event)` | callBack: Function |
+| destroy | 销毁滚动监听 | - |
+
+> `init` 回调参数说明：
+> - `scrollPosition` (Number): 当前滚动位置
+> - `isBottom` (Boolean): 是否已到达底部/右侧边缘
+> - `scrollType` (String): 滚动方向，`'vertical'` 或 `'horizontal'`
+> - `event` (Event): 原始滚动事件
 
 #### 示例
 
 ```javascript
 import { ScrollTool } from '@zkwq-x/business';
 
-// 滚动到顶部
-ScrollTool.scrollToTop();
+const scroller = new ScrollTool(this.$refs.container)
 
-// 滚动到指定元素
-ScrollTool.scrollToElement('#target');
+scroller.init((position, isBottom, type) => {
+  if (type === 'vertical' && isBottom) {
+    // 纵向滚动到底，加载更多
+    this.loadMore()
+  }
+})
+
+// 组件销毁时
+scroller.destroy()
 ```
 
-### Quote
+### ExportUtil
 
-引用工具。
+资源导出工具模块（对应源文件 `util/quote.js`），提供将搜索结果批量导出为 Excel（.xlsx）或 RIS（.ris）格式的功能。
 
-#### 方法
+#### 函数
 
-| 方法名 | 说明 | 参数 | 返回值 |
-|--------|------|------|--------|
-| format | 格式化引用 | (text: string) | string |
-
-#### 示例
-
+##### exportExcel(applicationId, fileName, sheetName, models, resourcePrefix)
+- **功能**: 将资源数据导出为 Excel 文件并触发浏览器下载
+- **参数**:
+  - `applicationId` (String): 应用 ID
+  - `fileName` (String): 导出文件名（无需扩展名）
+  - `sheetName` (String): Sheet 名称
+  - `models` (Array): 资源数据数组，支持 article/patent/sciencedata/report/book 等类型
+  - `resourcePrefix` (String): 资源详情页 URL 前缀，如 `'https://example.com/article/'`
+- **返回值**: Promise
+- **示例**:
 ```javascript
-import { Quote } from '@zkwq-x/business';
+import { exportExcel } from '@zkwq-x/business'
 
-// 格式化引用
-const formattedQuote = Quote.format('这是一段引用文本');
+exportExcel('app001', '论文导出', '论文', articleList, 'https://example.com/article/')
 ```
+
+##### buildExcelParams(applicationId, fileName, sheetName, models, resourcePrefix)
+- **功能**: 构建 Excel 导出参数对象（不触发下载，用于自定义处理）
+- **返回值**: Object - 包含 `appid`、`fileName`、`sheetName`、`head`、`data` 的参数对象
+
+##### exportRIS(applicationId, fileName, models, resourcePrefix)
+- **功能**: 将资源数据导出为 RIS 文件并触发浏览器下载
+- **参数**:
+  - `applicationId` (String): 应用 ID
+  - `fileName` (String): 导出文件名（无需扩展名）
+  - `models` (Array): 资源数据数组
+  - `resourcePrefix` (String): 资源详情页 URL 前缀
+- **返回值**: Promise
+- **示例**:
+```javascript
+import { exportRIS } from '@zkwq-x/business'
+
+exportRIS('app001', '专利导出', patentList, 'https://example.com/patent/')
+```
+
+##### buildRISParams(applicationId, fileName, models, resourcePrefix)
+- **功能**: 构建 RIS 导出参数对象（不触发下载，用于自定义处理）
+- **返回值**: Object - 包含 `appid`、`fileName`、`text` 的参数对象
 
 ### Bus
 
@@ -1774,23 +2314,62 @@ Bus.on('another-event', handler)
 Bus.remove('another-event', handler)
 ```
 
+### CheckRobot
+
+机器人验证工具，通过命令式方式弹出验证码对话框，验证通过后自动刷新页面。通常用于 HTTP 响应拦截器中，当检测到需要人机验证时触发。
+
+#### 函数
+
+##### createCaptchaDialog()
+- **功能**: 创建并显示机器人验证对话框（单例，防止重复弹出）。验证成功后页面自动刷新。
+- **参数**: 无
+- **示例**:
+```javascript
+import { CheckRobot } from '@zkwq-x/business'
+
+// 在 axios 拦截器中使用
+axios.interceptors.response.use(null, error => {
+  if (error.response?.status === 403) {
+    CheckRobot.createCaptchaDialog()
+  }
+  return Promise.reject(error)
+})
+```
+
 ### HighLight
 
-高亮工具。
+高亮工具，支持中英文混合文本的关键词高亮，通过 Proxy 实现对对象/数组的递归高亮处理。
 
 #### 方法
 
 | 方法名 | 说明 | 参数 | 返回值 |
 |--------|------|------|--------|
-| highlight | 高亮文本 | (text: string, keyword: string) | string |
+| check | 检查文本是否包含指定关键词 | `(str, particles, ignoreCase?)` | Boolean |
+| build | 对文本（或对象/数组）进行高亮处理，返回含高亮标签的 HTML 字符串或 Proxy | `(obj, particles, options?)` | String\|Proxy |
+
+> `build` options 参数说明：
+> - `ignoreCase` (Boolean): 是否忽略大小写，默认 `false`
+> - `startTag` (String): 高亮包裹标签名，默认 `'span'`
+> - `classMapper` (Array): 关键词样式映射，格式 `[{ patten: '关键词', classList: ['class1'] }]`
 
 #### 示例
 
 ```javascript
 import { HighLight } from '@zkwq-x/business';
 
+// 检查是否包含关键词
+const contains = HighLight.check('Vue is awesome', ['Vue'], true)
+console.log(contains) // true
+
 // 高亮文本
-const highlightedText = HighLight.highlight('原始文本', '关键词');
+const html = HighLight.build('Vue is awesome', ['Vue'], { ignoreCase: true })
+console.log(html)
+// 输出: '<span class="highlight_text ">Vue</span> is awesome'
+
+// 高亮对象属性（通过 Proxy）
+const obj = { title: 'Vue框架介绍', abstract: '关于Vue的详细介绍' }
+const highlighted = HighLight.build(obj, ['Vue'], {})
+console.log(highlighted.title) // 返回高亮后的 title 字符串
 ```
 
 ## 服务模块
@@ -2108,7 +2687,7 @@ Service.GetSearchSuggestions('Vue').then(suggestions => {
 
 ```vue
 <template>
-  <button v-ipple>点击我有水波纹效果</button>
+  <button v-ripple>点击我有水波纹效果</button>
 </template>
 ```
 
