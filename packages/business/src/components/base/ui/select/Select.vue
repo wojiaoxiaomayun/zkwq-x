@@ -17,7 +17,9 @@
           type="info"
           @close="deleteTag($event, selected[0])"
           disable-transitions>
-          <span class="base-select__tags-text">{{ selected[0].currentLabel }}</span>
+          <span class="base-select__tags-text">
+              <slot name="label">{{ selected[0].currentLabel }}</slot>
+          </span>
         </base-tag>
         <base-tag
           v-if="selected.length > 1"
@@ -26,6 +28,16 @@
           type="info"
           disable-transitions>
           <span class="base-select__tags-text">+ {{ selected.length - 1 }}</span>
+        </base-tag>
+      </span>
+      <span v-if="collapseTags && !selected.length">
+        <base-tag
+          :size="collapseTagSize"
+          type="info"
+          disable-transitions>
+          <span class="base-select__tags-text">
+              <slot name="emptyLabel"></slot>
+          </span>
         </base-tag>
       </span>
       <transition-group @after-leave="resetInputHeight" v-if="!collapseTags">
@@ -84,7 +96,6 @@
       :tabindex="(multiple && filterable) ? '-1' : null"
       :enable-focus-class="false"
       :show-label="showLabel"
-      :tags="selected"
       @focus="handleFocus"
       @blur="handleBlur"
       @keyup.native="debouncedOnInputChange"
@@ -367,7 +378,7 @@ export default {
       value(val, oldVal) {
         if (this.multiple) {
           this.resetInputHeight()
-          if (!this.showLabel && ((val && val.length > 0) || (this.$refs.input && this.query !== ''))) {
+          if ((val && val.length > 0) || (this.$refs.input && this.query !== '')) {
             this.currentPlaceholder = ''
           } else {
             this.currentPlaceholder = this.cachedPlaceHolder

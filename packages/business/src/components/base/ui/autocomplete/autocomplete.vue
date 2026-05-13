@@ -57,6 +57,9 @@
           {{ item[valueKey] }}
         </slot>
       </li>
+      <li v-if="showEmptyText" class="base-autocomplete-suggestion__empty">
+        {{ emptyText }}
+      </li>
     </base-autocomplete-suggestions>
   </div>
 </template>
@@ -135,6 +138,10 @@
         default: 'bottom-start'
       },
       hideLoading: Boolean,
+      emptyText: {
+        type: String,
+        default: ''
+      },
       popperAppendToBody: {
         type: Boolean,
         default: true
@@ -154,10 +161,17 @@
       };
     },
     computed: {
+      showEmptyText() {
+        return this.activated &&
+          !this.loading &&
+          !!this.emptyText &&
+          Array.isArray(this.suggestions) &&
+          this.suggestions.length === 0;
+      },
       suggestionVisible() {
         const suggestions = this.suggestions;
         let isValidData = Array.isArray(suggestions) && suggestions.length > 0;
-        return (isValidData || this.loading) && this.activated;
+        return (isValidData || this.loading || this.showEmptyText) && this.activated;
       },
       id() {
         return `base-autocomplete-${generateId()}`;
@@ -256,6 +270,7 @@
       },
       highlight(index) {
         if (!this.suggestionVisible || this.loading) { return; }
+        if (!Array.isArray(this.suggestions) || this.suggestions.length === 0) { return; }
         if (index < 0) {
           this.highlightedIndex = -1;
           return;

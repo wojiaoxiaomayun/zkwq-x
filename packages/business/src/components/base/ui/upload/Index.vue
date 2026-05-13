@@ -68,6 +68,10 @@ export default {
       type: Function,
       default: noop
     },
+    onInvalidExtension: {
+      type: Function,
+      default: noop
+    },
     onPreview: {
       type: Function
     },

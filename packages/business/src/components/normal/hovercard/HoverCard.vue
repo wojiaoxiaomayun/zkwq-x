@@ -176,7 +176,7 @@ export default {
   }
   .HoverCard__attrInfo {
     margin-left: 10px;
-    color: $--color-secondary;
+    color: $--color-text-secondary;
     white-space: nowrap;
   }
   .HoverCard__attrInfo .Icon {
@@ -186,7 +186,7 @@ export default {
     padding: 0 12px 16px;
     font-size: $--font-size-base;
     opacity: 1;
-    @include transition-base(opacity);
+    transition: opacity .2s cubic-bezier(.645, .045, .355, 1);
   }
   .HoverCard--isLoading {
     opacity: 0;
@@ -237,7 +237,7 @@ export default {
   }
   .HoverCard__boardKey {
     line-height: 1.7;
-    color: $--color-secondary;
+    color: $--color-text-secondary;
   }
   .HoverCard__boardNumber {
     margin-top: 4px;

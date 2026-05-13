@@ -2,8 +2,6 @@ import { addResizeListener, removeResizeListener } from '../util/resize-events'
 import scrollbarWidth from '../util/scrollbar-width'
 import { toObject } from '../util'
 import Bar from './bar'
-// import { mapActions } from 'vuex'
-// import { SET_SCROLL_MOVE_Y } from '../../../../store/mutation-types'
 
 export default {
   name: 'BaseScrollbar',
@@ -112,10 +110,6 @@ export default {
   },
 
   methods: {
-    // ...mapActions([
-    //   SET_SCROLL_MOVE_Y
-    // ]),
-
     handleScroll () {
       const wrap = this.wrap
 
@@ -125,9 +119,6 @@ export default {
       if (this.enableCalc) {
         let isMovedToBottom = wrap.scrollTop + wrap.clientHeight >= wrap.scrollHeight - 10 - this.offsetBottom
         this.$emit('on-scroll', wrap.scrollTop, isMovedToBottom)
-        if (!this.alone) {
-          // this.SET_SCROLL_MOVE_Y(wrap.scrollTop)
-        }
       }
 
     },
@@ -135,7 +126,7 @@ export default {
     easing(t, b, c, d) {
       return c * (-Math.pow(2, -10 * t / d) + 1) * 1024 / 1023 + b
     },
-    scrollTo(offsetTop, smooth) {
+    scrollTo(offsetTop, smooth, duration) {
       if (smooth) {
         let startTop = this.wrap.scrollTop
         let startTimestamp
@@ -144,13 +135,13 @@ export default {
           let progress = timestamp - startTimestamp
           let step
           if (offsetTop > startTop) {
-            step = this.easing(progress, startTop, offsetTop, this.duration)
+            step = this.easing(progress, startTop, offsetTop, duration ? duration : this.duration)
             this.wrap.scrollTop = step >= offsetTop ? offsetTop : step.toFixed(0)
           } else {
-            step = this.easing(progress, offsetTop, startTop, this.duration)
+            step = this.easing(progress, offsetTop, startTop, duration ? duration : this.duration)
             this.wrap.scrollTop = (startTop - step).toFixed(0) <= offsetTop ? offsetTop : (startTop - step).toFixed(0)
           }
-          if (progress < this.duration) {
+          if (progress < (duration ? duration : this.duration)) {
             timer = requestAnimationFrame(scroll)
           } else {
             cancelAnimationFrame(timer)
@@ -165,17 +156,14 @@ export default {
         this.wrap.scrollTop = offsetTop
       }
     },
-    scrollTop() {
-      this.scrollTo(0, true)
-      if (this.enableCalc && !this.alone) {
-        // this.SET_SCROLL_MOVE_Y(0)
-      }
+    scrollTop(duration) {
+      this.scrollTo(0, true, duration)
     },
     scrollBottom() {
       this.scrollTo(this.wrap.scrollHeight, true)
-      if (this.enableCalc && !this.alone) {
-        // this.SET_SCROLL_MOVE_Y(this.wrap.scrollHeight)
-      }
+    },
+    scrollBottomStrict() {
+      this.scrollTo(this.wrap.scrollHeight, false)
     },
     update() {
       let heightPercentage, widthPercentage

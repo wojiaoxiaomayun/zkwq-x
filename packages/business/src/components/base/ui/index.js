@@ -1,5 +1,7 @@
 import Message from './message'
+import XMessage from './message/xmessage'
 import MessageBox from './message-box/main.js'
+import Loading from './loading/main.js'
 import locale from './locale'
 import BaseAvatar from './avatar'
 import Button from "./button/Button";
@@ -19,7 +21,7 @@ import timeSelect from "./date-picker/picker/time-select";
 import checkbox from "./checkbox/checkbox";
 import checkboxButton from "./checkbox/checkbox-button";
 import checkboxGroup from "./checkbox/checkbox-group";
-import Loading from './loading/index.js';
+
 import col from "./col/col";
 import collapse from "./collapse/collapse";
 import collapseItem from "./collapse/collapse-item";
@@ -153,9 +155,9 @@ const BaseUI = {
     locale.i18n(opts.i18n)
     components.forEach(component => {
       if(opts.prefix){
-        Vue.component(component.name.replace('Base',opts.prefix), component);
+        Vue.component((component.name || component.componentName).replace('Base',opts.prefix), component);
       }else{
-        Vue.component(component.name, component);
+        Vue.component((component.name || component.componentName), component);
       }
     });
     Vue.use(Loading);
@@ -169,7 +171,7 @@ const BaseUI = {
     Vue.prototype.$confirm = MessageBox.confirm;
     Vue.prototype.$prompt = MessageBox.prompt;
     Vue.prototype.$notify = Notification;
-    Vue.prototype.$message = Message;
+    Vue.prototype.$message = XMessage;
   }
 }
 

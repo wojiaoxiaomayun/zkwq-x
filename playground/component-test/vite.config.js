@@ -1,13 +1,34 @@
 import { defineConfig } from 'vite'
 import {createVuePlugin} from 'vite-plugin-vue2'
+import { transformVueJsx } from 'vite-plugin-vue2/dist/jsxTransform'
 import {resolve} from 'path'
 import Inspect from 'vite-plugin-inspect'
 import {vitePlugin} from 'unplugin-test'
 import {ColorChangeUnpluginVite,presetBaseUIDynamic} from '@zkwq/unplugin-color-change'
 import {VersionCheckVite} from '@zkwq/unplugin-version-check'
+
+const baseUiVue2Jsx = () => ({
+  name: 'base-ui-vue2-jsx',
+  transform(code, id) {
+    const normalizedId = id.replace(/\\/g, '/')
+    const isBaseUiModule = normalizedId.includes('/packages/business/src/components/base/ui/')
+      || normalizedId.includes('/src/components/base/ui/')
+    const isVueMainModule = /\.vue($|\?)/.test(normalizedId) && !code.includes('<script')
+    const isPlainJsModule = /\.js$/.test(normalizedId)
+    const isScriptModule = isPlainJsModule || normalizedId.includes('type=script') || isVueMainModule
+
+    if (!isBaseUiModule || !isScriptModule || !code.includes('<')) {
+      return null
+    }
+
+    return transformVueJsx(code, id)
+  }
+})
+
 export default defineConfig({
   plugins: [
 		createVuePlugin({jsx:true}),
+    baseUiVue2Jsx(),
 		vitePlugin(),
 		Inspect({
       build: true,

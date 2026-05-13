@@ -5,13 +5,9 @@ import Vue from 'vue';
 Vue.directive('popover', directive);
 
 /* istanbul ignore next */
-Popover.install = function(Vue,opts = {}) {
+Popover.install = function(Vue) {
   Vue.directive('popover', directive);
-  if(opts.prefix){
-    Vue.component(Popover.name.replace('Base',opts.prefix), Popover);
-  }else{
-    Vue.component(Popover.name, Popover);
-  }
+  Vue.component(Popover.name, Popover);
 };
 Popover.directive = directive;
 

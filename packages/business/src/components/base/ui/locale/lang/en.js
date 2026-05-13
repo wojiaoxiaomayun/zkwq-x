@@ -246,5 +246,27 @@ export default {
       'translate':'Translate',
       'translateProgressWait': 'Translation in progress, please wait...',
     },
+  },
+  explore: {
+    action18: 'Show More Keywords',
+    action19: 'Show More Authors',
+    action20: 'Access Link',
+    journalWebsite: 'Journal Website',
+    report: {
+      label1: 'Editor',
+      label2: 'Publication Date',
+      label3: 'Subject',
+      label4: 'From Report'
+    },
+    book: {
+      label1: 'Publication Year',
+      label2: 'Publisher'
+    },
+    bulletin: {
+      label1: 'Affiliation',
+      label2: 'Subject',
+      label3: 'Total Issues',
+      label4: 'Recent'
+    }
   }
 };

@@ -45,7 +45,7 @@ export default {
     },
     hideAfter: {
       type: Number,
-      default: 0
+      default: 5000
     },
     tabindex: {
       type: Number,

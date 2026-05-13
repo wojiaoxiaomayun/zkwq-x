@@ -11,10 +11,9 @@
 		:before-upload="_beforeAvatarUpload">
 		<img v-if="newImg" :src="newImg" class="avatar" :style="{width:width + 'px',height:height + 'px'}">
 		<i v-else class="base-icon-plus avatar-uploader-icon"></i>
-		<div v-if="newImg" class="FileMask__actions" @click.stop="">
-			<base-tooltip :content="t('custom.cover.删除')" placement="top">
-				<i @click.stop="_handleFileRemove" class="base-icon-delete">
-				</i>
+		<div v-if="newImg" class="FileMask__actions">
+			<base-tooltip :content="t('custom.cover.编辑')" placement="top">
+				<i class="base-icon-edit"></i>
 			</base-tooltip>
 		</div>
 	</base-upload>
@@ -162,9 +161,6 @@
             font-size: $--font-size-large;
             i {
                 cursor: pointer;
-            }
-            i+i {
-                margin-left: 16px;
             }
         }
         &:hover{

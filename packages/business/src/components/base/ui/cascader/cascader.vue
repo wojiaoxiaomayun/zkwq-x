@@ -24,6 +24,7 @@
       @focus="handleFocus"
       @blur="handleBlur"
       :show-label="false"
+      :ripple="showRipple"
       @input="handleInput">
       <template slot="suffix">
         <i
@@ -129,6 +130,7 @@ import { isUndefined, isFunction } from '../util/types';
 import { isDef } from '../util/shared';
 import { addResizeListener, removeResizeListener } from '../util/resize-events';
 import debounce from '../util/debounce';
+import ripple from "../directive/ripple";
 
 const { keys: KeyCode } = AriaUtils;
 const MigratingProps = {
@@ -155,7 +157,7 @@ const PopperMixin = {
     appendToBody: Popper.props.appendToBody,
     visibleArrow: {
       type: Boolean,
-      default: true
+      default: false
     },
     arrowOffset: Popper.props.arrowOffset,
     offset: Popper.props.offset,
@@ -218,6 +220,7 @@ export default {
       default: true
     },
     collapseTags: Boolean,
+    showRipple: Boolean,
     debounce: {
       type: Number,
       default: 300
@@ -246,6 +249,9 @@ export default {
   },
 
   computed: {
+    ripple() {
+      return ripple
+    },
     realSize() {
       const _baseFormItemSize = (this.baseFormItem || {}).baseFormItemSize;
       return this.size || _baseFormItemSize || (this.$ELEMENT || {}).size;

@@ -41,7 +41,7 @@
 @include b(menu) {
   border-right: solid 1px #e6e6e6;
   list-style: none;
-  position: unset;
+  position: relative;
   margin: 0;
   padding-left: 0;
   background-color: $--menu-background-color;
@@ -167,7 +167,7 @@
     .base-submenu {
       position: relative;
       & .base-menu {
-        position: unset;
+        position: absolute;
         margin-left: 5px;
         top: 0;
         left: 100%;

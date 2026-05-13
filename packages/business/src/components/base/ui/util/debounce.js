@@ -1,6 +1,6 @@
 /* eslint-disable no-undefined */
 
-import throttle from './throttle';
+import throttle from './throttle'
 
 /**
  * Debounce execution of a function. Debouncing, unlike throttling,
@@ -16,6 +16,6 @@ import throttle from './throttle';
  *
  * @return {Function} A new, debounced function.
  */
-export default function ( delay, atBegin, callback ) {
+export default function debounce ( delay, atBegin, callback ) {
   return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
-};
+}

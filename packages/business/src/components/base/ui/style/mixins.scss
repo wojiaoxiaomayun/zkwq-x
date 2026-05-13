@@ -194,19 +194,3 @@
     @content
   }
 }
-
-@mixin transition-base($prop) {
-  transition: $prop .3s;
-}
-
-@mixin position-absolute($top, $right, $bottom, $left) {
-  position: absolute;
-  top: $top;
-  right: $right;
-  bottom: $bottom;
-  left: $left;
-}
-@mixin margin-x($infix) {
-  margin-left: $infix;
-  margin-right: $infix;
-}

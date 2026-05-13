@@ -24,9 +24,10 @@
   import BaseScrollbar from '../scrollbar';
 
   export default {
+    name: 'BaseAutocompleteSuggestions',
     components: { BaseScrollbar },
     mixins: [Popper, Emitter],
-    name:'BaseAutocompleteSuggestions',
+
     componentName: 'BaseAutocompleteSuggestions',
 
     data() {

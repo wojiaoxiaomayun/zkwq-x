@@ -60,6 +60,9 @@
   }
   @include when(active) {
   }
+  @include e(action) {
+    margin-left: auto;
+  }
   @include e(header) {
     display: flex;
     align-items: center;
@@ -74,6 +77,15 @@
     transition: height .3s cubic-bezier(.25,.8,.5,1), background-color .3s cubic-bezier(.25,.8,.5,1);
     @include e(arrow) {
       margin: 0 0 0 auto;
+      transition: transform .3s;
+      font-weight: 300;
+      @include when(active) {
+        transform: rotate(90deg);
+      }
+    }
+    @include e(search) {
+      margin-left: 10px;
+      margin-bottom: 2px;
       transition: transform .3s;
       font-weight: 300;
       @include when(active) {
@@ -111,4 +123,10 @@
 }
 .base-collapse-item.is-active+.base-collapse-item:after, .base-collapse-item.is-active:not(:first-child):after {
   opacity: 0;
+}
+.base-collapse-item__headerText {
+  max-width: calc(100% - 60px);
+  display: inline-block;
+  line-height: 1.5;
+  padding: 4px 0;
 }

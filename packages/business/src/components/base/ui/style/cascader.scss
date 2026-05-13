@@ -130,7 +130,7 @@
   }
 
   @include e(suggestion-list) {
-    max-height: 204px;
+    max-height: inherit;
     margin: 0;
     padding: 6px 0;
     font-size: $--font-size-base;

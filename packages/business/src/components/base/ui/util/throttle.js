@@ -16,7 +16,7 @@
  *
  * @return {Function}  A new, throttled, function.
  */
-export default function ( delay, noTrailing, callback, debounceMode ) {
+export default function throttle ( delay, noTrailing, callback, debounceMode ) {
 
   // After wrapper has stopped being called, this timeout ensures that
   // `callback` is executed at the proper times in `throttle` and `end`
@@ -88,4 +88,4 @@ export default function ( delay, noTrailing, callback, debounceMode ) {
   // Return the wrapper function.
   return wrapper;
 
-};
+}

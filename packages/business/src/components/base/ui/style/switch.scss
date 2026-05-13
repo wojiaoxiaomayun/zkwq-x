@@ -96,12 +96,12 @@
 
   @include m(wide) {
     .base-switch__label {
-      &.base-switch__label--left {
+      &.base-switch__labbase--left {
         span {
           left: 10px;
         }
       }
-      &.base-switch__label--right {
+      &.base-switch__labbase--right {
         span {
           right: 10px;
         }
@@ -109,8 +109,8 @@
     }
   }
 
-  & .label-fade-enter,
-  & .label-fade-leave-active {
+  & .labbase-fade-enter,
+  & .labbase-fade-leave-active {
     opacity: 0;
   }
 }

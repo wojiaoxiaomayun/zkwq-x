@@ -6,7 +6,7 @@
     :disabled="pickerDisabled"
     :size="pickerSize"
     :ripple="ripple"
-    :show-label="showLabel"
+    :show-label="false"
     :name="name"
     v-bind="firstInputId"
     v-if="!ranged"
@@ -100,12 +100,11 @@ const NewPopper = {
     appendToBody: Popper.props.appendToBody,
     offset: Popper.props.offset,
     boundariesPadding: Popper.props.boundariesPadding,
-    arrowOffset: Popper.props.arrowOffset,
-    transformOrigin: Popper.props.transformOrigin
+    arrowOffset: Popper.props.arrowOffset
   },
   methods: Popper.methods,
   data() {
-    return merge({ visibleArrow: true }, Popper.data);
+    return merge({ visibleArrow: false }, Popper.data);
   },
   beforeDestroy: Popper.beforeDestroy
 };
@@ -113,16 +112,15 @@ const NewPopper = {
 const DEFAULT_FORMATS = {
   date: 'yyyy-MM-dd',
   month: 'yyyy-MM',
-  months: 'yyyy-MM',
   datetime: 'yyyy-MM-dd HH:mm:ss',
   time: 'HH:mm:ss',
   week: 'yyyywWW',
   timerange: 'HH:mm:ss',
   daterange: 'yyyy-MM-dd',
   monthrange: 'yyyy-MM',
+  yearrange: 'yyyy',
   datetimerange: 'yyyy-MM-dd HH:mm:ss',
-  year: 'yyyy',
-  years: 'yyyy'
+  year: 'yyyy'
 };
 const HAVE_TRIGGER_TYPES = [
   'date',
@@ -134,11 +132,10 @@ const HAVE_TRIGGER_TYPES = [
   'year',
   'daterange',
   'monthrange',
+  'yearrange',
   'timerange',
   'datetimerange',
-  'dates',
-  'months',
-  'years'
+  'dates'
 ];
 const DATE_FORMATTER = function(value, format) {
   if (format === 'timestamp') return value.getTime();
@@ -219,6 +216,10 @@ const TYPE_VALUE_RESOLVER_MAP = {
     formatter: RANGE_FORMATTER,
     parser: RANGE_PARSER
   },
+  yearrange: {
+    formatter: RANGE_FORMATTER,
+    parser: RANGE_PARSER
+  },
   datetimerange: {
     formatter: RANGE_FORMATTER,
     parser: RANGE_PARSER
@@ -260,28 +261,10 @@ const TYPE_VALUE_RESOLVER_MAP = {
     },
     parser(value, format) {
       return (typeof value === 'string' ? value.split(', ') : value)
-          .map(date => date instanceof Date ? date : DATE_PARSER(date, format));
-      }
-    },
-    months: {
-      formatter(value, format) {
-        return value.map(date => DATE_FORMATTER(date, format));
-      },
-      parser(value, format) {
-        return (typeof value === 'string' ? value.split(', ') : value)
-          .map(date => date instanceof Date ? date : DATE_PARSER(date, format));
-      }
-    },
-    years: {
-      formatter(value, format) {
-        return value.map(date => DATE_FORMATTER(date, format));
-      },
-      parser(value, format) {
-        return (typeof value === 'string' ? value.split(', ') : value)
-          .map(date => date instanceof Date ? date : DATE_PARSER(date, format));
-      }
+        .map(date => date instanceof Date ? date : DATE_PARSER(date, format));
     }
-  };
+  }
+};
 const PLACEMENT_MAP = {
   left: 'bottom-start',
   center: 'bottom',
@@ -418,10 +401,6 @@ export default {
     validateEvent: {
       type: Boolean,
       default: true
-    },
-    showLabel:{
-      type:Boolean,
-      default:false
     }
   },
 
@@ -523,10 +502,6 @@ export default {
         return 'year';
       } else if (this.type === 'dates') {
         return 'dates';
-      } else if (this.type === 'months') {
-        return 'months';
-      } else if (this.type === 'years') {
-        return 'years';
       }
 
       return 'day';
@@ -549,7 +524,7 @@ export default {
       } else if (this.userInput !== null) {
         return this.userInput;
       } else if (formattedValue) {
-        return (this.type === 'dates' || this.type === 'years' || this.type === 'months')
+        return this.type === 'dates'
           ? formattedValue.join(', ')
           : formattedValue;
       } else {
@@ -649,7 +624,7 @@ export default {
       if (this.valueFormat && isFormattable) {
         return formatAsFormatAndType(date, this.valueFormat, this.type, this.rangeSeparator);
       } else {
-        return date;
+        return formatAsFormatAndType(date, null, this.type, this.rangeSeparator);
       }
     },
 
@@ -734,8 +709,7 @@ export default {
     handleClickIcon(event) {
       if (this.readonly || this.pickerDisabled) return;
       if (this.showClose) {
-        // this.valueOnOpen = this.value;
-        console.log(this.valueOnOpen)
+        this.valueOnOpen = this.value;
         event.stopPropagation();
         this.emitInput(null);
         this.emitChange(null);
@@ -752,7 +726,7 @@ export default {
       if (!this.pickerVisible) return;
       this.pickerVisible = false;
 
-      if (this.type === 'dates' || this.type === 'years' || this.type === 'months') {
+      if (this.type === 'dates') {
         // restore to former value
         const oldValue = parseAsFormatAndType(this.valueOnOpen, this.valueFormat, this.type, this.rangeSeparator) || this.valueOnOpen;
         this.emitInput(oldValue);
@@ -938,8 +912,8 @@ export default {
     emitChange(val) {
       // determine user real change only
       if (!valueEquals(val, this.valueOnOpen)) {
-        this.$emit('change', val || []);
-        this.valueOnOpen = val || [];
+        this.$emit('change', val);
+        this.valueOnOpen = val;
         if (this.validateEvent) {
           this.dispatch('BaseFormItem', 'base.form.change', val);
         }

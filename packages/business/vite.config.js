@@ -1,16 +1,35 @@
 import { defineConfig } from 'vite'
 import {createVuePlugin} from 'vite-plugin-vue2'
+import { transformVueJsx } from 'vite-plugin-vue2/dist/jsxTransform'
 import { resolve } from 'path'
 import copy from 'rollup-plugin-copy' //引入插件
 import {SplitStylePluginVite} from '@zkwq/unplugin-split-style'
 import {MinifyPluginVite} from '@zkwq/unplugin-minify'
 // import dts from 'vite-plugin-dts'
 
+const baseUiVue2Jsx = () => ({
+  name: 'base-ui-vue2-jsx',
+  transform(code, id) {
+    const normalizedId = id.replace(/\\/g, '/')
+    const isBaseUiModule = normalizedId.includes('/src/components/base/ui/')
+    const isVueMainModule = /\.vue($|\?)/.test(normalizedId) && !code.includes('<script')
+    const isPlainJsModule = /\.js$/.test(normalizedId)
+    const isScriptModule = isPlainJsModule || normalizedId.includes('type=script') || isVueMainModule
+
+    if (!isBaseUiModule || !isScriptModule || !code.includes('<')) {
+      return null
+    }
+
+    return transformVueJsx(code, id)
+  }
+})
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     // dts(),
     createVuePlugin({jsx:true}),
+    // baseUiVue2Jsx(),
     copy({
       verbose:true,
       hook:'closeBundle',

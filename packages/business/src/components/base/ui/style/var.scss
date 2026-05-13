@@ -15,6 +15,19 @@ $--color-primary: #2F3A91 !default;
 $--color-white: #FFFFFF !default;
 /// color|1|Background Color|4
 $--color-black: #000000 !default;
+
+$--color-primary-3: #1366ec !default;
+$--color-primary-2: #2076B0 !default;
+$--color-primary-2-light-1: mix($--color-white, $--color-primary-2, 10%) !default; /* 53a8ff */
+$--color-primary-2-light-2: mix($--color-white, $--color-primary-2, 20%) !default; /* 66b1ff */
+$--color-primary-2-light-3: mix($--color-white, $--color-primary-2, 30%) !default; /* 79bbff */
+$--color-primary-2-light-4: mix($--color-white, $--color-primary-2, 40%) !default; /* 8cc5ff */
+$--color-primary-2-light-5: mix($--color-white, $--color-primary-2, 50%) !default; /* a0cfff */
+$--color-primary-2-light-6: mix($--color-white, $--color-primary-2, 60%) !default; /* b3d8ff */
+$--color-primary-2-light-7: mix($--color-white, $--color-primary-2, 70%) !default; /* c6e2ff */
+$--color-primary-2-light-8: mix($--color-white, $--color-primary-2, 80%) !default; /* d9ecff */
+$--color-primary-2-light-9: mix($--color-white, $--color-primary-2, 90%) !default; /* ecf5ff */
+
 $--color-primary-light-1: mix($--color-white, $--color-primary, 10%) !default; /* 53a8ff */
 $--color-primary-light-2: mix($--color-white, $--color-primary, 20%) !default; /* 66b1ff */
 $--color-primary-light-3: mix($--color-white, $--color-primary, 30%) !default; /* 79bbff */
@@ -28,9 +41,9 @@ $--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default; /
 $--color-success: #67C23A !default;
 /// color|1|Functional Color|1
 /// $--color-warning: #E6A23C !default;
-$--color-warning: #FF791A !default;
+$--color-warning: #FF6A00 !default;
 /// color|1|Functional Color|1
-$--color-danger: #F1403C !default;
+$--color-danger: #F64041 !default;
 /// color|1|Functional Color|1
 $--color-info: #8590a6 !default;
 
@@ -44,16 +57,18 @@ $--color-warning-lighter: mix($--color-white, $--color-warning, 90%) !default;
 $--color-danger-lighter: mix($--color-white, $--color-danger, 90%) !default;
 $--color-info-lighter: mix($--color-white, $--color-info, 90%) !default;
 /// color|1|Font Color|2
-$--color-text-primary: #121212 !default;
+$--color-text-primary: #181818 !default;
+$--color-text-primary-2: #181818 !default;
 /// color|1|Font Color|2
 $--color-text-regular: #646464 !default;
 $--color-text-regular-2: #4b5b76 !default;
+$--color-text-regular-3: #717171 !default;
 /// color|1|Font Color|2
 $--color-text-secondary: #8590a6 !default;
 $--color-text-secondary-2: #97a3b7 !default;
+$--color-text-secondary-3: #999999 !default;
 /// color|1|Font Color|2
-/// $--color-text-placeholder: #C0C4CC !default;
-$--color-text-placeholder: #8590a6 !default;
+$--color-text-placeholder: #C0C4CC !default;
 $--border-color: #EBEBEB !default;
 /// color|1|Border Color|3
 $--border-color-base: #DCDFE6 !default;
@@ -63,10 +78,6 @@ $--border-color-light: #E4E7ED !default;
 $--border-color-lighter: #EBEEF5 !default;
 /// color|1|Border Color|3
 $--border-color-extra-light: #F2F6FC !default;
-$--color-secondary: #8590A6;
-$--app-red: #F1403C;
-$--color-background: #F6F6F6;
-$--color-regular: #646464;
 
 // Background
 /// color|1|Background Color|4
@@ -74,10 +85,6 @@ $--background-color-base: #F3F5F8 !default;
 
 :export{
   primary:$--color-primary;
-  success:$--color-success;
-  warning:$--color-warning;
-  danger:$--color-danger;
-  info:$--color-info;
 }
 
 /* Link
@@ -114,7 +121,7 @@ $--fill-base: $--color-white !default;
 
 /* Typography
 -------------------------- */
-$--font-path: '../static/' !default;
+$--font-path: 'fonts' !default;
 $--font-display: 'auto' !default;
 /// fontSize|1|Font Size|0
 $--font-size-extra-large: 20px !default;
@@ -318,7 +325,7 @@ $--select-group-font-size: 12px !default;
 
 $--select-dropdown-background: $--color-white !default;
 $--select-dropdown-shadow: $--box-shadow-light !default;
-$--select-dropdown-empty-color: #999 !default;
+$--select-dropdown-empty-color: #97a3b7 !default;
 /// height||Other|4
 $--select-dropdown-max-height: 274px !default;
 $--select-dropdown-padding: 6px 0 !default;
@@ -378,7 +385,7 @@ $--messagebox-danger-color: $--color-danger !default;
 $--message-shadow: $--box-shadow-base !default;
 $--message-min-width: 380px !default;
 $--message-background-color: #edf2fc !default;
-$--message-padding: 15px 15px 15px 20px !default;
+$--message-padding: 14px 24px !default;
 /// color||Color|0
 $--message-close-icon-color: $--color-text-placeholder !default;
 /// height||Other|4
@@ -1007,13 +1014,6 @@ $--breakpoints-spec: (
   'xl-only' : (min-width: $--xl),
 );
 
-/* Descriptions
--------------------------- */
-$--descriptions-header-margin-bottom: 20px !default;
-$--descriptions-title-font-size: 16px !default;
-$--descriptions-table-border: 1px solid $--border-color-lighter !default;
-$--descriptions-item-bordered-label-background: #fafafa !default;
-
 /* Skeleton
 --------------------------*/
 $--skeleton-color: #f2f2f2 !default;
@@ -1022,10 +1022,3 @@ $--skeleton-to-color: #e6e6e6 !default;
 /* Svg
 --------------- */
 $--svg-monochrome-grey: #DCDDE0 !default;
-
-/* Empty
--------------------------- */
-$--empty-padding: 40px 0 !default;
-$--empty-image-width: 160px !default;
-$--empty-description-margin-top: 20px !default;
-$--empty-bottom-margin-top: 20px !default;

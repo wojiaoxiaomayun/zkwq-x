@@ -1,9 +1,9 @@
-@import 'mixins';
-@import 'var';
+@import "mixins";
+@import "var";
 
 @include b(loading-parent) {
   @include m(relative) {
-    position: relative !important;
+    // position: relative !important;
   }
 
   @include m(hidden) {

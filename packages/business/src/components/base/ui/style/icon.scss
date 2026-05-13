@@ -2,8 +2,8 @@
 
 @font-face {
   font-family: 'base-icons';
-  src: url($--font-path + '/base-icons.woff') format('woff'), /* chrome, firefox */
-       url($--font-path + '/base-icons.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  src: url('../../../../static/base-icons.woff') format('woff'), /* chrome, firefox */
+       url('../../../../static/base-icons.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
   font-weight: normal;
   font-display: $--font-display;
   font-style: normal;

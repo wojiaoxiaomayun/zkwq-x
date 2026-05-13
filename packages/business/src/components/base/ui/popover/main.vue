@@ -34,6 +34,7 @@ export default {
   mixins: [Popper],
 
   props: {
+    prevent: Boolean,
     trigger: {
       type: String,
       default: 'click',
@@ -144,8 +145,19 @@ export default {
   },
 
   methods: {
-    doToggle() {
-      this.showPopper = !this.showPopper;
+    doToggle(e) {
+      if (this.prevent) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+      clearTimeout(this._timer);
+      if (this.openDelay) {
+        this._timer = setTimeout(() => {
+          this.showPopper = !this.showPopper;
+        }, this.openDelay);
+      } else {
+        this.showPopper = !this.showPopper;
+      }
     },
     doShow() {
       this.showPopper = true;

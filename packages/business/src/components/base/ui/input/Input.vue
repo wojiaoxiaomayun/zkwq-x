@@ -109,7 +109,7 @@
       :aria-label="label"
     >
     </textarea>
-    <div class="base-input__placeholder" :class="{ 'is-active' : focused || tags.length > 0 || !(value == undefined || value === null || value === '')}" v-if="showLabel && placeholder">{{ placeholder }}</div>
+    <div class="base-input__placeholder" :class="{ 'is-active' : focused || value }" v-if="showLabel && placeholder">{{ placeholder }}</div>
     <span v-if="isWordLimitVisible && type === 'textarea'" class="base-input__count">{{ textLength }}/{{ upperLimit }}</span>
   </div>
 </template>
@@ -206,10 +206,6 @@ export default {
     enableFocusClass: {
       type: Boolean,
       default: true
-    },
-    tags:{
-      type: Array,
-      default: () => []
     }
   },
   computed: {

@@ -3,7 +3,7 @@
     <div tabindex="-1" ref="base-image-viewer__wrapper" class="base-image-viewer__wrapper" :style="{ 'z-index': zIndex }">
       <div class="base-image-viewer__mask"></div>
       <!-- CLOSE -->
-      <span v-if="closeButton" class="base-image-viewer__btn base-image-viewer__close" @click="hide">
+      <span class="base-image-viewer__btn base-image-viewer__close" @click="hide">
         <i class="base-icon-close"></i>
       </span>
       <!-- ARROW -->
@@ -69,7 +69,7 @@ const Mode = {
 const mousewheelEventName = isFirefox() ? 'DOMMouseScroll' : 'mousewheel';
 
 export default {
-  name: 'BaseImageViewer',
+  name: 'ImageViewer',
 
   props: {
     urlList: {
@@ -91,10 +91,6 @@ export default {
     initialIndex: {
       type: Number,
       default: 0
-    },
-    closeButton:{
-      type:Boolean,
-      default:true
     }
   },
 
@@ -147,9 +143,6 @@ export default {
         this.reset();
         this.onSwitch(val);
       }
-    },
-    initialIndex(val){
-      this.index = val
     },
     currentImg(val) {
       this.$nextTick(_ => {
@@ -220,15 +213,10 @@ export default {
     },
     handleImgLoad(e) {
       this.loading = false;
-      this.$emit('load',{
-        event:e,
-        index:this.index
-      })
     },
     handleImgError(e) {
       this.loading = false;
       e.target.alt = '加载失败';
-      this.$emit('error',e)
     },
     handleMouseDown(e) {
       if (this.loading || e.button !== 0) return;
@@ -270,13 +258,11 @@ export default {
       if (this.isFirst && !this.infinite) return;
       const len = this.urlList.length;
       this.index = (this.index - 1 + len) % len;
-      this.$emit('change',this.index)
     },
     next() {
       if (this.isLast && !this.infinite) return;
       const len = this.urlList.length;
       this.index = (this.index + 1) % len;
-      this.$emit('change',this.index)
     },
     handleActions(action, options = {}) {
       if (this.loading) return;
