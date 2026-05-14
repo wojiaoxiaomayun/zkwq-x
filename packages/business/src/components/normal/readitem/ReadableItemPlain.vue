@@ -1319,6 +1319,19 @@ export default {
       return date
     }
   },
+  watch: {
+    readable: {
+      handler (val) {
+        if (val && !val.year && val.publish_year) {
+          this.$set(val, 'year', val.publish_year)
+        }
+      },
+      immediate: true
+    }
+  },
+  created(){
+    this.$set(this.readable,'year',this.readable.year || this.readable.publish_year || '')
+  },
   mounted () {
     this.readable.show_all_author = false
     this.readable.show_all_keyword = false
@@ -2016,8 +2029,8 @@ export default {
     .ContentItem__abstracts .RichContent__inner {
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-      max-height: 72px;
+      -webkit-line-clamp: 2;
+      max-height: 48px;
       overflow: hidden;
     }
     .FacilityAbstract .RichText {

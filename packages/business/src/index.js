@@ -7,6 +7,7 @@ export default BaseUI;
 import AggsItemH from './components/normal/AggsItemH.vue'
 import AggsItemV from './components/normal/AggsItemV.vue'
 import ReadableItem from './components/normal/readitem/ReadableItem'
+import ReadableItemPlain from './components/normal/readitem/ReadableItemPlain'
 import BounceLoading from './components/base/widget/BounceLoading'
 import AppDialog from './components/base/widget/AppDialog'
 import SmoothNumber from './components/base/widget/SmoothNumber'
@@ -40,6 +41,7 @@ export {
   AggsItemH,
   AggsItemV,
   ReadableItem,
+  ReadableItemPlain,
   BounceLoading,
   AppDialog,
   SmoothNumber,

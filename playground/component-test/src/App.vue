@@ -4,6 +4,12 @@
       <XTab vertical></XTab>
       <Cover :userId="'test-user-id'" v-model="coverImg" fullUrl></Cover>
       <readable-item-plain :readable="readable"></readable-item-plain>
+      <base-tabs v-model="activeName" @tab-click="handleClick">
+    <base-tab-pane label="用户管理" name="first">用户管理</base-tab-pane>
+    <base-tab-pane label="配置管理" name="second">配置管理</base-tab-pane>
+    <base-tab-pane label="角色管理" name="third">角色管理</base-tab-pane>
+    <base-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</base-tab-pane>
+  </base-tabs>
       <!-- <AggsItemV :title="'aa'" :datas="[{key:'a',value:10},{key:'b',value:11}]"></AggsItemV> -->
     </div>
     <!-- <base-input v-model="year" placeholder="牛逼"></base-input>
@@ -18,7 +24,7 @@
 <app-dialog ref="dialog" width="900px" staticDialog dialogTitle="认领学者身份" originTitle :zIndex="3000"  custom-class="claim-same-name-wrapper">
 
 </app-dialog> -->
-    <!-- <base-table
+    <base-table
       :data="tableData"
       height="100"
       style="width: 100%">
@@ -37,7 +43,7 @@
         label="地址">
       </base-table-column>
     </base-table>
-    <div style="background:white;padding: 16px;">
+   <!--  <div style="background:white;padding: 16px;">
       <ReadableItem :readable="readable"></ReadableItem>
     </div>
     
@@ -81,236 +87,183 @@ export default {
       dateRange:[],
       fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
       readable: {
-        "abstracts": "N-methyl-d-aspartate receptors (NMDARs) are glutamate-gated ion channels that mediate excitatory neurotransmission throughout the brain1. As obligate heterotetramers, their activation requires the binding of both glycine and glutamate2. Although recent structural studies have provided insights into endogenous receptors from select brain regions3, most previous work has relied on recombinant receptors and engineered constructs, which limits our understanding of native NMDARs across the whole brain. Here we identify and resolve ten distinct native NMDAR assemblies from the whole-brain tissue of female C57BL/6 mice using immunoaffinity purification, single-molecule total internal reflection fluorescence microscopy and cryo-electron microscopy. Analyses of the GluN1–GluN2A(S1), GluN1–GluN2A(S2), GluN1–GluN2A(S3), GluN1–GluN2B, GluN1–GluN2A–GluN2B(S1), GluN1–GluN2A–GluN2B(S2), GluN1–GluN2A–GluNX(S1), GluN1–GluN2A–GluNX(S2), GluN1–GluN2B–GluNX and GluN1–GluNX structures reveal that GluN2A is the most prevalent subunit across assemblies. Moreover, the substantial conformational flexibility observed in the GluN2A amino-terminal domain may explain its fast kinetics and dominant role in gating. Dynamic movements ofS-ketamine were also captured at the channel vestibule, as was pore dilation in both the GluN1 and GluN2B subunits of a native GluN1–GluN2B receptor. The latter observation represents a previously unknown fully open state of NMDAR. Our large collection of heterogeneous NMDAR structures from whole brain reveals previously unrecognized properties of conformational diversity and channel dilation.",
-          "abstracts_abbreviation": "N-methyl-d-aspartate receptors (NMDARs) are glutamate-gated ion channels that mediate excitatory neurotransmission throughout the brain1. As obligate heterotetramers, their activation requir...",
-          "article_type": "期刊论文",
-          "attachments": [],
-          "author": [
-        "Xu, Ruisheng",
-        "Jiang, Qiqi",
-        "Xu, Hongwei",
-        "Zhang, Lu",
-        "Hu, Xiangzi",
-        "Lu, Zizhuo",
-        "Deng, Huaqin",
-        "Xiong, Haolin",
-        "Zhang, Sensen",
-        "Chen, Zhongwen",
-        "Ge, Yifan",
-        "Zhu, Zhengjiang",
-        "Zhang, Yaoyang",
-        "Chen, Yelin",
-        "Ge, Jingpeng",
-        "Yu, Jie"
-      ],
-          "author_id": [
-        "65baab6a0d431498c58ad7057da637e6",
-        "793777fc49fd667901abc745d32f297a",
-        "c60709a5cfbf9c99a40806c007261890",
-        "85d15d7c693648a1ab805b45c2fbca88",
-        "34581f09a483216992eb53106ef61740",
-        "4b3f4cc6cbd9bd86d4a3df21880d10e5",
-        "bac39a8c668c98ea109f1c84296897c5",
-        "9c5a101df033a210bb7c10dcabfdf985",
-        "a9d90af4c19e41e211328e4d019bb1b3",
-        "4b160766f76ad8b0f13d5e7dda2ddcbd",
-        "69578a5e7d6a1c626bd96b8ed72887d4",
-        "ac7d8e7bd954092bd177909ef7f9fca6",
-        "6b893bc5a8220a630152bfe6175a8249",
-        "76c097ad2e1539f51efc47184e9f2b85",
-        "c47f2e5785459757f009a12bac0c58f5",
-        "3338910a940a278b7148e221d4dd5cb3"
-      ],
-          "authors": [
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Xu, Ruisheng"
+            "abstracts": "Compression garments are used by athletes for post-exercise recovery and injury prevention, yet their effectiveness depends on the interaction between textile properties, garment construction, and user-specific biomechanics. Despite growing participation of women in collegiate sports, few studies have examined recovery-focused compression engineered specifically for female athletes. This pilot investigation combined user-centered design methodology with textile performance testing to develop and evaluate a hamstring compression sleeve for female NCAA athletes. Survey data from competitive athletes (N = 34) identified durability, stretch, and thermal comfort as primary design priorities. Five candidate fabrics were evaluated for thickness, mass, elongation, and air permeability, leading to selection of a spacer knit fabric that provided high extensibility with sufficient stability for localized compression. A prototype sleeve incorporating elastomeric striping aligned with hamstring musculature was produced and evaluated during four repeated sprint testing sessions with NCAA athletes (N = 8). Functional performance measures included isometric strength, jump performance, and power output, alongside perceived soreness and wearability assessments. No statistically significant differences were detected between the compression and control limbs across biomechanical performance variables. However, participants consistently reported positive perceptions related to comfort, usability, and recovery support. These findings suggest that perceived benefits of compression garments may not always be reflected into short-term performance metrics, but remain relevant to athlete experience. The study demonstrates the feasibility of integrating textile engineering, garment design, and athlete feedback within a single development process and provides a framework for future optimization of compression systems tailored to female athletic populations.",
+            "abstracts_abbreviation": "Compression garments are used by athletes for post-exercise recovery and injury prevention, yet their effectiveness depends on the interaction between textile properties, garment constructio...",
+            "article_type": "期刊论文",
+            "attachment_id": [],
+            "author": [
+                "Megivern, Sarah",
+                "Gorea, Adriana"
+            ],
+            "author_name": [
+                [
+                    "Megivern, Sarah"
+                ],
+                [
+                    "Gorea, Adriana"
+                ]
+            ],
+            "author_v2": [
+                {
+                    "author_index": 1,
+                    "institutions": [
+                        {
+                            "name": "特拉华大学"
+                        }
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "Megivern, Sarah"
+                },
+                {
+                    "author_index": 2,
+                    "institutions": [
+                        {
+                            "name": "特拉华大学"
+                        }
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "Gorea, Adriana"
+                }
+            ],
+            "authors": [
+                {
+                    "author_index": 1,
+                    "institutions": [
+                        {
+                            "name": "Fashion and Apparel Studies Department, University of Delaware, Newark, USA"
+                        }
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "Megivern, Sarah"
+                },
+                {
+                    "author_index": 2,
+                    "institutions": [
+                        {
+                            "name": "Fashion and Apparel Studies Department, University of Delaware, Newark, USA"
+                        }
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "Gorea, Adriana"
+                }
+            ],
+            "cn_type": "论文",
+            "collections": [],
+            "corresponding_author": [
+                false,
+                false
+            ],
+            "create_time": "2026-05-13 10:01:35",
+            "date": "2026-05-12",
+            "doi": "10.1186/s40691-026-00471-0",
+            "equal_first_author": [
+                false,
+                false
+            ],
+            "extend_entity": {
+                "article-id": [
+                    "4e513f85e161914139055ed40912b5fb"
+                ],
+                "project_name": [],
+                "wos-category-cn": [
+                    {
+                        "category": [
+                            "材料科学☋材料科学（纺织品）"
+                        ],
+                        "group": "材料科学"
+                    }
+                ],
+                "is_use_headline": [],
+                "ai_news": {
+                    "comprehensive_score": [
+                        68
+                    ],
+                    "importance": [
+                        41
+                    ],
+                    "relevance": [
+                        80
+                    ]
+                },
+                "base_subject": [],
+                "datasource-link": [
+                    "KJTT_JournalArticle:https://fashionandtextiles.springeropen.com/article/10.1186/s40691-026-00471-0"
+                ],
+                "title-repeated": "addressinghamstringmusclesorenessinfemalencaaathletesdesignandevaluationofausercenteredcompressionsleeveforrecovery",
+                "wos-category-llm": [],
+                "journal-repeated": "fashionandtextiles",
+                "base_project": [],
+                "classification_bg": [],
+                "article-id-type": [
+                    "kjtt_journalarticleID"
+                ],
+                "contrib_institution": [
+                    [
+                        "特拉华大学"
+                    ]
+                ],
+                "wos-category": [
+                    {
+                        "category": [
+                            "Materials Science☋MATERIALS SCIENCE, TEXTILES"
+                        ],
+                        "group": "Materials Science"
+                    }
+                ]
+            },
+            "first_page": "21",
+            "free": false,
+            "id": "79f733854fe6327b8488de18db44750d",
+            "impact_factor": "2.3",
+            "institution": [
+                "Fashion and Apparel Studies Department, University of Delaware, Newark, USA"
+            ],
+            "is_representativeWork": false,
+            "issn": "2198-0802",
+            "issue": 1,
+            "journal_title": "Fashion and Textiles",
+            "lang": "E",
+            "link": "https://fashionandtextiles.springeropen.com/article/10.1186/s40691-026-00471-0",
+            "links": [
+                {
+                    "is_authorized": false,
+                    "login_url": "KJTT_JournalArticle",
+                    "name": "其他来源",
+                    "url": "https://fashionandtextiles.springeropen.com/article/10.1186/s40691-026-00471-0"
+                }
+            ],
+            "local_links": [
+                "https://file.scholarin.cn/preview2?file=editor_cj_d7e98e506c4bf76602a6f71382c9bd42.pdf"
+            ],
+            "permission": 4,
+            "publish_year": "2026",
+            "publisher": "Springer Nature Singapore",
+            "relation": [
+                [
+                    "Fashion and Apparel Studies Department, University of Delaware, Newark, USA"
+                ],
+                [
+                    "Fashion and Apparel Studies Department, University of Delaware, Newark, USA"
+                ]
+            ],
+            "relation_index": [
+                [
+                    "0"
+                ],
+                [
+                    "0"
+                ]
+            ],
+            "research_field": [],
+            "source": "Fashion and Textiles",
+            "source_list": [
+                "KJTT_JournalArticle",
+                "pubscholar_running"
+            ],
+            "title": "Addressing hamstring muscle soreness in female NCAA athletes: design and evaluation of a user-centered compression sleeve for recovery",
+            "type": "article",
+            "volume": 13
         },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Jiang, Qiqi"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Xu, Hongwei"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Zhang, Lu"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Hu, Xiangzi"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Lu, Zizhuo"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Deng, Huaqin"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Xiong, Haolin"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Zhang, Sensen"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Chen, Zhongwen"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Ge, Yifan"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Zhu, Zhengjiang"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Zhang, Yaoyang"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Chen, Yelin"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Ge, Jingpeng"
-        },
-        {
-          "institution": [
-            "未知"
-          ],
-          "is_corresponding_author": false,
-          "name": "Yu, Jie"
-        }
-      ],
-          "browse_count": 467,
-          "cn_type": "论文",
-          "cstr": "",
-          "date": "2026-02-11",
-          "degree": "",
-          "doi": "10.1038/s41586-026-10139-w",
-          "extendEntity": {
-        "title-repeated": "conformationaldiversityandfullyopeningmechanismofnativenmdareceptor",
-            "wos-category-llm": [
-          "NEUROSCIENCES",
-          "BIOCHEMISTRY & MOLECULAR BIOLOGY",
-          "BIOTECHNOLOGY & APPLIED MICROBIOLOGY"
-        ],
-            "journal-repeated": "nature",
-            "article-id": [
-          "2c35ecec05d7f7f49b1ae5b147d08573",
-          "10.1038/s41586-026-10139-w"
-        ],
-            "project_name": [],
-            "base_project": [],
-            "classification_bg": [],
-            "article-id-type": [
-          "kjtt_journalarticleID",
-          "doi"
-        ],
-            "is_high_level": "",
-            "contrib_institution": [
-          [
-            "未知"
-          ]
-        ],
-            "article_legal_status": "",
-            "is_use_headline": [],
-            "is_financial_support_project": "",
-            "is_cas_representative": "",
-            "base_subject": [],
-            "datasource-link": [
-          "KJTT_JournalArticle:https://www.nature.com/articles/s41586-026-10139-w"
-        ]
-      },
-        "first_page": "1",
-          "graduation_institution": [],
-          "id": "466024a9f12af22c3d38c0920b260137",
-          "is_free": false,
-          "issue": "",
-          "keywords": [
-        "Calcium channels",
-        "Cryoelectron microscopy",
-        "Ion channels in the nervous system"
-      ],
-          "last_page": "10",
-          "license": "",
-          "links": [
-        {
-          "is_open_access": false,
-          "name": "其他来源",
-          "url": "https://www.nature.com/articles/s41586-026-10139-w"
-        }
-      ],
-          "local_links": [],
-          "major": "",
-          "school": [],
-          "semantic_entities": {},
-        "source": "Nature",
-          "source_list": [
-        "KJTT_JournalArticle",
-        "pubscholar_running",
-        "chuNeng_journal_article",
-        "neweditarticle"
-      ],
-          "title": "Conformational diversity and fully opening mechanism of native NMDA receptor",
-          "tutor": [],
-          "type": "article",
-          "volume": "",
-          "year": 2026
-      },
       tableData: [{
             date: '2016-05-02',
             name: '王小虎',

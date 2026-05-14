@@ -78,6 +78,10 @@ $--border-color-light: #E4E7ED !default;
 $--border-color-lighter: #EBEEF5 !default;
 /// color|1|Border Color|3
 $--border-color-extra-light: #F2F6FC !default;
+$--color-secondary: #8590A6;
+$--app-red: #F1403C;
+$--color-background: #F6F6F6;
+$--color-regular: #646464;
 
 // Background
 /// color|1|Background Color|4
@@ -85,6 +89,10 @@ $--background-color-base: #F3F5F8 !default;
 
 :export{
   primary:$--color-primary;
+  success:$--color-success;
+  warning:$--color-warning;
+  danger:$--color-danger;
+  info:$--color-info;
 }
 
 /* Link
@@ -1014,6 +1022,13 @@ $--breakpoints-spec: (
   'xl-only' : (min-width: $--xl),
 );
 
+/* Descriptions
+--------------------------*/
+$--descriptions-header-margin-bottom: 20px !default;
+$--descriptions-title-font-size: 16px !default;
+$--descriptions-table-border: 1px solid $--border-color-lighter !default;
+$--descriptions-item-bordered-label-background: #fafafa !default;
+
 /* Skeleton
 --------------------------*/
 $--skeleton-color: #f2f2f2 !default;
@@ -1022,3 +1037,10 @@ $--skeleton-to-color: #e6e6e6 !default;
 /* Svg
 --------------- */
 $--svg-monochrome-grey: #DCDDE0 !default;
+
+/* Empty
+--------------------------*/
+$--empty-padding: 40px 0 !default;
+$--empty-image-width: 160px !default;
+$--empty-description-margin-top: 20px !default;
+$--empty-bottom-margin-top: 20px !default;
