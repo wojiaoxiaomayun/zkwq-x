@@ -144,6 +144,7 @@ export default {
       '姓名，如：张三 清华大学':'name, like: zhangsan Tsinghua University'
     },
     cover:{
+      '编辑':'Edit',
       '删除':'Delete'
     },
     keyword:{

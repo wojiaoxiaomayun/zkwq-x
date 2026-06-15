@@ -12,6 +12,7 @@ export class ParamsEncry{
   NONCE_HEADER = 'X-Nonce';
   APP_SECRET = 'sk-adslfkogmelzdlkfotkeled';
   ignore = [];
+  include = [];
 
   constructor(options = {}){
     this.SIGN_HEADER = options.SIGN_HEADER || this.SIGN_HEADER
@@ -19,6 +20,7 @@ export class ParamsEncry{
     this.NONCE_HEADER = options.NONCE_HEADER || this.NONCE_HEADER
     this.APP_SECRET = options.APP_SECRET || this.APP_SECRET
     this.ignore = options.ignore || this.ignore
+    this.include = options.include || this.include
   }
   init(){
     const interceptor = new BatchInterceptor({
@@ -31,7 +33,14 @@ export class ParamsEncry{
       const url = new URL(requestCloneForResponseEvent.url);
       const method = requestCloneForResponseEvent.method.toUpperCase();
 
-      if (this.ignore.some(p => url.pathname.includes(p))) return;
+      // 如果设置了包含模式，优先判断是否匹配包含规则
+      if (this.include.length > 0) {
+        const shouldInclude = this.include.some(p => url.pathname.includes(p));
+        if (!shouldInclude) return;
+      } else {
+        // 没有包含模式时，才使用忽略模式
+        if (this.ignore.some(p => url.pathname.includes(p))) return;
+      }
 
       const timestamp = Date.now().toString();
       const nonce = CryptoJS.lib.WordArray.random(16).toString();

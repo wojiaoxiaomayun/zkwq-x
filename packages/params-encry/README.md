@@ -10,6 +10,7 @@
 - 使用 HMAC-SHA256 算法进行签名
 - 支持自定义请求头和密钥
 - 可配置忽略特定路径的签名
+- 支持包含模式，精确控制需要签名的路径
 
 ## 安装
 
@@ -53,10 +54,50 @@ const paramsEncry = new ParamsEncry({
   TIMESTAMP_HEADER: 'X-Custom-Time',   // 自定义时间戳头名称，默认为 'X-Timestamp'
   NONCE_HEADER: 'X-Custom-Nonce',       // 自定义随机数头名称，默认为 'X-Nonce'
   APP_SECRET: 'your-custom-secret',    // 自定义密钥，默认为 'sk-adslfkogmelzdlkfotkeled'
-  ignore: ['/api/public', '/upload']    // 忽略这些路径的签名
+  ignore: ['/api/public', '/upload'],   // 忽略这些路径的签名（仅在未设置 include 时生效）
+  include: ['/api/user', '/api/order']  // 仅对这些路径进行签名（优先级高于 ignore）
 });
 
 paramsEncry.init();
+```
+
+### 包含模式 vs 忽略模式
+
+库提供了两种路径过滤模式：
+
+#### 1. 忽略模式（ignore）
+
+默认对所有请求进行签名，但排除指定的路径：
+
+```javascript
+const paramsEncry = new ParamsEncry({
+  ignore: ['/api/public', '/health', '/upload']
+});
+paramsEncry.init();
+
+// ✅ 会签名：/api/user, /api/order, /api/product
+// ❌ 不签名：/api/public, /health, /upload
+```
+
+#### 2. 包含模式（include）
+
+仅对指定的路径进行签名，其他路径都不签名。**当设置了 include 时，ignore 配置将失效**：
+
+```javascript
+const paramsEncry = new ParamsEncry({
+  include: ['/api/user', '/api/order'],
+  ignore: ['/api/user/login']  // ⚠️ 此配置会被忽略
+});
+paramsEncry.init();
+
+// ✅ 会签名：/api/user, /api/user/login, /api/order
+// ❌ 不签名：/api/product, /api/public, /health
+```
+
+**使用建议：**
+- 如果只有少数几个接口需要签名，使用 `include` 模式
+- 如果大部分接口需要签名，只有少数例外，使用 `ignore` 模式
+- 不要同时依赖两种模式，因为 `include` 会覆盖 `ignore`
 ```
 
 ### 签名算法说明
@@ -139,7 +180,8 @@ constructor(options?: ParamsEncryOptions)
   - `TIMESTAMP_HEADER` (string): 时间戳头名称，默认为 `'X-Timestamp'`
   - `NONCE_HEADER` (string): 随机数头名称，默认为 `'X-Nonce'`
   - `APP_SECRET` (string): 签名密钥，默认为 `'sk-adslfkogmelzdlkfotkeled'`
-  - `ignore` (string[]): 忽略签名的路径数组
+  - `ignore` (string[]): 忽略签名的路径数组（仅在未设置 include 时生效）
+  - `include` (string[]): 仅对这些路径进行签名（设置后 ignore 失效）
 
 #### 方法
 

@@ -144,7 +144,7 @@ export default {
       if (!model || !this.prop) { return }
 
       let path = this.prop
-      if (path.indexOf(':') !== -1) {
+      if (path && path.indexOf(':') !== -1) {
         path = path.replace(/:/, '.')
       }
       return getPropByPath(model, path, true).v
