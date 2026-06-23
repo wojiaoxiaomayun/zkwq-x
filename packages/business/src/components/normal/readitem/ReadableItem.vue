@@ -667,12 +667,23 @@ export default {
             return link.name === '中国科学院学位论文数据库'
           })
         }
-        if (!isArrayEmpty(this.readable.local_links) && this.readable.type === TYPE_ARTICLE)  {
-          this.readable.links.unshift({
-            name: '原文下载',
-            url: this.readable.local_links[0],
-            logo: appPdf
-          })
+        if(this.readable.type === TYPE_ARTICLE){
+          if (!isArrayEmpty(this.readable.local_links))  {
+            this.readable.links.unshift({
+              name: '原文下载',
+              url: this.readable.local_links[0],
+              logo: appPdf
+            })
+          } else {
+            const pdf = (this.readable.attachments || []).filter(item => item.file_name.endsWith('.pdf'))[0]
+            if (pdf) {
+              this.readable.links.unshift({
+                name: '原文下载',
+                url: `https://file.scholarin.cn/files?fastdfspath=${pdf.file_link}`,
+                logo: appPdf
+              })
+            }
+          }
         }
         return this.readable.links
       } else {
