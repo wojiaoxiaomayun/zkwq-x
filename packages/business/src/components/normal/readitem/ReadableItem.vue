@@ -661,29 +661,33 @@ export default {
       return 0
     },
     links () {
+      if (this.readable.type === TYPE_ARTICLE) {
+        let links = Array.isArray(this.readable.links) ? [...this.readable.links] : []
+        if (!isArrayEmpty(this.readable.local_links)) {
+          links.unshift({
+            name: '原文下载',
+            url: this.readable.local_links[0],
+            logo: appPdf
+          })
+        } else {
+          const pdf = (this.readable.attachments || []).filter(item => item.file_name.endsWith('.pdf'))[0]
+          if (pdf) {
+            links.unshift({
+              name: '原文下载',
+              url: `https://file.scholarin.cn/files?fastdfspath=${pdf.file_link}`,
+              logo: appPdf
+            })
+          }
+        }
+        if (links.length > 0) {
+          return links
+        }
+      }
       if (!isArrayEmpty(this.readable.links)) {
         if (this.readable.article_type === '学位论文') {
           return this.readable.links.filter(link => {
             return link.name === '中国科学院学位论文数据库'
           })
-        }
-        if(this.readable.type === TYPE_ARTICLE){
-          if (!isArrayEmpty(this.readable.local_links))  {
-            this.readable.links.unshift({
-              name: '原文下载',
-              url: this.readable.local_links[0],
-              logo: appPdf
-            })
-          } else {
-            const pdf = (this.readable.attachments || []).filter(item => item.file_name.endsWith('.pdf'))[0]
-            if (pdf) {
-              this.readable.links.unshift({
-                name: '原文下载',
-                url: `https://file.scholarin.cn/files?fastdfspath=${pdf.file_link}`,
-                logo: appPdf
-              })
-            }
-          }
         }
         return this.readable.links
       } else {
